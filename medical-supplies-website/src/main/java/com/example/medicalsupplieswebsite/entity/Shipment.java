@@ -17,7 +17,7 @@ public class Shipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long shipmentId;
-    private String invoceCode;
+    private String invoiceCode;
     private String note;
     private Date dateOfCreate;
 
