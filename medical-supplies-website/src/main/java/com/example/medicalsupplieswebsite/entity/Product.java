@@ -43,4 +43,17 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<ShipmentDetail> shipmentDetails = new LinkedHashSet<>();
 
+    public void decreaseQuantity(int quantity){
+        int newQuantity = this.productQuantity - quantity;
+        if (newQuantity >= 0) {
+            this.setProductQuantity(newQuantity);
+        } else {
+            // Code xử lý thông báo cho người dùng về việc số lượng hàng trong kho không còn đủ để giao dịch
+        }
+    }
+
+    public void increaseQuantity(int quantity){
+        this.productQuantity += quantity;
+    }
+
 }
