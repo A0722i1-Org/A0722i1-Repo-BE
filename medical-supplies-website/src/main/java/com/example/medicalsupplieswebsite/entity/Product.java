@@ -17,8 +17,8 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
     private String productName;
-    private int productPrice;
-    private int productQuantity;
+    private Interger productPrice;
+    private Interger productQuantity;
     private String productImg;
     private String productCode;
     private Date expireDate;

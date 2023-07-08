@@ -14,7 +14,7 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
-    private String accountName;
+    private String username;
     private String encryptPassword;
     private String email;
     private boolean isEnable;
