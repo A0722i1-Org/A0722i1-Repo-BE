@@ -1,5 +1,6 @@
 package com.example.medicalsupplieswebsite.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -17,7 +18,7 @@ public class ShipmentType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long shipmentTypeId;
     private String shipmentTypeName;
-
+    @JsonBackReference
     @OneToMany(mappedBy = "shipmentType", cascade = CascadeType.ALL)
     private Set<Shipment> shipments = new LinkedHashSet<>();
 

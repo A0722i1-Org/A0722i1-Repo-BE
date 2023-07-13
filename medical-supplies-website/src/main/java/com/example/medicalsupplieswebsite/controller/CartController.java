@@ -1,7 +1,7 @@
 package com.example.medicalsupplieswebsite.controller;
 
-import com.example.medicalsupplieswebsite.service.CartDetailService;
-import com.example.medicalsupplieswebsite.service.CartService;
+import com.example.medicalsupplieswebsite.service.impl.CartDetailService;
+import com.example.medicalsupplieswebsite.service.impl.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;

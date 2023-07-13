@@ -1,13 +1,15 @@
-package com.example.medicalsupplieswebsite.service;
+package com.example.medicalsupplieswebsite.service.impl;
 
 import com.example.medicalsupplieswebsite.entity.Product;
 import com.example.medicalsupplieswebsite.entity.ProductInfo;
+import com.example.medicalsupplieswebsite.service.IProductService;
+import com.example.medicalsupplieswebsite.service.IService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProductService implements IService<Product> {
+public class ProductService implements IProductService {
 
     @Override
     public Page<Product> findAll(Pageable pageable) {

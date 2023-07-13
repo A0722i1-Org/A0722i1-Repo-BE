@@ -1,38 +1,39 @@
-package com.example.medicalsupplieswebsite.service;
+package com.example.medicalsupplieswebsite.service.impl;
 
 import com.example.medicalsupplieswebsite.entity.Account;
 import com.example.medicalsupplieswebsite.repository.IAccountRepository;
+import com.example.medicalsupplieswebsite.service.IAccountService;
+import com.example.medicalsupplieswebsite.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AccountService implements IService<Account> {
+public class AccountService implements IAccountService {
     private final IAccountRepository accountRepository;
-
     @Autowired
-    AccountService(IAccountRepository accountRepository) {
+    AccountService(IAccountRepository accountRepository){
         this.accountRepository = accountRepository;
     }
 
     @Override
     public Page<Account> findAll(Pageable pageable) {
-        return this.accountRepository.findAll(pageable);
+        return null;
     }
 
     @Override
     public Account findById(Long id) {
-        return this.accountRepository.findById(id).orElse(null);
+        return null;
     }
 
     @Override
     public Account save(Account account) {
-        return this.accountRepository.save(account);
+        return null;
     }
 
     @Override
     public void deleteById(Long id) {
-        this.accountRepository.deleteById(id);
+
     }
 }

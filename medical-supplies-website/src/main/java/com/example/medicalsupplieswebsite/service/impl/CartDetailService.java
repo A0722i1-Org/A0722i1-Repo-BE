@@ -1,14 +1,16 @@
-package com.example.medicalsupplieswebsite.service;
+package com.example.medicalsupplieswebsite.service.impl;
 
 import com.example.medicalsupplieswebsite.entity.CartDetail;
 import com.example.medicalsupplieswebsite.repository.ICartDetailRepository;
+import com.example.medicalsupplieswebsite.service.ICartDetailService;
+import com.example.medicalsupplieswebsite.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CartDetailService implements IService<CartDetail> {
+public class CartDetailService implements ICartDetailService {
     private final ICartDetailRepository cartDetailRepository;
 
     @Autowired

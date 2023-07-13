@@ -1,13 +1,15 @@
-package com.example.medicalsupplieswebsite.service;
+package com.example.medicalsupplieswebsite.service.impl;
 
 import com.example.medicalsupplieswebsite.entity.Role;
 import com.example.medicalsupplieswebsite.entity.ShipmentDetail;
+import com.example.medicalsupplieswebsite.service.IService;
+import com.example.medicalsupplieswebsite.service.IShipmentDetailService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ShipmentDetailService implements IService<ShipmentDetail> {
+public class ShipmentDetailService implements IShipmentDetailService {
 
 
     @Override

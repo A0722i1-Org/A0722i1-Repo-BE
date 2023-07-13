@@ -1,5 +1,6 @@
 package com.example.medicalsupplieswebsite.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -33,7 +34,7 @@ public class Shipment {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private Customer customer;
-
+    @JsonBackReference
     @OneToMany(mappedBy = "shipment", cascade = CascadeType.ALL)
     private Set<ShipmentDetail> shipmentDetails = new LinkedHashSet<>();
 
