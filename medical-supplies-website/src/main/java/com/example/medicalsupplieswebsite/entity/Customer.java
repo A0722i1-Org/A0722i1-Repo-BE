@@ -23,6 +23,7 @@ public class Customer {
     private String idCard;
     private String customerAddress;
     private String customerImg;
+    private boolean isEnable;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_type_id")
