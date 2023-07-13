@@ -29,9 +29,6 @@ public class Employee {
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "role_id")
-    private Role role;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private Set<Receipt> receipts = new LinkedHashSet<>();
