@@ -17,8 +17,6 @@ public class Role {
     private String roleName;
     @ManyToMany(mappedBy = "roles")
     private Set<Account> accounts = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "role", orphanRemoval = true)
-    private Set<Employee> employees = new LinkedHashSet<>();
+    
 
 }
