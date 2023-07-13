@@ -21,21 +21,14 @@ public class Shipment {
     private String invoiceCode;
     private String note;
     private Date dateOfCreate;
-
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "shipment_type_id")
     private ShipmentType shipmentType;
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_id")
     private Employee employee;
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private Customer customer;
-    @JsonBackReference
-    @OneToMany(mappedBy = "shipment", cascade = CascadeType.ALL)
-    private Set<ShipmentDetail> shipmentDetails = new LinkedHashSet<>();
 
 }

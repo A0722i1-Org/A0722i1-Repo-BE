@@ -25,20 +25,11 @@ public class Employee {
     private String employeeImg;
     private int salary;
     private boolean isEnable;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
     private Account account;
-
-    @JsonBackReference
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    private Set<Receipt> receipts = new LinkedHashSet<>();
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "position_id")
     private Position position;
-    @JsonBackReference
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    private Set<Shipment> shipments = new LinkedHashSet<>();
 
 }

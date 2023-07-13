@@ -20,14 +20,9 @@ public class Cart {
     private String receiverName;
     private String receiverAddress;
     private String receiverEmail;
-    @JsonBackReference
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-    private Set<CartDetail> cartDetails = new LinkedHashSet<>();
+
     @JsonBackReference
     @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL)
     private Customer customer;
 
-    public void clearAllItems() {
-        this.cartDetails.clear();
-    }
 }

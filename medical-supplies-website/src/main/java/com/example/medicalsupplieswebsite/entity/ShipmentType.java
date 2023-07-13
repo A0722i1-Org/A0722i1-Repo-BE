@@ -18,8 +18,5 @@ public class ShipmentType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long shipmentTypeId;
     private String shipmentTypeName;
-    @JsonBackReference
-    @OneToMany(mappedBy = "shipmentType", cascade = CascadeType.ALL)
-    private Set<Shipment> shipments = new LinkedHashSet<>();
 
 }

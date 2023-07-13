@@ -37,19 +37,13 @@ public class Product {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private Customer customer;
-    @JsonBackReference
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private Set<ReceiptDetail> receiptDetails = new LinkedHashSet<>();
-    @JsonBackReference
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private Set<ShipmentDetail> shipmentDetails = new LinkedHashSet<>();
 
     public void decreaseQuantity(int quantity){
         int newQuantity = this.productQuantity - quantity;
         if (newQuantity >= 0) {
             this.setProductQuantity(newQuantity);
         } else {
-            // Code xử lý thông báo cho người dùng về việc số lượng hàng trong kho không còn đủ để giao dịch
+            // Code xử lý thông báo cho nhân viên về việc số lượng hàng trong kho không còn đủ để giao dịch
         }
     }
 

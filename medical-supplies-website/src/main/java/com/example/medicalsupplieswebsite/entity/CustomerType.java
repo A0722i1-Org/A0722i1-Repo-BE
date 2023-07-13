@@ -16,8 +16,5 @@ public class CustomerType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerTypeId;
     private String customerTypeName;
-    @JsonBackReference
-    @OneToMany(mappedBy = "customerType", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Customer> customers = new LinkedHashSet<>();
 
 }
