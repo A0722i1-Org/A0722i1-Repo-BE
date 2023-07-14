@@ -16,7 +16,8 @@ import java.util.Set;
 public class Position {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long positionId;
-    private String positionName;
+    private Integer id;
+
+    private String name;
 
 }
