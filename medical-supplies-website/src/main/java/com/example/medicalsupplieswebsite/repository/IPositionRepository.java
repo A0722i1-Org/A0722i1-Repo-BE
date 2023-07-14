@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface IPositionRepository extends JpaRepository<Position, Integer> {
+public interface IPositionRepository extends JpaRepository<Position, Long> {
     /**
      * Created by: PhongTD
      * Date created: 12/07/2023
@@ -24,5 +24,5 @@ public interface IPositionRepository extends JpaRepository<Position, Integer> {
      * @return position was found by id
      */
     @Query("SELECT position FROM Position position WHERE position.id = ?1")
-    Position findAllById(Integer id);
+    Position findAllById(Long id);
 }

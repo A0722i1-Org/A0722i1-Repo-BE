@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface IPositionService {
     List<Position> findAll();
-    Position findById(Integer id);
+    Position findById(Long id);
 }
