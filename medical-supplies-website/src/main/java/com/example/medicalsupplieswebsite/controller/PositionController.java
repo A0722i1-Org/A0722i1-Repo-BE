@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/positions")
+@RequestMapping("api/v1/position")
 public class PositionController {
     @Autowired
     private IPositionService iPositionService;

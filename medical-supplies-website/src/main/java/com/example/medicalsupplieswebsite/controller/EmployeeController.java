@@ -18,7 +18,7 @@ import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/employees")
+@RequestMapping("/api/v1/employee")
 public class EmployeeController {
     @Autowired
     private IEmployeeService iEmployeeService;
