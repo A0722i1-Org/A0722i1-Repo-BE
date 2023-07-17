@@ -37,4 +37,7 @@ out/
 .vscode/
 
 #Configure file
-#!**/src/main/resources/
+!**/src/main/resources/
+
+#TestDriveFile
+!**\src\main\java\com\example\medicalsupplieswebsite\TestDrive.java
