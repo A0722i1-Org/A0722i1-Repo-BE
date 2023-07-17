@@ -1,10 +1,41 @@
 package com.example.medicalsupplieswebsite.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.medicalsupplieswebsite.entity.Employee;
+import com.example.medicalsupplieswebsite.service.IEmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/employee")
 public class EmployeeController {
+    @Autowired
+    private IEmployeeService iEmployeeService;
+
+    @GetMapping("")
+    public ResponseEntity<List<Employee>> findAllEmployees(@RequestParam(defaultValue = "") String name,
+                                                           @RequestParam(defaultValue = "") String date,
+                                                           @RequestParam(defaultValue = "") String pos) {
+        List<Employee> listEmployee = iEmployeeService.findAllEmWithNameAndDateAndPositions(name,date,pos);
+        if (listEmployee.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }return new ResponseEntity<>(listEmployee, HttpStatus.OK);
+    }
+    @DeleteMapping("/delete/{id_employee}")
+    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id_employee){
+        iEmployeeService.deleteEmployee(id_employee);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping("/detail/{id_employee}")
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id_employee){
+        Employee employee = iEmployeeService.findEmployeeByID(id_employee) ;
+        if (employee == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(employee, HttpStatus.OK);
+    }
 }
