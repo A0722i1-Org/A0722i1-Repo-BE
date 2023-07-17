@@ -12,7 +12,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
             "from employee e " +
             "inner join position p on e.position_id = p.position_id " +
             "inner join account a on e.account_id = a.account_id " +
-            "where a.username = :username",
+            "where (e.is_enable = true) and (a.is_enable = true) and (a.username = :username)",
             nativeQuery = true)
     Optional<Employee> findByUsername(@Param("username") String username);
 }
