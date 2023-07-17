@@ -25,6 +25,6 @@ public interface IPositionRepository extends JpaRepository<Position, Long> {
      * @param id
      * @return position was found by id
      */
-    @Query("SELECT position FROM Position position WHERE position.id = ?1")
+    @Query("SELECT position FROM Position position WHERE position.positionId = ?1")
     Position findAllById(Long id);
 }
