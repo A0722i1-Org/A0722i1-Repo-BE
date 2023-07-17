@@ -24,9 +24,9 @@ public class EmployeeService implements IEmployeeService {
      */
     @Override
     public void save(EmployeeInfo employeeInfo) {
-        Employee employee = new Employee(employeeInfo.getId(), employeeInfo.getEmployeeCode(), employeeInfo.getName(),
-                employeeInfo.getEmail(), employeeInfo.getPhone(), employeeInfo.getAddress(), employeeInfo.getGender(),
-                employeeInfo.getIdCard(), employeeInfo.getDateOfBirth(), employeeInfo.getAvatar(), false,
+        Employee employee = new Employee(employeeInfo.getEmployeeId(), employeeInfo.getEmployeeCode(), employeeInfo.getEmployeeName(),
+                employeeInfo.getEmail(), employeeInfo.getPhone(), employeeInfo.getEmployeeAddress(), employeeInfo.getGender(),
+                employeeInfo.getIdCard(), employeeInfo.getDateOfBirth(), employeeInfo.getEmployeeImg(), false,
                 employeeInfo.getPosition());
         iEmployeeRepository.save(employee);
     }
@@ -51,8 +51,8 @@ public class EmployeeService implements IEmployeeService {
      */
     @Override
     public void updateEmployee(EmployeeInfo employeeInfo, Long id) {
-        iEmployeeRepository.updateEmployee(employeeInfo.getName(), employeeInfo.getEmail(), employeeInfo.getPhone(),
-                employeeInfo.getAddress(), employeeInfo.getGender(), employeeInfo.getIdCard(), employeeInfo.getDateOfBirth(),
-                employeeInfo.getAvatar(), employeeInfo.getPosition(), id);
+        iEmployeeRepository.updateEmployee(employeeInfo.getEmployeeName(), employeeInfo.getEmail(), employeeInfo.getPhone(),
+                employeeInfo.getEmployeeAddress(), employeeInfo.getGender(), employeeInfo.getIdCard(), employeeInfo.getDateOfBirth(),
+                employeeInfo.getEmployeeImg(), employeeInfo.getPosition(), id);
     }
 }

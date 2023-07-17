@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
+import java.sql.Date;
 
 @Repository
 @Transactional
@@ -31,7 +31,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
     @Query("UPDATE Employee SET employeeName = ?1, email = ?2, phone = ?3, employeeAddress = ?4, gender = ?5, idCard = ?6," +
             " dateOfBirth = ?7,employeeImg = ?8 ,position = ?9 WHERE employeeId = ?10")
     void updateEmployee(String employeeName, String email, String phone, String employeeAddress, Integer gender,
-                        String idCard, LocalDate dateOfBirth, String avatar, Position position, Long id);
+                        String idCard, Date dateOfBirth, String avatar, Position position, Long id);
 
     /**
      * Created by: PhongTD

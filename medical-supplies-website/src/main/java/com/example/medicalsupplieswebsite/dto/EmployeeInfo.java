@@ -7,17 +7,18 @@ import org.springframework.validation.Errors;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class EmployeeInfo {
-    private Long id;
+    private Long employeeId;
 
     private String employeeCode;
 
     @NotBlank(message = "Vui lòng nhập họ tên")
     @Pattern(regexp = "^(?:[A-Z][a-zÀ-ỹ]*(?: [A-Z][a-zÀ-ỹ]*)+)$",message = "Họ và tên chưa đúng định dạng")
     @Length(min = 3,max = 50,message = "Họ và tên phải chứa ít nhất 3 kí tự và tối đa 50 kí tự")
-    private String name;
+    private String employeeName;
 
     @NotBlank(message = "Vui lòng nhập email")
     @Pattern(regexp = "^[a-zA-Z0-9_.+-]+@gmail.com+$",message = "Email không đúng định dạng, vui lòng nhập lại. Ex: tên_email@gmail.com")
@@ -31,7 +32,7 @@ public class EmployeeInfo {
     @NotBlank(message = "Vui lòng nhập địa chỉ")
     @Pattern(regexp = "^[^!@#$%^&*()_+<>?'\"{}\\`~|/\\\\]+$",message = "Địa chỉ không được chứa các kí tự đặc biệt")
     @Length(min = 5,max = 100,message = "Địa chỉ phải có ít nhất 5 và tối đa 100 kí tự")
-    private String address;
+    private String employeeAddress;
 
     @NotNull(message = "Vui lòng chọn giới tính")
     private Integer gender;
@@ -41,37 +42,39 @@ public class EmployeeInfo {
     private String idCard;
 
     @NotNull(message = "Vui lòng nhập ngày sinh")
-    private LocalDate dateOfBirth;
+    private Date dateOfBirth;
+
+    @NotNull(message = "Vui lòng chọn ảnh đại diện")
+    private String employeeImg;
 
     @NotNull(message = "Vui lòng chọn chức vụ")
     private Position position;
 
-    @NotNull(message = "Vui lòng chọn ảnh đại diện")
-    private String avatar;
-
     public EmployeeInfo() {
     }
 
-    public EmployeeInfo(Long id, String employeeCode, String name, String email, String phone, String address, Integer gender, String idCard, LocalDate dateOfBirth, Position position, String avatar) {
-        this.id = id;
+    public EmployeeInfo(Long employeeId, String employeeCode, String employeeName, String email, String phone,
+                        String employeeAddress, Integer gender, String idCard, Date dateOfBirth, String employeeImg,
+                        Position position) {
+        this.employeeId = employeeId;
         this.employeeCode = employeeCode;
-        this.name = name;
+        this.employeeName = employeeName;
         this.email = email;
         this.phone = phone;
-        this.address = address;
+        this.employeeAddress = employeeAddress;
         this.gender = gender;
         this.idCard = idCard;
         this.dateOfBirth = dateOfBirth;
+        this.employeeImg = employeeImg;
         this.position = position;
-        this.avatar = avatar;
     }
 
-    public Long getId() {
-        return id;
+    public Long getEmployeeId() {
+        return employeeId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getEmployeeCode() {
@@ -82,12 +85,12 @@ public class EmployeeInfo {
         this.employeeCode = employeeCode;
     }
 
-    public String getName() {
-        return name;
+    public String getEmployeeName() {
+        return employeeName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 
     public String getEmail() {
@@ -106,12 +109,12 @@ public class EmployeeInfo {
         this.phone = phone;
     }
 
-    public String getAddress() {
-        return address;
+    public String getEmployeeAddress() {
+        return employeeAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setEmployeeAddress(String employeeAddress) {
+        this.employeeAddress = employeeAddress;
     }
 
     public Integer getGender() {
@@ -130,12 +133,20 @@ public class EmployeeInfo {
         this.idCard = idCard;
     }
 
-    public LocalDate getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getEmployeeImg() {
+        return employeeImg;
+    }
+
+    public void setEmployeeImg(String employeeImg) {
+        this.employeeImg = employeeImg;
     }
 
     public Position getPosition() {
@@ -146,24 +157,16 @@ public class EmployeeInfo {
         this.position = position;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
     public void validate(Object target, Errors errors) {
         EmployeeInfo employeeInfo = (EmployeeInfo) target;
         if (!(employeeInfo.dateOfBirth == null)) {
             LocalDate today = LocalDate.now();
             LocalDate minAgeDate = today.minusYears(23);
             LocalDate maxAgeDate = today.minusYears(50);
-            if (employeeInfo.dateOfBirth.isAfter(minAgeDate)) {
+            if (employeeInfo.dateOfBirth.toLocalDate().isAfter(minAgeDate)) {
                 errors.rejectValue("dateOfBirth", "", "chưa đủ 23 tuổi");
             }
-            if (employeeInfo.dateOfBirth.isBefore(maxAgeDate)) {
+            if (employeeInfo.dateOfBirth.toLocalDate().isBefore(maxAgeDate)) {
                 errors.rejectValue("dateOfBirth", "", "lớn hơn 50 tuổi");
             }
         }

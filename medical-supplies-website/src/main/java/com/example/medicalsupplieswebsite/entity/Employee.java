@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.time.LocalDate;
 
 @Entity
@@ -32,7 +33,7 @@ public class Employee {
 
     private Integer salary;
 
-    private LocalDate dateOfBirth;
+    private Date dateOfBirth;
 
     private String employeeImg;
 
@@ -46,24 +47,7 @@ public class Employee {
     @JoinColumn(name = "position_id")
     private Position position;
 
-    public Employee(Long employeeId, String employeeCode, String employeeName, String email, String phone, String employeeAddress, Integer gender, String idCard, Integer salary, LocalDate dateOfBirth, String employeeImg, Boolean isEnable, Account account, Position position) {
-        this.employeeId = employeeId;
-        this.employeeCode = employeeCode;
-        this.employeeName = employeeName;
-        this.email = email;
-        this.phone = phone;
-        this.employeeAddress = employeeAddress;
-        this.gender = gender;
-        this.idCard = idCard;
-        this.salary = salary;
-        this.dateOfBirth = dateOfBirth;
-        this.employeeImg = employeeImg;
-        this.isEnable = isEnable;
-        this.account = account;
-        this.position = position;
-    }
-
-    public Employee(Long employeeId, String employeeCode, String employeeName, String email, String phone, String employeeAddress, Integer gender, String idCard, LocalDate dateOfBirth, String employeeImg, boolean isEnable, Position position) {
+    public Employee(Long employeeId, String employeeCode, String employeeName, String email, String phone, String employeeAddress, Integer gender, String idCard, Date dateOfBirth, String employeeImg, boolean isEnable, Position position) {
         this.employeeId = employeeId;
         this.employeeCode = employeeCode;
         this.employeeName = employeeName;
