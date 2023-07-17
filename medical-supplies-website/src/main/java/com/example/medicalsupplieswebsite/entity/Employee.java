@@ -24,17 +24,17 @@ public class Employee {
 //    @ManyToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "position_id")
 //    private Position position;
-    private Long employeeId;
+    private Long id;
 
     private String employeeCode;
 
-    private String employeeName;
+    private String name;
 
     private String email;
 
     private String phone;
 
-    private String employeeAddress;
+    private String address;
 
     private Integer gender;
 
@@ -44,7 +44,7 @@ public class Employee {
 
     private LocalDate dateOfBirth;
 
-    private String employeeImg;
+    private String avatar;
 
     private Boolean isEnable;
 
@@ -56,34 +56,34 @@ public class Employee {
     @JoinColumn(name = "position_id")
     private Position position;
 
-    public Employee(Long employeeId, String employeeCode, String employeeName, String email, String phone, String employeeAddress, Integer gender, String idCard, int salary, LocalDate dateOfBirth, String employeeImg, Boolean isEnable, Account account, Position position) {
-        this.employeeId = employeeId;
+    public Employee(Long id, String employeeCode, String name, String email, String phone, String address, Integer gender, String idCard, int salary, LocalDate dateOfBirth, String avatar, Boolean isEnable, Account account, Position position) {
+        this.id = id;
         this.employeeCode = employeeCode;
-        this.employeeName = employeeName;
+        this.name = name;
         this.email = email;
         this.phone = phone;
-        this.employeeAddress = employeeAddress;
+        this.address = address;
         this.gender = gender;
         this.idCard = idCard;
         this.salary = salary;
         this.dateOfBirth = dateOfBirth;
-        this.employeeImg = employeeImg;
+        this.avatar = avatar;
         this.isEnable = isEnable;
         this.account = account;
         this.position = position;
     }
 
-    public Employee(Long employeeId, String employeeCode, String employeeName, String email, String phone, String employeeAddress, Integer gender, String idCard, LocalDate dateOfBirth, String employeeImg, boolean isEnable, Position position) {
-        this.employeeId = employeeId;
+    public Employee(Long id, String employeeCode, String name, String email, String phone, String address, Integer gender, String idCard, LocalDate dateOfBirth, String avatar, boolean isEnable, Position position) {
+        this.id = id;
         this.employeeCode = employeeCode;
-        this.employeeName = employeeName;
+        this.name = name;
         this.email = email;
         this.phone = phone;
-        this.employeeAddress = employeeAddress;
+        this.address = address;
         this.gender = gender;
         this.idCard = idCard;
         this.dateOfBirth = dateOfBirth;
-        this.employeeImg = employeeImg;
+        this.avatar = avatar;
         this.isEnable = isEnable;
         this.position = position;
     }
