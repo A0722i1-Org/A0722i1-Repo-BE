@@ -1,11 +1,8 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
-import com.example.medicalsupplieswebsite.entity.Account;
 import com.example.medicalsupplieswebsite.entity.Customer;
-import com.example.medicalsupplieswebsite.repository.IAccountRepository;
 import com.example.medicalsupplieswebsite.repository.ICustomerRepository;
 import com.example.medicalsupplieswebsite.service.ICustomerService;
-import com.example.medicalsupplieswebsite.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,5 +36,10 @@ public class CustomerService implements ICustomerService {
     @Override
     public void deleteById(Long id) {
 
+    }
+
+    @Override
+    public Customer findByUsername(String username) {
+        return customerRepository.findByUsername(username).orElse(null);
     }
 }
