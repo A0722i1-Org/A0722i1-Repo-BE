@@ -30,7 +30,7 @@ public class PositionService implements IPositionService {
      * @return position was found by id
      */
     @Override
-    public Position findById(Long id) {
+    public Position findById(Integer id) {
         return iPositionRepository.findAllById(id);
     }
 }
