@@ -17,10 +17,10 @@ public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
     /**
      * Create by: PhongTD
      * Date create: 12/07/2023
-     * @param name
+     * @param employeeName
      * @param email
      * @param phone
-     * @param address
+     * @param employeeAddress
      * @param gender
      * @param idCard
      * @param dateOfBirth
@@ -30,7 +30,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
     @Modifying
     @Query("UPDATE Employee SET employeeName = ?1, email = ?2, phone = ?3, employeeAddress = ?4, gender = ?5, idCard = ?6," +
             " dateOfBirth = ?7,employeeImg = ?8 ,position = ?9 WHERE employeeId = ?10")
-    void updateEmployee(String name, String email, String phone, String address, Integer gender,
+    void updateEmployee(String employeeName, String email, String phone, String employeeAddress, Integer gender,
                         String idCard, LocalDate dateOfBirth, String avatar, Position position, Long id);
 
     /**

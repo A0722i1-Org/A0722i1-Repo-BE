@@ -14,16 +14,6 @@ import java.time.LocalDate;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long employeeId;
-//    private String employeeName;
-//    private boolean gender;
-//    private Date dateOfBirth;
-//    private String employeeAddress;
-//    private String employeeImg;
-//    private boolean isEnable;
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "position_id")
-//    private Position position;
     private Long employeeId;
 
     private String employeeCode;
@@ -40,7 +30,7 @@ public class Employee {
 
     private String idCard;
 
-    private int salary;
+    private Integer salary;
 
     private LocalDate dateOfBirth;
 
@@ -56,7 +46,7 @@ public class Employee {
     @JoinColumn(name = "position_id")
     private Position position;
 
-    public Employee(Long employeeId, String employeeCode, String employeeName, String email, String phone, String employeeAddress, Integer gender, String idCard, int salary, LocalDate dateOfBirth, String employeeImg, Boolean isEnable, Account account, Position position) {
+    public Employee(Long employeeId, String employeeCode, String employeeName, String email, String phone, String employeeAddress, Integer gender, String idCard, Integer salary, LocalDate dateOfBirth, String employeeImg, Boolean isEnable, Account account, Position position) {
         this.employeeId = employeeId;
         this.employeeCode = employeeCode;
         this.employeeName = employeeName;
