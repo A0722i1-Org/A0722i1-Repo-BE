@@ -1,19 +1,9 @@
 package com.example.medicalsupplieswebsite.repository;
 
 import com.example.medicalsupplieswebsite.entity.Employee;
-import com.example.medicalsupplieswebsite.entity.Position;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
-import java.time.LocalDate;
-
-@Repository
-@Transactional
 public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
-
     /**
      * Create by: PhongTD
      * Date create: 12/07/2023
