@@ -12,7 +12,6 @@ public interface IPositionRepository extends JpaRepository<Position, Long> {
     /**
      * Created by: PhongTD
      * Date created: 12/07/2023
-     *
      * @return List position
      */
     @Query("SELECT position FROM Position position")
@@ -21,7 +20,6 @@ public interface IPositionRepository extends JpaRepository<Position, Long> {
     /**
      * Created by: PhongTD
      * Date created: 12/07/2023
-     *
      * @param id
      * @return position was found by id
      */
