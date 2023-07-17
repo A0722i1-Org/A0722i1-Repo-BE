@@ -8,7 +8,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface IAccountRepository extends JpaRepository<Account, Long> {
-    //ThanhNV code
+    /*
+     * ThanhNV code
+     */
     @Query(nativeQuery = true, value =
             "select account_id, username, email, encrypt_password, is_enable " +
                     "from account " +
