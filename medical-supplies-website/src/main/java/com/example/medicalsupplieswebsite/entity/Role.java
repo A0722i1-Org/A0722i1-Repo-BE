@@ -19,6 +19,4 @@ public class Role {
     @JsonBackReference
     @ManyToMany(mappedBy = "roles")
     private Set<Account> accounts = new LinkedHashSet<>();
-
-
 }
