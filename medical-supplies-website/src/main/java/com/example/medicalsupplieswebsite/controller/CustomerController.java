@@ -1,7 +1,6 @@
 package com.example.medicalsupplieswebsite.controller;
 
 import com.example.medicalsupplieswebsite.dto.CustomerUserDetailDto;
-import com.example.medicalsupplieswebsite.entity.Customer;
 import com.example.medicalsupplieswebsite.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

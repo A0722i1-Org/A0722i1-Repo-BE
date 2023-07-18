@@ -38,4 +38,3 @@ out/
 .vscode/
 
 #Configure file
-!**/src/main/resources/
