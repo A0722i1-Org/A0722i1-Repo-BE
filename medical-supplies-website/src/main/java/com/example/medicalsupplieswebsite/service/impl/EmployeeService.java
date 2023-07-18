@@ -1,9 +1,10 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
-import com.example.medicalsupplieswebsite.entity.CustomerType;
+import com.example.medicalsupplieswebsite.dto.EmployeeInfo;
 import com.example.medicalsupplieswebsite.entity.Employee;
+import com.example.medicalsupplieswebsite.repository.IEmployeeRepository;
 import com.example.medicalsupplieswebsite.service.IEmployeeService;
-import com.example.medicalsupplieswebsite.service.IService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,11 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public Employee findById(Long id) {
         return iEmployeeRepository.findAllById(id);
+    }
+
+    @Override
+    public Employee save(Employee employee) {
+        return null;
     }
 
     @Override
@@ -46,6 +52,6 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public Employee findByUsername(String username) {
-        return employeeRepository.findByUsername(username).orElse(null);
+        return iEmployeeRepository.findByUsername(username).orElse(null);
     }
 }

@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/employee")
 public class EmployeeController {
     @Autowired
-    private IEmployeeService employeeService;
+    private IEmployeeService iEmployeeService;
 
     @GetMapping("/detail")
     public ResponseEntity<Employee> getDetail() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        Employee employee = employeeService.findByUsername(username);
+        Employee employee = iEmployeeService.findByUsername(username);
 
         if (employee == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

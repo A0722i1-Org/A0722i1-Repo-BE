@@ -10,12 +10,12 @@ import java.util.Optional;
 
 public interface ICartRepository extends JpaRepository<Cart, Long> {
     @Query(nativeQuery = true,
-            value = "SELECT c.cart_id, receiver_address, receiver_email, receiver_name, receiver_phone FROM cart c JOIN customer USING (cart_id) JOIN account a USING(account_id) WHERE a.username=:username")
+            value = "SELECT c.cart_id, receiver_address, receiver_email, receiver_name, receiver_phone FROM cart c JOIN customer USING (cart_id) JOIN account a USING(account_id) WHERE a.username = :username")
     Optional<Cart> findCartByUsername(@Param("username") String username);
 
     @Query(nativeQuery = true,
             value = "SELECT cart_id, receiver_address, receiver_email, receiver_name, receiver_phone FROM cart WHERE cart_id=:id")
-    Optional<Cart> findById(@Param("username") Long id);
+    Optional<Cart> findById(@Param("id") Long id);
 
     @Query(nativeQuery = true,
             value = "SELECT cart_id, receiver_address, receiver_email, receiver_name, receiver_phone FROM cart ORDER BY cart_id DESC LIMIT 1")

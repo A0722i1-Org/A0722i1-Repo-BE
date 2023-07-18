@@ -7,10 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.query.Param;
 
-import javax.transaction.Transactional;
 import java.sql.Date;
+import java.util.Optional;
 
 @Transactional
 public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
@@ -23,7 +23,10 @@ public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
     @Query("SELECT employee FROM Employee employee WHERE employee.employeeId = ?1")
     Employee findAllById(Long id);
 
-    @Query(value = "select e.employee_id, e.employee_name, e.gender, e.date_of_birth, e.employee_address, e.employee_img, e.salary, e.is_enable, p.position_id, a.account_id " +
+    @Query(value =
+            "select e.employee_id, e.employee_code, e.employee_name, e.email, e.phone, " +
+            "e.employee_address, e.gender, e.date_of_birth, e.id_card, e.salary, e.employee_img, " +
+            "e.is_enable, p.position_id, a.account_id " +
             "from employee e " +
             "inner join position p on e.position_id = p.position_id " +
             "inner join account a on e.account_id = a.account_id " +

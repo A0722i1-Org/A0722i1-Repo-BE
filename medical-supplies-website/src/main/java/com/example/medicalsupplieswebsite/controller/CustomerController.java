@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/customer")
 public class CustomerController {
     @Autowired
-    private ICustomerService customerService;
+    private ICustomerService iCustomerService;
 
     @GetMapping("/detail")
     public ResponseEntity<Customer> getDetail() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        Customer customer = customerService.findByUsername(username);
+        Customer customer = iCustomerService.findByUsername(username);
 
         if (customer == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
