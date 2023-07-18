@@ -1,4 +1,4 @@
-package com.codegym.building.utils;
+package com.example.medicalsupplieswebsite.utils;
 
 import org.hibernate.HibernateException;
 import org.hibernate.MappingException;

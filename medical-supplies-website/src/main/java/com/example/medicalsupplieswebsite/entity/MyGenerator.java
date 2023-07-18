@@ -1,4 +1,4 @@
-package com.codegym.casestudy_spring_module_4.model;
+package com.example.medicalsupplieswebsite.entity;
 
 import org.hibernate.HibernateException;
 import org.hibernate.MappingException;
@@ -19,6 +19,7 @@ public class MyGenerator implements IdentifierGenerator {
     public void configure(Type type, Properties properties, ServiceRegistry serviceRegistry) throws MappingException {
         prefix = properties.getProperty("prefix");
     }
+
 
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object obj) throws HibernateException {

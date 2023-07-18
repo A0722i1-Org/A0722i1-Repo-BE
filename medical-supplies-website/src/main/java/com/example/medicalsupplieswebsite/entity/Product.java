@@ -1,9 +1,13 @@
 package com.example.medicalsupplieswebsite.entity;
 
+import com.example.medicalsupplieswebsite.dto.ProductDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.sql.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -12,30 +16,49 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
+
     private String productName;
+
+
     private Integer productPrice;
+
     private Integer productQuantity;
+
     private String productImg;
+
+    @Getter
+    @GeneratedValue(generator = "person-generator")
+    @GenericGenerator(name = "person-generator",
+            parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "VT"),
+            strategy = "com.example.medicalsupplieswebsite.utils.PersonAutoGenerator")
+    @Column(length = 45)
     private String productCode;
+
     private Date expireDate;
+
     private boolean isEnable;
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id")
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "category_id",nullable = false,referencedColumnName = "categoryId")
     private Category category;
 
-    @OneToOne()
-    @JoinColumn(name = "product_info_id")
+    @OneToOne
+    @JsonIgnore
+    @JoinColumn(name = "product_info_id",nullable = false,referencedColumnName = "infoId")
     private ProductInfo productInfo;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id")
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "customer_id",nullable = false,referencedColumnName = "customerId")
     private Customer customer;
 
     public void decreaseQuantity(int quantity){
@@ -51,4 +74,20 @@ public class Product {
         this.productQuantity += quantity;
     }
 
+
+    public Product(Long id){
+        this.productId= id;
+    }
+    public Product(ProductDTO productDTO){
+        this.productName = productDTO.getProductName();
+        this.productPrice = productDTO.getProductPrice();
+        this.productQuantity = productDTO.getProductQuantity();
+        this.productImg = productDTO.getProductImg();
+        this.productCode = productDTO.getProductCode();
+        this.expireDate = productDTO.getExpireDate();
+        this.isEnable = false;
+        this.category = new Category(Long.parseLong(productDTO.getCategory()));
+        this.productInfo = new ProductInfo(Long.parseLong(productDTO.getProductInfo()));
+        this.customer = new Customer(Long.parseLong(productDTO.getCustomer()));
+    }
 }

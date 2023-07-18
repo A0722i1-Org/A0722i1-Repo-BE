@@ -1,4 +1,4 @@
-package com.codegym.building.error;
+package com.example.medicalsupplieswebsite.error;
 
 public class NotFoundById extends Exception{
     public NotFoundById(String error){
