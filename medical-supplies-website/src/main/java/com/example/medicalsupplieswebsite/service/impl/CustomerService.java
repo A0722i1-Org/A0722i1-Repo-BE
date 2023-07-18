@@ -43,7 +43,6 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Customer findByUsername(String username) {
-        return null;
-        //Cu Khánh code khúc này lẹ lẹ
+        return customerRepository.findByUsername(username).orElse(null);
     }
 }
