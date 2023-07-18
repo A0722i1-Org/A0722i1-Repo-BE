@@ -38,6 +38,3 @@ out/
 
 #Configure file
 !**/src/main/resources/
-
-#TestDriveFile
-!**\src\main\java\com\example\medicalsupplieswebsite\TestDrive.java
