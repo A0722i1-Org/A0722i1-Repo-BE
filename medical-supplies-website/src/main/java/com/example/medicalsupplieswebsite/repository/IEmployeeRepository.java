@@ -4,6 +4,7 @@ import com.example.medicalsupplieswebsite.entity.Employee;
 import com.example.medicalsupplieswebsite.entity.Position;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.persistence.Tuple;
 import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -33,4 +34,15 @@ public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
             "where (e.is_enable = true) and (a.is_enable = true) and (a.username = :username)",
             nativeQuery = true)
     Optional<Employee> findByUsername(@Param("username") String username);
+
+    @Query(value =
+            "select e.employee_id, e.employee_code, e.employee_name, e.phone, " +
+                    "e.employee_address, e.gender, e.date_of_birth, e.id_card, e.salary, e.employee_img, " +
+                    "e.is_enable, p.position_name, a.username, a.email " +
+                    "from employee e " +
+                    "inner join position p on e.position_id = p.position_id " +
+                    "inner join account a on e.account_id = a.account_id " +
+                    "where (e.is_enable = true) and (a.is_enable = true) and (a.username = :username)",
+            nativeQuery = true)
+    Optional<Tuple> findUserDetailByUsername(@Param("username") String username);
 }

@@ -1,6 +1,6 @@
 package com.example.medicalsupplieswebsite.controller;
 
-import com.example.medicalsupplieswebsite.entity.Employee;
+import com.example.medicalsupplieswebsite.dto.EmployeeUserDetailDto;
 import com.example.medicalsupplieswebsite.service.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,16 +20,16 @@ public class EmployeeController {
     private IEmployeeService iEmployeeService;
 
     @GetMapping("/detail")
-    public ResponseEntity<Employee> getDetail() {
+    public ResponseEntity<EmployeeUserDetailDto> getDetail() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        Employee employee = iEmployeeService.findByUsername(username);
+        EmployeeUserDetailDto employeeUserDetailDto = iEmployeeService.findUserDetailByUsername(username);
 
-        if (employee == null) {
+        if (employeeUserDetailDto == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(employee, HttpStatus.OK);
+        return new ResponseEntity<>(employeeUserDetailDto, HttpStatus.OK);
     }
 }

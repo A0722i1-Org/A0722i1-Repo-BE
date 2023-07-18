@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.persistence.Tuple;
 import java.util.Optional;
 
 public interface ICustomerRepository extends JpaRepository<Customer,Long> {
@@ -16,4 +17,13 @@ public interface ICustomerRepository extends JpaRepository<Customer,Long> {
             "where (c.is_enable = true) and (a.is_enable = true) and (a.username = :username)",
             nativeQuery = true)
     Optional<Customer> findByUsername(@Param("username") String username);
+
+    @Query(value = "select c.customer_id, c.name, c.phone, c.gender, c.date_of_birth, " +
+            "c.id_card, c.customer_address, c.customer_img,  ct.customer_type_name, a.username, a.email " +
+            "from customer c " +
+            "inner join customer_type ct on c.customer_type_id = ct.customer_type_id " +
+            "inner join account a on c.account_id = a.account_id " +
+            "where (c.is_enable = true) and (a.is_enable = true) and (a.username = :username)",
+            nativeQuery = true)
+    Optional<Tuple> findUserDetailByUsername(@Param("username") String username);
 }

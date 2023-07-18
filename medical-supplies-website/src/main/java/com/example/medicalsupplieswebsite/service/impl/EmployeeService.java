@@ -1,5 +1,6 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
+import com.example.medicalsupplieswebsite.dto.EmployeeUserDetailDto;
 import com.example.medicalsupplieswebsite.dto.EmployeeInfo;
 import com.example.medicalsupplieswebsite.entity.Employee;
 import com.example.medicalsupplieswebsite.repository.IEmployeeRepository;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.Tuple;
 
 @Service
 public class EmployeeService implements IEmployeeService {
@@ -53,5 +56,14 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public Employee findByUsername(String username) {
         return iEmployeeRepository.findByUsername(username).orElse(null);
+    }
+
+    @Override
+    public EmployeeUserDetailDto findUserDetailByUsername(String username) {
+        Tuple tuple = iEmployeeRepository.findUserDetailByUsername(username).orElse(null);
+        if (tuple != null) {
+            return EmployeeUserDetailDto.TupleToEmployeeDto(tuple);
+        }
+        return null;
     }
 }

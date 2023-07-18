@@ -1,5 +1,6 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
+import com.example.medicalsupplieswebsite.dto.CustomerUserDetailDto;
 import com.example.medicalsupplieswebsite.entity.Customer;
 import com.example.medicalsupplieswebsite.repository.ICustomerRepository;
 import com.example.medicalsupplieswebsite.service.ICustomerService;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.Tuple;
 
 @Service
 public class CustomerService implements ICustomerService {
@@ -41,5 +44,16 @@ public class CustomerService implements ICustomerService {
     @Override
     public Customer findByUsername(String username) {
         return iCustomerRepository.findByUsername(username).orElse(null);
+    }
+
+    @Override
+    public CustomerUserDetailDto findUserDetailByUsername(String username) {
+        Tuple tuple = iCustomerRepository.findUserDetailByUsername(username).orElse(null);
+
+        if (tuple != null) {
+            return CustomerUserDetailDto.TupleToCustomerDto(tuple);
+        }
+
+        return null;
     }
 }
