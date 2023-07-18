@@ -22,6 +22,12 @@ public class EmployeeService implements IEmployeeService {
         return null;
     }
 
+    /**
+     * Created by: PhongTD
+     * Date created: 12/07/2023
+     * @param id
+     * @return Employee was found by id
+     */
     @Override
     public Employee findById(Long id) {
         return iEmployeeRepository.findAllById(id);
@@ -32,6 +38,12 @@ public class EmployeeService implements IEmployeeService {
         return null;
     }
 
+    /**
+     * Created by: PhongTD
+     * Date created: 12/07/2023
+     *
+     * @param employeeInfo
+     */
     @Override
     public void save(EmployeeInfo employeeInfo) {
         Employee employee = new Employee(employeeInfo.getEmployeeId(), employeeInfo.getEmployeeCode(), employeeInfo.getEmployeeName(),
@@ -41,6 +53,13 @@ public class EmployeeService implements IEmployeeService {
         iEmployeeRepository.save(employee);
     }
 
+    /**
+     * Created by: PhongTD
+     * Date created: 12/07/2023
+     *
+     * @param employeeInfo
+     * @param id
+     */
     @Override
     public void updateEmployee(EmployeeInfo employeeInfo, Long id) {
         iEmployeeRepository.updateEmployee(employeeInfo.getEmployeeName(), employeeInfo.getEmail(), employeeInfo.getPhone(),
