@@ -20,6 +20,7 @@ public class Cart {
     private String receiverName;
     private String receiverAddress;
     private String receiverEmail;
+    private String receiverPhone;
 
     @JsonBackReference
     @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL)

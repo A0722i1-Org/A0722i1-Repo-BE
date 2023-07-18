@@ -40,4 +40,10 @@ public class CustomerService implements ICustomerService {
     public void deleteById(Long id) {
 
     }
+
+    @Override
+    public Customer findByUsername(String username) {
+        return null;
+        //Cu Khánh code khúc này lẹ lẹ
+    }
 }
