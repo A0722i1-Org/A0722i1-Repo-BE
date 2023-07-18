@@ -65,7 +65,7 @@ public class EmployeeController {
      * @param id_employee
      * @return none
      */
-    @GetMapping("/details/{id_employee}")
+    @GetMapping("/{id_employee}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id_employee){
         Employee employee = iEmployeeService.findEmployeeByID(id_employee) ;
         if (employee == null) {
