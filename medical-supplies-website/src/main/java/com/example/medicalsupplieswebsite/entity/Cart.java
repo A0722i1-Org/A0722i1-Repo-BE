@@ -6,8 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -20,6 +18,7 @@ public class Cart {
     private String receiverName;
     private String receiverAddress;
     private String receiverEmail;
+    private String receiverPhone;
 
     @JsonBackReference
     @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL)
