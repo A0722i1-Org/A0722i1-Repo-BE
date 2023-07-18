@@ -73,7 +73,12 @@ public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
      * @param position
      * @return list of employee
      */
-    @Query(value = "SELECT employee.employee_id, date_of_birth, employee_address, employee_img, employee_name, gender, employee.is_enable, salary, employee.account_id, employee.position_id, position_name, username,employee.email,employee_code,id_card,phone\n" +
+    @Query(value = "SELECT employee.employee_id, " +
+            "date_of_birth, employee_address," +
+            " employee_img, employee_name, gender, " +
+            "employee.is_enable, salary, employee.account_id, " +
+            "employee.position_id, position_name, username,employee.email," +
+            "employee_code,id_card,phone\n" +
             "FROM employee\n" +
             "JOIN account ON employee.account_id = account.account_id\n" +
             "JOIN position ON employee.position_id = position.position_id\n" +
@@ -100,7 +105,11 @@ public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
      * @param id
      * @return none
      */
-    @Query(value = "SELECT employee.employee_id, date_of_birth, employee_address, employee_img, employee_name, gender, employee.is_enable, salary, employee.account_id, employee.position_id, position_name, username,employee.email,employee_code,id_card,phone\n" +
+    @Query(value = "SELECT employee.employee_id, " +
+            "date_of_birth, employee_address, employee_img," +
+            " employee_name, gender, employee.is_enable, salary, " +
+            "employee.account_id, employee.position_id, position_name, " +
+            "username,employee.email,employee_code,id_card,phone\n" +
             "FROM employee\n" +
             "JOIN account ON employee.account_id = account.account_id\n" +
             "JOIN position ON employee.position_id = position.position_id\n" +
