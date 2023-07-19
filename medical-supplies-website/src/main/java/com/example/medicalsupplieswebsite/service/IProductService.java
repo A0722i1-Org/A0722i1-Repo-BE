@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface IProductService extends IService<Product>{
+    Product findByIdProductShipment(Long productId);
     Product findByProductId(Long productId);
     Page<Supply> findAllSuppliesForAdmin(Pageable pageable);
     Page<Supply> searchSupplies(String productCode, String productName,

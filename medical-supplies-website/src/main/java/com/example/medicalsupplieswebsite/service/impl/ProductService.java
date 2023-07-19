@@ -44,6 +44,10 @@ public class ProductService implements IProductService {
     public void deleteById(Long id) {
 
     }
+    @Override
+    public Product findByIdProductShipment(Long productId) {
+        return iProductRepository.findByIdProductShipment(productId);
+    }
 
     @Override
     public Product findByProductId(Long productId) {
