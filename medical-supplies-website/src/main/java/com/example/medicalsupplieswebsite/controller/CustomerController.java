@@ -18,6 +18,9 @@ public class CustomerController {
     @Autowired
     private ICustomerService iCustomerService;
 
+    /**
+     * A0722I1-KhanhNL
+     */
     @GetMapping("/detail")
     public ResponseEntity<CustomerUserDetailDto> getDetail() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

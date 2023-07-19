@@ -55,6 +55,9 @@ public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
             nativeQuery = true)
     Optional<Employee> findByUsername(@Param("username") String username);
 
+    /**
+     * A0722I1-KhanhNL
+     */
     @Query(value =
             "select e.employee_id, e.employee_code, e.employee_name, e.phone, " +
                     "e.employee_address, e.gender, e.date_of_birth, e.id_card, e.salary, e.employee_img, " +

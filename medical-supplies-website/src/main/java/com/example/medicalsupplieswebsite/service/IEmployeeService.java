@@ -8,6 +8,10 @@ import java.util.List;
 
 public interface IEmployeeService extends IService<Employee>{
     Employee findByUsername(String username);
+
+    /**
+     * A0722I1-KhanhNL
+     */
     EmployeeUserDetailDto findUserDetailByUsername(String username);
     void save(EmployeeInfo employeeInfo);
     void updateEmployee(EmployeeInfo employeeInfo, Long id);

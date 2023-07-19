@@ -19,6 +19,9 @@ public class EmployeeController {
     @Autowired
     private IEmployeeService iEmployeeService;
 
+    /**
+     * A0722I1-KhanhNL
+     */
     @GetMapping("/detail")
     public ResponseEntity<EmployeeUserDetailDto> getDetail() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

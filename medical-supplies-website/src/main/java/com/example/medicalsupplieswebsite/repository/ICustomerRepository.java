@@ -18,6 +18,9 @@ public interface ICustomerRepository extends JpaRepository<Customer,Long> {
             nativeQuery = true)
     Optional<Customer> findByUsername(@Param("username") String username);
 
+    /**
+     * A0722I1-KhanhNL
+     */
     @Query(value = "select c.customer_id, c.name, c.phone, c.gender, c.date_of_birth, " +
             "c.id_card, c.customer_address, c.customer_img,  ct.customer_type_name, a.username, a.email " +
             "from customer c " +
