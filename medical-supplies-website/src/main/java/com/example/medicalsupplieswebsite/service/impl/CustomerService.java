@@ -46,6 +46,9 @@ public class CustomerService implements ICustomerService {
         return iCustomerRepository.findByUsername(username).orElse(null);
     }
 
+    /**
+     * A0722I1-KhanhNL
+     */
     @Override
     public CustomerUserDetailDto findUserDetailByUsername(String username) {
         Tuple tuple = iCustomerRepository.findUserDetailByUsername(username).orElse(null);

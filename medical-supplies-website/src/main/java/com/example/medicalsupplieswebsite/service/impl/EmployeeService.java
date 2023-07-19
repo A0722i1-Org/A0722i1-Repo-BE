@@ -77,6 +77,9 @@ public class EmployeeService implements IEmployeeService {
         return iEmployeeRepository.findByUsername(username).orElse(null);
     }
 
+    /**
+     * A0722I1-KhanhNL
+     */
     @Override
     public EmployeeUserDetailDto findUserDetailByUsername(String username) {
         Tuple tuple = iEmployeeRepository.findUserDetailByUsername(username).orElse(null);

@@ -8,6 +8,9 @@ import javax.persistence.Tuple;
 import java.math.BigInteger;
 import java.sql.Date;
 
+/**
+ * A0722I1-KhanhNL
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
