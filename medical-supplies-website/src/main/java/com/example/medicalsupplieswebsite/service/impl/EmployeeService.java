@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Tuple;
+import java.util.List;
 
 @Service
 public class EmployeeService implements IEmployeeService {
@@ -87,5 +88,34 @@ public class EmployeeService implements IEmployeeService {
             return EmployeeUserDetailDto.TupleToEmployeeDto(tuple);
         }
         return null;
+    }
+    /**
+     * this function could return a list of employee ,that can display all employee or combines search with 3 params
+     * @param name
+     * @param date
+     * @param position
+     * @return list of employee
+     */
+    @Override
+    public List<Employee> findAllEmWithNameAndDateAndPositions(String name, String date, String position) {
+        return iEmployeeRepository.findAllByNameAndDobAndAndPosition(name,date,position);
+    }
+    /**
+     * this function could return 1 employee of employee table by id employee
+     * @param id
+     * @return employee
+     */
+    @Override
+    public void deleteEmployee(Long id) {
+        iEmployeeRepository.deleteEmployeeByID(id);
+    }
+    /**
+     * this function could delete employee by id employee
+     * @param id
+     * @return none
+     */
+    @Override
+    public Employee findEmployeeByID(Long id) {
+        return iEmployeeRepository.getEmployeeById(id);
     }
 }
