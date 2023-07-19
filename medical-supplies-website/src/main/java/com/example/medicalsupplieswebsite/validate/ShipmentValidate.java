@@ -27,12 +27,5 @@ public class ShipmentValidate implements Validator {
         if (!(target instanceof ShipmentDto)){
             return;
         }
-        ShipmentDto shipmentDto = (ShipmentDto) target;
-        if (shipmentService.findByIdShipmentInvoiceCode(shipmentDto.getInvoiceCode())!=null){
-            errors.rejectValue("invoiceCode","create.duplicateId", new String[]{shipmentDto.getInvoiceCode()},"Mã hóa đơn đã tồn tại");
-        }
-        for (ShipmentDetailDto shipmentDetailDto: shipmentDto.getListShipmentDetailDtos()){
-
-        }
     }
 }

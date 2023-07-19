@@ -31,9 +31,6 @@ public class ShipmentController {
     IShipmentDetailService shipmentDetailService;
 
     @Autowired
-    ShipmentValidate shipmentValidate;
-
-    @Autowired
     IProductService productService;
 
     @Autowired
@@ -41,7 +38,6 @@ public class ShipmentController {
         /*PhucND code luu hoa don xuat kho*/
     @PostMapping("/create")
     public ResponseEntity<?> createShipment(@Valid @RequestBody ShipmentDto shipmentDto, BindingResult bindingResult, Model model) {
-        shipmentValidate.validate(shipmentDto,bindingResult);
         if (bindingResult.hasErrors()){
             return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.OK);
         }

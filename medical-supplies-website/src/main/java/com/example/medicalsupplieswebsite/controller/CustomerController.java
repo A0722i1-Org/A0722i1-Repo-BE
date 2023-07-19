@@ -1,6 +1,6 @@
 package com.example.medicalsupplieswebsite.controller;
 
-import com.example.medicalsupplieswebsite.entity.Customer;
+import com.example.medicalsupplieswebsite.dto.CustomerUserDetailDto;
 import com.example.medicalsupplieswebsite.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,19 +16,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/customer")
 public class CustomerController {
     @Autowired
-    private ICustomerService customerService;
+    private ICustomerService iCustomerService;
 
+    /**
+     * A0722I1-KhanhNL
+     */
     @GetMapping("/detail")
-    public ResponseEntity<Customer> getDetail() {
+    public ResponseEntity<CustomerUserDetailDto> getDetail() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        Customer customer = customerService.findByUsername(username);
+        CustomerUserDetailDto customerUserDetailDto = iCustomerService.findUserDetailByUsername(username);
 
-        if (customer == null) {
+        if (customerUserDetailDto == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(customer, HttpStatus.OK);
+        return new ResponseEntity<>(customerUserDetailDto, HttpStatus.OK);
     }
 }

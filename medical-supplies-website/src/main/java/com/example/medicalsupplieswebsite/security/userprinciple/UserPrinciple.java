@@ -44,7 +44,7 @@ public class UserPrinciple implements UserDetails {
                 account.getUsername(),
                 account.getEncryptPassword(),
                 account.getEmail(),
-                account.getEnable(),
+                account.isEnable(),
                 authorities
         );
     }

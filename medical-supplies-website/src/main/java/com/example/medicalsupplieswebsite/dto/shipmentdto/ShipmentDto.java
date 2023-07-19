@@ -4,6 +4,7 @@ import com.example.medicalsupplieswebsite.entity.Customer;
 import com.example.medicalsupplieswebsite.entity.Employee;
 import com.example.medicalsupplieswebsite.entity.Product;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
@@ -19,8 +20,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ShipmentDto {
     private Long shipmentId;
-    @NotBlank(message = "Mã hóa đơn không được để trống")
-    @Pattern(regexp = "HD-\\d{3}", message = "Mã hóa đơn không đúng định dạng HD-xxx")
     private String invoiceCode;
     private Date dateOfCreate;
     private Long employeeId;
