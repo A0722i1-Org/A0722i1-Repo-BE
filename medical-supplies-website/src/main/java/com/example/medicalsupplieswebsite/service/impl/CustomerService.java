@@ -42,4 +42,9 @@ public class CustomerService implements ICustomerService {
     public Customer findByUsername(String username) {
         return customerRepository.findByUsername(username).orElse(null);
     }
+
+    @Override
+    public String findAddressByCustomerId(Long customerId) {
+        return customerRepository.findAddressByCustomerId(customerId);
+    }
 }

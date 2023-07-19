@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.persistence.Convert;
 import java.util.Optional;
 
 public interface ICustomerRepository extends JpaRepository<Customer, Long> {
@@ -16,4 +17,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             "where (c.is_enable = true) and (a.is_enable = true) and (a.username = :username)",
             nativeQuery = true)
     Optional<Customer> findByUsername(@Param("username") String username);
+
+    @Query(value = "select customer_address from customer where customer_id = ?1", nativeQuery = true)
+    String findAddressByCustomerId(Long customerId );
 }

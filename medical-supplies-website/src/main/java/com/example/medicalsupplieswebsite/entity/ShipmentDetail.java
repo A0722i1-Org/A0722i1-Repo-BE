@@ -23,5 +23,4 @@ public class ShipmentDetail {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
     private Product product;
-
 }
