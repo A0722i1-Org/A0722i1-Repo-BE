@@ -1,5 +1,6 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
+import com.example.medicalsupplieswebsite.dto.Supply;
 import com.example.medicalsupplieswebsite.entity.Product;
 import com.example.medicalsupplieswebsite.entity.ProductInfo;
 import com.example.medicalsupplieswebsite.repository.IProductRepository;
@@ -10,10 +11,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Tuple;
+
 @Service
 public class ProductService implements IProductService {
     @Autowired
-    IProductRepository iProductRepository;
+    private IProductRepository iProductRepository;
 
     @Override
     public Page<Product> findAll(Pageable pageable) {
@@ -38,5 +41,17 @@ public class ProductService implements IProductService {
     @Override
     public Product findByProductId(Long productId) {
         return iProductRepository.findByProductId(productId);
+    }
+
+    @Override
+    public Page<Supply> findAllSuppliesForAdmin(Pageable pageable) {
+        return iProductRepository.findAllSuppliesForAdmin(pageable);
+    }
+
+    @Override
+    public Page<Supply> searchSupplies(String productCode, String productName, String categoryName,
+                                       String customerName, String expireDateStart, String expireDateEnd,
+                                       Pageable pageable) {
+        return iProductRepository.searchSupplies(productCode, productName, categoryName, customerName, expireDateStart, expireDateEnd, pageable);
     }
 }
