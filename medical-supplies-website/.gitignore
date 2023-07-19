@@ -16,6 +16,7 @@ build/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
+!**/src/main/resources/
 
 ### IntelliJ IDEA ###
 .idea
@@ -25,7 +26,6 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-!**/src/main/resources/
 
 ### NetBeans ###
 /nbproject/private/
@@ -37,7 +37,4 @@ out/
 ### VS Code ###
 .vscode/
 
-# Ignore application.properties
-/src/main/resources/application.properties
-
-D:\CODEGYM\module_6\Spring\A0722i1-Repo-BE\medical-supplies-website\gradle\wrapper\gradle-wrapper.properties
+#Configure file

@@ -16,39 +16,24 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class Product {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
-
     private String productName;
-
-
     private Integer productPrice;
-
     private Integer productQuantity;
-
     private String productImg;
-
-    @Getter
-    @GeneratedValue(generator = "person-generator")
-    @GenericGenerator(name = "person-generator",
-            parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "VT"),
-            strategy = "com.example.medicalsupplieswebsite.utils.PersonAutoGenerator")
-    @Column(length = 45)
     private String productCode;
-
     private Date expireDate;
-
     private boolean isEnable;
 
 
-    @ManyToOne
+
     @JsonIgnore
     @JoinColumn(name = "category_id",nullable = false,referencedColumnName = "categoryId")
+    @ManyToOne(cascade = CascadeType.ALL)
     private Category category;
 
     @OneToOne
