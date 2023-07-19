@@ -18,6 +18,7 @@ public class ProductService implements IProductService {
     @Autowired
     private IProductRepository iProductRepository;
 
+
     @Override
     public Page<Product> findAll(Pageable pageable) {
         return null;
@@ -36,6 +37,10 @@ public class ProductService implements IProductService {
     @Override
     public void deleteById(Long id) {
 
+    }
+    @Override
+    public Product findByIdProductShipment(Long productId) {
+        return iProductRepository.findByIdProductShipment(productId);
     }
 
     @Override
