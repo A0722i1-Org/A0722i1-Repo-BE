@@ -1,5 +1,6 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
+import com.example.medicalsupplieswebsite.dto.shipmentdto.CustomerDto;
 import com.example.medicalsupplieswebsite.entity.Customer;
 import com.example.medicalsupplieswebsite.repository.ICustomerRepository;
 import com.example.medicalsupplieswebsite.service.ICustomerService;
@@ -41,5 +42,10 @@ public class CustomerService implements ICustomerService {
     @Override
     public Customer findByUsername(String username) {
         return customerRepository.findByUsername(username).orElse(null);
+    }
+
+    @Override
+    public CustomerDto findByPhoneCustomer(String phone) {
+        return customerRepository.findByPhoneCustomer(phone).orElse(null);
     }
 }
