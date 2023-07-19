@@ -26,7 +26,7 @@ public class ProductController {
      * @param pageable (8 item/page)
      * @return list all product and paging
      */
-    @GetMapping("")
+    @GetMapping("/home")
     public ResponseEntity<Page<ProductHomeDto>> getAllProduct(
             @PageableDefault(value = 8) Pageable pageable) {
         Page<ProductHomeDto> productPage  = productService.findAllProducts(pageable);
@@ -45,7 +45,7 @@ public class ProductController {
      * @param pageable
      * @return search list product with productNam or range price or category
      */
-    @GetMapping("/search")
+    @GetMapping("/home/search")
     public ResponseEntity<Page<ProductHomeDto>> searchProducts(
             @RequestParam("productName") Optional<String> productName ,
             @RequestParam("categoryName") Optional<String> categoryName,
@@ -69,7 +69,7 @@ public class ProductController {
      * VanNT
      * @return  highest price list product
      */
-    @GetMapping("/highest")
+    @GetMapping("/home/highest")
     public ResponseEntity<List<ProductPriceDto>> getProductPrice(){
         List<ProductPriceDto> productPriceList  = productService.getProductListPrice();
         if (productPriceList.isEmpty()) {
