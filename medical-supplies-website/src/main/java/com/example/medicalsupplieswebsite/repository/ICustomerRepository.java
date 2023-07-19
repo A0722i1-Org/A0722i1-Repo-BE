@@ -32,7 +32,11 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             nativeQuery = true)
     Optional<Tuple> findUserDetailByUsername(@Param("username") String username);
 
+
     /*PhucND*/
     @Query(value = "select customer_id, name,phone, customer_address from customer where phone = ?1", nativeQuery = true)
     Optional<CustomerDto> findByPhoneCustomer(String phone);
+
+    @Query(value = "select customer_address from customer where customer_id = ?1", nativeQuery = true)
+    String findAddressByCustomerId(Long customerId );
 }

@@ -16,6 +16,8 @@ public interface IProductRepository extends JpaRepository<Product,Long> {
             "as sd on \n" + "s.shipment_id = sd.shipment_id inner join product as p on sd.product_id = p.product_id " +
             "where p.product_id = ?1", nativeQuery = true)
     Product findByIdProductShipment(Long productId);
+    @Query(value = "select p.product_id,expire_date,is_enable,product_code,product_img,product_name,product_price,product_quantity,category_id,p.customer_id,product_info_id from receipt as r inner join receipt_detail as rd on r.receipt_id = rd.receipt_id inner join product as p on rd.product_id = p.product_id where p.product_id = ?1", nativeQuery = true)
+    Product findByProductId(Long productId);
     @Query(nativeQuery = true,
             value = "select p.product_code, p.product_name, ct.category_name, p.product_price, p.expire_date, c.name " +
                     "from product p " +

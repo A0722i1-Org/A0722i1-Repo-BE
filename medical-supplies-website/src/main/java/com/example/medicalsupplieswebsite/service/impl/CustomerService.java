@@ -62,7 +62,10 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+
     public CustomerDto findByPhoneCustomer(String phone) {
         return iCustomerRepository.findByPhoneCustomer(phone).orElse(null);
+    public String findAddressByCustomerId(Long customerId) {
+        return iCustomerRepository.findAddressByCustomerId(customerId);
     }
 }
