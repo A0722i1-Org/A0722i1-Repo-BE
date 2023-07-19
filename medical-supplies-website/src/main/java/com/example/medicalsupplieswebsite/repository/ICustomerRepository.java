@@ -29,4 +29,7 @@ public interface ICustomerRepository extends JpaRepository<Customer,Long> {
             "where (c.is_enable = true) and (a.is_enable = true) and (a.username = :username)",
             nativeQuery = true)
     Optional<Tuple> findUserDetailByUsername(@Param("username") String username);
+
+    @Query(value = "select customer_address from customer where customer_id = ?1", nativeQuery = true)
+    String findAddressByCustomerId(Long customerId );
 }

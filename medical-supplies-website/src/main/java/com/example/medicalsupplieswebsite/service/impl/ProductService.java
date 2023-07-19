@@ -39,6 +39,11 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public Product findByProductId(Long productId) {
+        return iProductRepository.findByProductId(productId);
+    }
+
+    @Override
     public Page<Supply> findAllSuppliesForAdmin(Pageable pageable) {
         return iProductRepository.findAllSuppliesForAdmin(pageable);
     }

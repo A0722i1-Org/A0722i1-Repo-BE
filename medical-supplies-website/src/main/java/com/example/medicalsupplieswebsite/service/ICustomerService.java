@@ -10,4 +10,5 @@ public interface ICustomerService extends IService<Customer>{
      * A0722I1-KhanhNL
      */
     CustomerUserDetailDto findUserDetailByUsername(String username);
+    String findAddressByCustomerId(Long customerId );
 }

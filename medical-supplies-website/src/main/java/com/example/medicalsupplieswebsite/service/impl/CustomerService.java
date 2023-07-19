@@ -59,4 +59,9 @@ public class CustomerService implements ICustomerService {
 
         return null;
     }
+
+    @Override
+    public String findAddressByCustomerId(Long customerId) {
+        return iCustomerRepository.findAddressByCustomerId(customerId);
+    }
 }
