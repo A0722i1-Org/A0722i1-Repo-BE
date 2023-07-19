@@ -78,6 +78,7 @@ public class Product {
     public Product(Long id){
         this.productId= id;
     }
+
     public Product(ProductDTO productDTO){
         this.productName = productDTO.getProductName();
         this.productPrice = productDTO.getProductPrice();
