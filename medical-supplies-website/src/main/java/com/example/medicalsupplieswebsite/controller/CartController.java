@@ -40,19 +40,19 @@ public class CartController {
 //        Customer customer = this.customerService.findByUsername(username);
         Cart cart = this.cartService.findByUsername(username);
         List<CartDetail> cartDetailList = this.cartDetailService.findByCartId(cart.getCartId());
-        CartWithDetail cartWithDetail = new CartWithDetail();
+        CartWithDetail cartWithDetail = new CartWithDetail(cart, cartDetailList);
 //        cartWithDetail.setCartId(cart.getCartId());
 //        cartWithDetail.setReceiverName(cart.getReceiverName());
 //        cartWithDetail.setReceiverAddress(cart.getReceiverAddress());
 //        cartWithDetail.setReceiverEmail(cart.getReceiverEmail());
 //        cartWithDetail.setCustomer_id(customer.getCustomerId());
-        cartWithDetail.setCart(cart);
-        cartWithDetail.setCartDetailList(cartDetailList);
+//        cartWithDetail.setCart(cart);
+//        cartWithDetail.setCartDetailList(cartDetailList);
         return new ResponseEntity<CartWithDetail>(cartWithDetail, HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<CartWithDetail> updateCart(@PathVariable("id") Long id, @RequestBody CartWithDetail cartWithDetail) {
+    public ResponseEntity<CartWithDetail> updateCart(@RequestBody CartWithDetail cartWithDetail) {
         Cart cart = cartWithDetail.getCart();
         this.cartService.save(cart);
         List<CartDetail> cartDetailList = cartWithDetail.getCartDetailList();

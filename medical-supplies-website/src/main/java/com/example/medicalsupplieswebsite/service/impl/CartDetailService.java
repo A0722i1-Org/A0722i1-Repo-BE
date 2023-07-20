@@ -38,7 +38,7 @@ public class CartDetailService implements ICartDetailService {
             Long product_id = cartDetail.getProduct().getProductId();
             int quantity = cartDetail.getQuantity();
             boolean status = cartDetail.isStatus();
-            Long cart_id = cartDetail.getCart().getCartId();
+            Long cart_id = cartDetail.getCartId();
             if (cart_detail_id != null) {
                 this.cartDetailRepository.updateCart(product_id, quantity, status, cart_id, cart_detail_id);
             } else {
