@@ -4,6 +4,7 @@ import com.example.medicalsupplieswebsite.dto.EmployeeUserDetailDto;
 import com.example.medicalsupplieswebsite.dto.EmployeeInfo;
 import com.example.medicalsupplieswebsite.entity.Employee;
 
+import java.sql.Date;
 import java.util.List;
 
 public interface IEmployeeService extends IService<Employee>{
@@ -36,4 +37,10 @@ public interface IEmployeeService extends IService<Employee>{
      * @return none
      */
     Employee findEmployeeByID(Long id);
+
+    /*
+    * NhanTQ
+     */
+
+    void updateEmployeeByFieldsDTO(String employeeName, String employeeImg, boolean gender, Date dateOfBirth, String employeeAddress, String phone, String email, String username);
 }
