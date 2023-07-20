@@ -1,5 +1,6 @@
 package com.example.medicalsupplieswebsite.controller;
 
+import com.example.medicalsupplieswebsite.dto.ChangePasswordDto;
 import com.example.medicalsupplieswebsite.service.impl.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
