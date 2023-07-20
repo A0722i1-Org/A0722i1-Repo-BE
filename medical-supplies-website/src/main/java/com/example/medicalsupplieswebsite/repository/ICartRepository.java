@@ -35,4 +35,5 @@ public interface ICartRepository extends JpaRepository<Cart, Long> {
     @Query(value = "DELETE FROM cart  WHERE cart_id = :id",
             nativeQuery = true)
     void deleteById(@Param("id") Long id);
+
 }
