@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(value = "http://localhost:4200", allowedHeaders = "*")
 @RequestMapping("api/positions")
 public class PositionController {
     @Autowired

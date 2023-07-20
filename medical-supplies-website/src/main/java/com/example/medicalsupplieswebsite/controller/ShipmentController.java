@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.sql.Date;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1/shipment")
 public class ShipmentController {
@@ -35,19 +35,20 @@ public class ShipmentController {
 
     @Autowired
     ICustomerService customerService;
-        /*PhucND code luu hoa don xuat kho*/
+
+    /*PhucND code luu hoa don xuat kho*/
     @PostMapping("/create")
     public ResponseEntity<?> createShipment(@Valid @RequestBody ShipmentDto shipmentDto, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.OK);
         }
-        shipmentService.addShipment(shipmentDto.getInvoiceCode(),shipmentDto.getDateOfCreate(), shipmentDto.getShipmentTypeId(),shipmentDto.getCustomerId(),shipmentDto.getEmployeeId());
+        shipmentService.addShipment(shipmentDto.getInvoiceCode(), shipmentDto.getDateOfCreate(), shipmentDto.getShipmentTypeId(), shipmentDto.getCustomerId(), shipmentDto.getEmployeeId());
         Long shipmentID = shipmentService.findByShipmentIDInvoice(shipmentDto.getInvoiceCode());
-        for (ShipmentDetailDto list: shipmentDto.getListShipmentDetailDtos()) {
-            if (productService.findByIdProductShipment(list.getProductId())!= null){
+        for (ShipmentDetailDto list : shipmentDto.getListShipmentDetailDtos()) {
+            if (productService.findByIdProductShipment(list.getProductId()) != null) {
                 productService.findByIdProductShipment(list.getProductId()).setProductQuantity(productService.findByIdProductShipment(list.getProductId()).getProductQuantity() - list.getQuantity());
             }
-            shipmentDetailService.addNewShipmentDetail(list.getQuantity(),list.getNote(), shipmentID,list.getProductId());
+            shipmentDetailService.addNewShipmentDetail(list.getQuantity(), list.getNote(), shipmentID, list.getProductId());
         }
         return new ResponseEntity<>(shipmentDto, HttpStatus.CREATED);
     }
