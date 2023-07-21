@@ -8,4 +8,7 @@ public interface IPositionService {
     List<Position> findAll();
     Position findById(Long id);
 
+    Position save(Position position);
+
+    void deleteById(Long id);
 }

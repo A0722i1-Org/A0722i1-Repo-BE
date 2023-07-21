@@ -15,6 +15,7 @@ public class ShipmentDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long shipmentDetailId;
     private int quantity;
+    private String note;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "shipment_id")
@@ -23,5 +24,4 @@ public class ShipmentDetail {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
     private Product product;
-
 }

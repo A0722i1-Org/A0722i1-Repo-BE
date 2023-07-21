@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -16,27 +15,16 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long employeeId;
-
     private String employeeCode;
-
     private String employeeName;
-
     private String email;
-
     private String phone;
-
     private String employeeAddress;
-
     private Integer gender;
-
-    private String idCard;
-
-    private Integer salary;
-
     private Date dateOfBirth;
-
+    private String idCard;
+    private Integer salary;
     private String employeeImg;
-
     private Boolean isEnable;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -46,7 +34,6 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "position_id")
     private Position position;
-
     public Employee(Long employeeId, String employeeCode, String employeeName, String email, String phone, String employeeAddress, Integer gender, String idCard, Date dateOfBirth, String employeeImg, boolean isEnable, Position position) {
         this.employeeId = employeeId;
         this.employeeCode = employeeCode;

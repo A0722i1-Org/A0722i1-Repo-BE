@@ -4,6 +4,7 @@ import com.example.medicalsupplieswebsite.entity.Position;
 import com.example.medicalsupplieswebsite.repository.IPositionRepository;
 import com.example.medicalsupplieswebsite.service.IPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +13,6 @@ import java.util.List;
 public class PositionService implements IPositionService {
     @Autowired
     private IPositionRepository iPositionRepository;
-
     /**
      * Created by: PhongTD
      * Date created: 12/07/2023
@@ -32,5 +32,15 @@ public class PositionService implements IPositionService {
     @Override
     public Position findById(Long id) {
         return iPositionRepository.findAllById(id);
+    }
+
+    @Override
+    public Position save(Position position) {
+        return null;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+
     }
 }

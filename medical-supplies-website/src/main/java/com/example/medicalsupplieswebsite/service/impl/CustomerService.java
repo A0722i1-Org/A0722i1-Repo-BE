@@ -1,23 +1,24 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
-import com.example.medicalsupplieswebsite.entity.Account;
+import com.example.medicalsupplieswebsite.dto.shipmentdto.CustomerDto;
+import com.example.medicalsupplieswebsite.dto.CustomerUserDetailDto;
 import com.example.medicalsupplieswebsite.entity.Customer;
-import com.example.medicalsupplieswebsite.repository.IAccountRepository;
 import com.example.medicalsupplieswebsite.repository.ICustomerRepository;
 import com.example.medicalsupplieswebsite.service.ICustomerService;
-import com.example.medicalsupplieswebsite.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Tuple;
+
 @Service
 public class CustomerService implements ICustomerService {
-    private final ICustomerRepository customerRepository;
+    private final ICustomerRepository iCustomerRepository;
 
     @Autowired
-    CustomerService(ICustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    CustomerService(ICustomerRepository iCustomerRepository) {
+        this.iCustomerRepository = iCustomerRepository;
     }
 
 
@@ -39,5 +40,33 @@ public class CustomerService implements ICustomerService {
     @Override
     public void deleteById(Long id) {
 
+    }
+
+    @Override
+    public Customer findByUsername(String username) {
+        return iCustomerRepository.findByUsername(username).orElse(null);
+    }
+
+    /**
+     * A0722I1-KhanhNL
+     */
+    @Override
+    public CustomerUserDetailDto findUserDetailByUsername(String username) {
+        Tuple tuple = iCustomerRepository.findUserDetailByUsername(username).orElse(null);
+
+        if (tuple != null) {
+            return CustomerUserDetailDto.TupleToCustomerDto(tuple);
+        }
+
+        return null;
+    }
+
+    @Override
+
+    public CustomerDto findByPhoneCustomer(String phone) {
+        return iCustomerRepository.findByPhoneCustomer(phone).orElse(null);
+    }
+    public String findAddressByCustomerId(Long customerId) {
+        return iCustomerRepository.findAddressByCustomerId(customerId);
     }
 }

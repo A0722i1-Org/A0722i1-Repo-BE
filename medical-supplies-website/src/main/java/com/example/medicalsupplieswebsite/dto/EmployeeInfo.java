@@ -54,6 +54,7 @@ public class EmployeeInfo {
     public EmployeeInfo(Long employeeId, String employeeCode, String employeeName, String email, String phone,
                         String employeeAddress, Integer gender, String idCard, Date dateOfBirth, String employeeImg,
                         Position position) {
+
         this.employeeCode = employeeCode;
         this.employeeName = employeeName;
         this.email = email;
