@@ -18,10 +18,10 @@ public class Account {
     private String encryptPassword;
     private String email;
     private boolean isEnable;
+
     @ManyToMany
     @JoinTable(name = "account_roles",
             joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new LinkedHashSet<>();
-
 }
