@@ -59,7 +59,7 @@ public class CustomerController {
 
 
 @PutMapping("{id}")
-public ResponseEntity<?> updateEmployee(@Valid @PathVariable Long id, @RequestBody CustomerInfo employeeInfo, BindingResult bindingResult) {
+public ResponseEntity<?> updateCustomer(@Valid @PathVariable Long id, @RequestBody CustomerInfo employeeInfo, BindingResult bindingResult) {
     new CustomerInfo().validate(employeeInfo, bindingResult);
     if (bindingResult.hasErrors()) {
         Map<String, String> errors = new HashMap<>();
