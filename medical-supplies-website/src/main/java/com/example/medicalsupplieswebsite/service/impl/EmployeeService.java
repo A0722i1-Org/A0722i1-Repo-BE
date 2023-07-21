@@ -1,16 +1,24 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
+import com.example.medicalsupplieswebsite.entity.Account;
 import com.example.medicalsupplieswebsite.entity.CustomerType;
 import com.example.medicalsupplieswebsite.entity.Employee;
+import com.example.medicalsupplieswebsite.repository.IEmployeeRepository;
 import com.example.medicalsupplieswebsite.service.IEmployeeService;
 import com.example.medicalsupplieswebsite.service.IService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmployeeService implements IEmployeeService {
+    private final IEmployeeRepository employeeRepository;
 
+    @Autowired
+    public EmployeeService(IEmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
     @Override
     public Page<Employee> findAll(Pageable pageable) {
@@ -19,7 +27,7 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public Employee findById(Long id) {
-        return null;
+        return employeeRepository.findAllById(id);
     }
 
     @Override
