@@ -1,11 +1,13 @@
 package com.example.medicalsupplieswebsite.repository;
 
+import com.example.medicalsupplieswebsite.dto.receipt_dto.SupplierDTO;
 import com.example.medicalsupplieswebsite.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import javax.persistence.Tuple;
+import java.util.List;
 import java.util.Optional;
 
 public interface ICustomerRepository extends JpaRepository<Customer,Long> {
@@ -32,4 +34,7 @@ public interface ICustomerRepository extends JpaRepository<Customer,Long> {
 
     @Query(value = "select customer_address from customer where customer_id = ?1", nativeQuery = true)
     String findAddressByCustomerId(Long customerId );
+
+    @Query(value = "select customer_id,`name`,customer_address  from customer as c join customer_type as ct on c.customer_type_id = ct.customer_type_id where ct.customer_type_id = 2", nativeQuery = true)
+   Optional< List<SupplierDTO>> getALlCustomerByCustomerTypeSupplier();
 }

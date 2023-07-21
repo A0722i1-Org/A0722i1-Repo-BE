@@ -1,6 +1,7 @@
 package com.example.medicalsupplieswebsite.repository;
 
 import com.example.medicalsupplieswebsite.dto.Supply;
+import com.example.medicalsupplieswebsite.dto.receipt_dto.ProductDTO;
 import com.example.medicalsupplieswebsite.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.Tuple;
+import java.util.List;
 
 public interface IProductRepository extends JpaRepository<Product,Long> {
     @Query(value = "select p.product_id,expire_date,is_enable,product_code,product_img,product_name,product_price,product_quantity,category_id,p.customer_id,product_info_id from receipt as r inner join receipt_detail as rd on r.receipt_id = rd.receipt_id inner join product as p on rd.product_id = p.product_id where p.product_id = ?1", nativeQuery = true)
@@ -46,5 +48,10 @@ public interface IProductRepository extends JpaRepository<Product,Long> {
     Page<Supply> searchSupplies(String productCode, String productName,
                                 String categoryName, String customerName,
                                 String expireDateStart, String expireDateEnd, Pageable pageable);
+
+    @Query(value = "select product_id,product_name,product_quantity,product_price,expire_date  from customer as c inner join product as p on c.customer_id = p.customer_id where c.customer_id = ?1", nativeQuery = true)
+    List<ProductDTO> getAllProductByCustomerID(Long customerId);
+    @Query(value = "select product_id,product_name,product_quantity,product_price,expire_date from product where product_id = ?1", nativeQuery = true)
+    ProductDTO findProductDTOByProductId(Long productId);
 
 }

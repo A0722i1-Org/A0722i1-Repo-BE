@@ -36,4 +36,5 @@ public interface IEmployeeService extends IService<Employee>{
      * @return none
      */
     Employee findEmployeeByID(Long id);
+    Employee findEmployeeByUserName(String userName);
 }

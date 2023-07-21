@@ -1,6 +1,7 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
 import com.example.medicalsupplieswebsite.dto.CustomerUserDetailDto;
+import com.example.medicalsupplieswebsite.dto.receipt_dto.SupplierDTO;
 import com.example.medicalsupplieswebsite.entity.Customer;
 import com.example.medicalsupplieswebsite.repository.ICustomerRepository;
 import com.example.medicalsupplieswebsite.service.ICustomerService;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Tuple;
+import java.util.List;
 
 @Service
 public class CustomerService implements ICustomerService {
@@ -64,4 +66,11 @@ public class CustomerService implements ICustomerService {
     public String findAddressByCustomerId(Long customerId) {
         return iCustomerRepository.findAddressByCustomerId(customerId);
     }
+
+    @Override
+    public List<SupplierDTO> getALlCustomerByCustomerTypeSupplier() {
+        return iCustomerRepository.getALlCustomerByCustomerTypeSupplier().orElse(null);
+    }
+
+
 }

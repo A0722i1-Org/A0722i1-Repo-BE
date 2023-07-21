@@ -1,9 +1,12 @@
 package com.example.medicalsupplieswebsite.service;
 
 import com.example.medicalsupplieswebsite.dto.Supply;
+import com.example.medicalsupplieswebsite.dto.receipt_dto.ProductDTO;
 import com.example.medicalsupplieswebsite.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface IProductService extends IService<Product>{
     Product findByProductId(Long productId);
@@ -11,4 +14,6 @@ public interface IProductService extends IService<Product>{
     Page<Supply> searchSupplies(String productCode, String productName,
                                 String categoryName, String customerName,
                                 String expireDateStart, String expireDateEnd, Pageable pageable);
+    List<ProductDTO> getAllProductByCustomerID(Long customerId);
+    ProductDTO findProductDTOByProductId(Long productId);
 }

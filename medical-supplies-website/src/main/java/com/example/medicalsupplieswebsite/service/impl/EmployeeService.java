@@ -118,4 +118,10 @@ public class EmployeeService implements IEmployeeService {
     public Employee findEmployeeByID(Long id) {
         return iEmployeeRepository.getEmployeeById(id);
     }
+
+    @Override
+    public Employee findEmployeeByUserName(String userName) {
+        return iEmployeeRepository.findEmployeeByUserName(userName).orElse(null);
+    }
+
 }
