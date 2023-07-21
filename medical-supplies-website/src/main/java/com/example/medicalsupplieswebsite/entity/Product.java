@@ -24,7 +24,6 @@ public class Product {
     private Date expireDate;
     private boolean isEnable;
 
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private Category category;
