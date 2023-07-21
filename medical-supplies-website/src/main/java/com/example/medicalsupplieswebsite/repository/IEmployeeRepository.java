@@ -8,14 +8,24 @@ import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.Tuple;
 import javax.transaction.Transactional;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.jpa.repository.Query;
 
+
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.repository.query.Param;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
+import javax.persistence.Tuple;
+import javax.transaction.Transactional;
 
 @Transactional
-public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
+public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
+
+    @Query("SELECT employee FROM Employee employee WHERE employee.employeeId = ?1")
+    Employee findAllById(Long id);
+
+
     /**
      * Create by: PhongTD
      * Date create: 12/07/2023
