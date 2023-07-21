@@ -4,8 +4,11 @@ import com.example.medicalsupplieswebsite.dto.CustomerInfo;
 import com.example.medicalsupplieswebsite.entity.Customer;
 import com.example.medicalsupplieswebsite.service.ICustomerService;
 import com.example.medicalsupplieswebsite.service.ICustomerTypeService;
+import com.example.medicalsupplieswebsite.service.impl.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,7 +21,9 @@ import org.springframework.data.domain.Pageable;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.example.medicalsupplieswebsite.dto.CustomerUserDetailDto;
 import com.example.medicalsupplieswebsite.service.ICustomerService;
@@ -38,7 +43,7 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @GetMapping("/list")
+    @GetMapping("")
     public ResponseEntity<Page<Customer>> findAllCustomer(@RequestParam("page") Optional<Integer> page,
                                                           @RequestParam("size") Optional<Integer> size,
                                                           @RequestParam("sort") Optional<String> sort) {
@@ -121,7 +126,6 @@ public ResponseEntity<?> updateCustomer(@Valid @PathVariable Long id, @RequestBo
 
         return new ResponseEntity<>(customerUserDetailDto, HttpStatus.OK);
     }
-}
 
     @GetMapping("/search")
     public ResponseEntity<List<Customer>> searchCustomer(@RequestParam(required = false) String type,

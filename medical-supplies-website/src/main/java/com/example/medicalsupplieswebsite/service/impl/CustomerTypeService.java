@@ -1,12 +1,8 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
-import com.example.medicalsupplieswebsite.entity.Customer;
 import com.example.medicalsupplieswebsite.entity.CustomerType;
 import com.example.medicalsupplieswebsite.repository.ICustomerTypeRepository;
-import com.example.medicalsupplieswebsite.repository.ICustomerRepository;
-import com.example.medicalsupplieswebsite.repository.ICustomerTypeRepository;
 import com.example.medicalsupplieswebsite.service.ICustomerTypeService;
-import com.example.medicalsupplieswebsite.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

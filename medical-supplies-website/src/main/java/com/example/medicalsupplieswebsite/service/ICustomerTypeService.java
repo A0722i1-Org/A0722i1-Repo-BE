@@ -10,4 +10,5 @@ import java.util.List;
 import java.util.List;
 
 public interface ICustomerTypeService extends IService<CustomerType>{
+    List<CustomerType> findAllCustomerType();
 }
