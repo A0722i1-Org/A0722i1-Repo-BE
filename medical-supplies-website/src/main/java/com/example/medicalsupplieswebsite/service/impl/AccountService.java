@@ -60,4 +60,14 @@ public class AccountService implements IAccountService {
     public void deleteById(Long id) {
 
     }
+
+    /*
+     * NhanTQ
+     * @param username
+     * @param newPass
+     */
+    @Override
+    public void changePassword(String username, String newPass) {
+        accountRepository.changePassword(username,newPass);
+    }
 }
