@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/employee")
 public class EmployeeController {
@@ -57,6 +57,16 @@ public class EmployeeController {
     @GetMapping("{id}")
     public Employee getEmployeeById(@PathVariable Long id) {
         return iEmployeeService.findById(id);
+    }
+
+    /**
+     * Created by: PhongTD
+     * Date created: 21/07/2023
+     * @return List all employees
+     */
+    @GetMapping("")
+    public List<Employee> findAll() {
+        return iEmployeeService.findAll();
     }
 
     /**
