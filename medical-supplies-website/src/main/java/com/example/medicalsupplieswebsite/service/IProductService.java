@@ -22,5 +22,4 @@ public interface IProductService extends IService<Product>{
     Page<ProductHomeDto> searchProduct(String productName,
                                        String categoryName, String minPrice, String maxPrice, Pageable pageable);
     List<ProductPriceDto> getProductListPrice();
-public interface IProductService extends IService<Product> {
 }

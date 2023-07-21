@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductInfoService implements IProductInfoService {
 
+
     @Autowired
     IProductInforRepository productInforRepository;
 
@@ -21,6 +22,11 @@ public class ProductInfoService implements IProductInfoService {
         return null;
     }
 
+    /**
+     * A0722I1 - ThanhDT
+     * @param id
+     * @return
+     */
     @Override
     public ProductInfo findById(Long id) {
         return productInforRepository.findByIdProductInfo(id).orElse(null);

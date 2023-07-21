@@ -9,6 +9,11 @@ import java.util.Optional;
 
 public interface IProductInforRepository extends JpaRepository<ProductInfo, Long> {
 
+    /**
+     * A0722I1 - ThanhDT
+     * @param id
+     * @return
+     */
     @Query(value = "SELECT pi.info_id, pi.info_introduction, pi.info_description, pi.trademark, pi.place_of_manufacture, " +
             "p.product_img, p.product_name, p.product_price, p.product_quantity " +
             "FROM product_info pi " +

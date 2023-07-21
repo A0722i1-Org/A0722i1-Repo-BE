@@ -16,6 +16,12 @@ public class ProductInfoController {
     @Autowired
     ProductInfoService productInfoService;
 
+    /**
+     * A0722I1 - ThanhDT
+     * @param id
+     * @return
+     * @throws NotFoundById
+     */
     @GetMapping("/{id}")
     private ResponseEntity<ProductInfoDTO> findById(@PathVariable Long id) throws NotFoundById {
         return new ResponseEntity<>(new ProductInfoDTO(productInfoService.findById(id)), HttpStatus.OK);
