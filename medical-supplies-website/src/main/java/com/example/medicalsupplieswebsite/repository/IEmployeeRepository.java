@@ -120,4 +120,21 @@ public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
             "  AND employee.is_enable = false \n" +
             "LIMIT 0, 300;",nativeQuery = true)
     Employee getEmployeeById(Long id);
+
+    @Modifying
+    @Query(value = "UPDATE employee e " +
+            "inner join account a using(account_id)" +
+            "SET e.employee_name= :employee_name,e.employee_img= :employee_img, " +
+            "e.gender =:gender, e.date_of_birth =:date_of_birth, e.employee_address =:employee_address," +
+            "e.phone =:phone, a.email = :email " +
+            "where (e.is_enable = true) and (a.is_enable = true) and (a.username = :username)",
+            nativeQuery = true)
+    void updateEmployeeDto(@Param("employee_name") String name,
+                         @Param("employee_img") String employeeImg,
+                         @Param("gender") boolean gender,
+                         @Param("date_of_birth") Date date,
+                         @Param("employee_address") String employeeAddress,
+                         @Param("phone") String phone,
+                         @Param("email") String email,
+                         @Param("username") String username);
 }
