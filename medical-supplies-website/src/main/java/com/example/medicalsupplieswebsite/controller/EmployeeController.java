@@ -1,5 +1,8 @@
 package com.example.medicalsupplieswebsite.controller;
 
+import com.example.medicalsupplieswebsite.dto.EmployeeInfo;
+import com.example.medicalsupplieswebsite.dto.InvalidDataException;
+import com.example.medicalsupplieswebsite.dto.ValidationError;
 import com.example.medicalsupplieswebsite.dto.EmployeeDTO;
 import com.example.medicalsupplieswebsite.dto.EmployeeUserDetailDto;
 import com.example.medicalsupplieswebsite.entity.Employee;
@@ -13,7 +16,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -23,21 +28,93 @@ public class EmployeeController {
     private IEmployeeService iEmployeeService;
 
     /**
-     * A0722I1-KhanhNL
+     * Created by: PhongTD
+     * Date created: 12/07/2023
+     * @param employeeInfo
+     * @param bindingResult
+     * @return if info of employee valid return httpStatus.CREATED else return error
      */
-    @GetMapping("/detail")
-    public ResponseEntity<EmployeeUserDetailDto> getDetail() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-
-        EmployeeUserDetailDto employeeUserDetailDto = iEmployeeService.findUserDetailByUsername(username);
-
-        if (employeeUserDetailDto == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @PostMapping("")
+    public ResponseEntity<?> saveEmployee(@Valid @RequestBody EmployeeInfo employeeInfo, BindingResult bindingResult) {
+        new EmployeeInfo().validate(employeeInfo, bindingResult);
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(
+                    error -> {
+                        String fieldName = error.getField();
+                        String errorMessage = error.getDefaultMessage();
+                        errors.put(fieldName, errorMessage);
+                    });
+            return ResponseEntity.badRequest().body(errors);
+        } else {
+            iEmployeeService.save(employeeInfo);
         }
-
-        return new ResponseEntity<>(employeeUserDetailDto, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    /**
+     * Created by: PhongTD
+     * Date created: 12/07/2023
+     * @param id
+     * @return employee by id
+     */
+    @GetMapping("{id}")
+    public Employee getEmployeeByIdToEdit(@PathVariable Long id) {
+        return iEmployeeService.findById(id);
+    }
+
+    /**
+     * Created by: PhongTD
+     * Date created: 21/07/2023
+     * @return List all employees
+     */
+    @GetMapping("")
+    public List<Employee> findAll() {
+        return iEmployeeService.findAll();
+    }
+
+    /**
+     * Created by: PhongTD
+     * Date created: 12/07/2023
+     * @param id
+     * @param employeeInfo
+     * @param bindingResult
+     * @return if info of employee valid return httpStatus.OK else return error
+     */
+    @PutMapping("{id}")
+    public ResponseEntity<?> updateEmployee(@Valid @PathVariable Long id, @RequestBody EmployeeInfo employeeInfo, BindingResult bindingResult) {
+        new EmployeeInfo().validate(employeeInfo, bindingResult);
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(
+                    error -> {
+                        String fieldName = error.getField();
+                        String errorMessage = error.getDefaultMessage();
+                        errors.put(fieldName, errorMessage);
+                    });
+            return ResponseEntity.badRequest().body(errors);
+        } else {
+            iEmployeeService.updateEmployee(employeeInfo, id);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+        /**
+         * A0722I1-KhanhNL
+         */
+        @GetMapping("/detail")
+        public ResponseEntity<EmployeeUserDetailDto> getDetail() {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+
+            EmployeeUserDetailDto employeeUserDetailDto = iEmployeeService.findUserDetailByUsername(username);
+
+            if (employeeUserDetailDto == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            return new ResponseEntity<>(employeeUserDetailDto, HttpStatus.OK);
+        }
 
     /**
      * this function could return a list of employee ,that can display all employee or combines search with 3 params
@@ -47,16 +124,16 @@ public class EmployeeController {
      * @param pos
      * @return list of employee
      */
-    @GetMapping("")
-    public ResponseEntity<List<Employee>> findAllEmployees(@RequestParam(defaultValue = "") String name,
-                                                           @RequestParam(defaultValue = "") String date,
-                                                           @RequestParam(defaultValue = "") String pos) {
-        List<Employee> listEmployee = iEmployeeService.findAllEmWithNameAndDateAndPositions(name, date, pos);
-        if (listEmployee.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(listEmployee, HttpStatus.OK);
-    }
+//    @GetMapping("")
+//    public ResponseEntity<List<Employee>> findAllEmployees(@RequestParam(defaultValue = "") String name,
+//                                                           @RequestParam(defaultValue = "") String date,
+//                                                           @RequestParam(defaultValue = "") String pos) {
+//        List<Employee> listEmployee = iEmployeeService.findAllEmWithNameAndDateAndPositions(name, date, pos);
+//        if (listEmployee.isEmpty()) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        return new ResponseEntity<>(listEmployee, HttpStatus.OK);
+//    }
 
     /**
      * this function could return 1 employee of employee table by id employee
@@ -71,19 +148,41 @@ public class EmployeeController {
     }
 
     /**
+     * Created by: PhongTD
+     * Date created: 12/07/2023
+     * @param ex
+     * @return
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidDataException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidDataException(InvalidDataException ex) {
+        List<ValidationError> errors1 = ex.getErrors();
+        Map<String, String> errors = new HashMap<>();
+        errors1.forEach((error) -> {
+
+            String fieldName = error.getField();
+            String errorMessage = error.getMessage();
+            errors.put(fieldName, errorMessage);
+        });
+
+        return ResponseEntity.badRequest().body(errors);
+
+    }
+
+    /**
      * this function could delete employee by id employee
      *
      * @param id_employee
      * @return none
      */
-    @GetMapping("/{id_employee}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id_employee) {
-        Employee employee = iEmployeeService.findEmployeeByID(id_employee);
-        if (employee == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(employee, HttpStatus.OK);
-    }
+//    @GetMapping("/{id_employee}")
+//    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id_employee) {
+//        Employee employee = iEmployeeService.findEmployeeByID(id_employee);
+//        if (employee == null) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        return new ResponseEntity<>(employee, HttpStatus.OK);
+//    }
 
     /*
      *NhanTQ

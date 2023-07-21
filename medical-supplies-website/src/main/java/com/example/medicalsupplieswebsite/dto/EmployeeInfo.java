@@ -11,8 +11,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 public class EmployeeInfo {
-    private Long employeeId;
-
     private String employeeCode;
 
     @NotBlank(message = "Vui lòng nhập họ tên")
@@ -56,7 +54,7 @@ public class EmployeeInfo {
     public EmployeeInfo(Long employeeId, String employeeCode, String employeeName, String email, String phone,
                         String employeeAddress, Integer gender, String idCard, Date dateOfBirth, String employeeImg,
                         Position position) {
-        this.employeeId = employeeId;
+
         this.employeeCode = employeeCode;
         this.employeeName = employeeName;
         this.email = email;
@@ -67,14 +65,6 @@ public class EmployeeInfo {
         this.dateOfBirth = dateOfBirth;
         this.employeeImg = employeeImg;
         this.position = position;
-    }
-
-    public Long getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
     }
 
     public String getEmployeeCode() {
