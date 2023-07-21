@@ -8,7 +8,6 @@ import java.sql.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-
 @Entity
 @Getter
 @Setter
@@ -24,7 +23,6 @@ public class Product {
     private String productCode;
     private Date expireDate;
     private boolean isEnable;
-
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
