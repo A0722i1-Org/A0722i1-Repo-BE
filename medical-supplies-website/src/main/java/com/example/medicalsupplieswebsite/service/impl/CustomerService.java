@@ -10,7 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import javax.persistence.Tuple;
+import java.util.List;
+
+import java.util.List;
 
 @Service
 public class CustomerService implements ICustomerService {
@@ -24,30 +28,32 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Page<Customer> findAll(Pageable pageable) {
-        return customerRepository.findAll(pageable);
+        Page<Customer> customers = this.iCustomerRepository.findAllCustomers(pageable);
+        return customers;
     }
 
     @Override
     public void saveCustomer(CustomerInfo customerInfo) {
-        customerRepository.insertCustomer(customerInfo.getName(),customerInfo.getEmail(),customerInfo.getPhone(),
-                customerInfo.isGender(),customerInfo.getDateOfBirth(),customerInfo.getIdCard(),
+        iCustomerRepository.insertCustomer(customerInfo.getName(), customerInfo.getEmail(), customerInfo.getPhone(),
+                customerInfo.isGender(), customerInfo.getDateOfBirth(), customerInfo.getIdCard(),
                 customerInfo.getCustomerAddress(), customerInfo.getCustomerImg(), customerInfo.getCustomerType(),
-                customerInfo.getCustomerCode(),false);
+                customerInfo.getCustomerCode(), false);
+
 
     }
 
     @Override
     public Customer findById(Long id) {
-        return customerRepository.findById(id).orElse(null);
+        return iCustomerRepository.findById(id).orElse(null);
     }
 
 
     @Override
     public void update(CustomerInfo customerInfo, Long id) {
-        customerRepository.updateCustomer(id, customerInfo.getName(),customerInfo.getEmail(),customerInfo.getPhone(),
-                customerInfo.isGender(),customerInfo.getDateOfBirth(),customerInfo.getIdCard(),
+        iCustomerRepository.updateCustomer(id, customerInfo.getName(), customerInfo.getEmail(), customerInfo.getPhone(),
+                customerInfo.isGender(), customerInfo.getDateOfBirth(), customerInfo.getIdCard(),
                 customerInfo.getCustomerAddress(), customerInfo.getCustomerImg(), customerInfo.getCustomerType(),
-                customerInfo.getCart(),customerInfo.getAccount(),customerInfo.getCustomerCode(),false);
+                customerInfo.getCart(), customerInfo.getAccount(), customerInfo.getCustomerCode(), false);
 
     }
 
@@ -59,8 +65,10 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public void deleteById(Long id) {
-
+        iCustomerRepository.deleteCustomerId(id);
     }
+
+}
 
     @Override
     public Customer findByUsername(String username) {
@@ -86,7 +94,25 @@ public class CustomerService implements ICustomerService {
     public CustomerDto findByPhoneCustomer(String phone) {
         return iCustomerRepository.findByPhoneCustomer(phone).orElse(null);
     }
+
     public String findAddressByCustomerId(Long customerId) {
         return iCustomerRepository.findAddressByCustomerId(customerId);
+    }
+
+    @Override
+    public List<Customer> searchCustomers(String type, String name, String address, String phone) {
+        if (type == null) {
+            type = "";
+        }
+        if (name == null) {
+            name = "";
+        }
+        if (address == null) {
+            address = "";
+        }
+        if (phone == null) {
+            phone = "";
+        }
+        return this.iCustomerRepository.searchCustomer(type, name, address, phone);
     }
 }

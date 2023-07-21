@@ -4,8 +4,11 @@ import com.example.medicalsupplieswebsite.dto.CustomerInfo;
 import com.example.medicalsupplieswebsite.entity.Customer;
 import com.example.medicalsupplieswebsite.service.ICustomerService;
 import com.example.medicalsupplieswebsite.service.ICustomerTypeService;
+import com.example.medicalsupplieswebsite.service.impl.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,7 +21,9 @@ import org.springframework.data.domain.Pageable;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.example.medicalsupplieswebsite.dto.CustomerUserDetailDto;
 import com.example.medicalsupplieswebsite.service.ICustomerService;
@@ -35,6 +40,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/customer")
 public class CustomerController {
+    @Autowired
+    private CustomerService customerService;
+
+    @GetMapping("")
+    public ResponseEntity<Page<Customer>> findAllCustomer(@RequestParam("page") Optional<Integer> page,
+                                                          @RequestParam("size") Optional<Integer> size,
+                                                          @RequestParam("sort") Optional<String> sort) {
+        int currentPage = page.orElse(0);
+        int pageSize = size.orElse(1);
+        String sortField = sort.orElse("name");
+        Pageable pageable = PageRequest.of(currentPage, pageSize, Sort.by(sortField).descending());
+        Page<Customer> customers = this.customerService.findAll(pageable);
+        if (customers.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(customers, HttpStatus.OK);
+        }
+    }
 
     @Autowired
     private ICustomerService iCustomerService;
@@ -103,4 +126,24 @@ public ResponseEntity<?> updateCustomer(@Valid @PathVariable Long id, @RequestBo
 
         return new ResponseEntity<>(customerUserDetailDto, HttpStatus.OK);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Customer>> searchCustomer(@RequestParam(required = false) String type,
+                                                         @RequestParam(required = false) String name,
+                                                         @RequestParam(required = false) String address,
+                                                         @RequestParam(required = false) String phone) {
+        List<Customer> searchCustomers = customerService.searchCustomers(type, name, address, phone);
+        if (searchCustomers.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(searchCustomers, HttpStatus.OK);
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
+        customerService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
+

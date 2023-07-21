@@ -7,9 +7,10 @@ import com.example.medicalsupplieswebsite.dto.CustomerUserDetailDto;
 
 import com.example.medicalsupplieswebsite.entity.Customer;
 
-
+import java.util.List;
 
 public interface ICustomerService extends IService<Customer>{
+    List<Customer> searchCustomers(String type , String name ,String address , String phone);
     void saveCustomer(CustomerInfo customerInfo);
     void update(CustomerInfo customerInfo, Long id);
     Customer findByUsername(String username);
