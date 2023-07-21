@@ -57,9 +57,13 @@ public class CustomerController {
     }
 
 
-
-
-    //    @RequestMapping(value = {"/"}, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    /**
+     *
+     * @param customerInfo
+     * @param bindingResult
+     * @return
+     * HieuLD
+     */
     @PostMapping("")
     public ResponseEntity<?> saveCustomer(@Valid @RequestBody CustomerInfo customerInfo, BindingResult bindingResult) {
         new CustomerInfo().validate(customerInfo,bindingResult);
@@ -79,14 +83,25 @@ public class CustomerController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    /**
+     * HieuLD
+     * @param id
+     * @return
+     */
     @GetMapping("{id}")
     public Customer getCustomerById(@PathVariable Long id) {
         return iCustomerService.findById(id);
     }
 
 
-
-@PutMapping("{id}")
+    /**
+     * HieuLD
+     * @param id
+     * @param employeeInfo
+     * @param bindingResult
+     * @return
+     */
+    @PutMapping("{id}")
 public ResponseEntity<?> updateCustomer(@Valid @PathVariable Long id, @RequestBody CustomerInfo employeeInfo, BindingResult bindingResult) {
     new CustomerInfo().validate(employeeInfo, bindingResult);
     if (bindingResult.hasErrors()) {

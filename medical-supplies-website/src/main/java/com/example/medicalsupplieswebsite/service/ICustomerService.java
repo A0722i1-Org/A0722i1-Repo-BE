@@ -8,8 +8,11 @@ import com.example.medicalsupplieswebsite.entity.Customer;
 
 
 public interface ICustomerService extends IService<Customer>{
-   // HieuLD
-    void saveCustomer(CustomerInfo customerInfo);
+ /**
+  * HieuLD
+  * @param customerInfo
+  */
+ void saveCustomer(CustomerInfo customerInfo);
     void update(CustomerInfo customerInfo, Long id);
 
     Customer findByUsername(String username);

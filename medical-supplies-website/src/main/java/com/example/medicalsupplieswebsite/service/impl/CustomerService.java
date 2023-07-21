@@ -33,6 +33,10 @@ public class CustomerService implements ICustomerService {
         return iCustomerRepository.findAll(pageable);
     }
 
+    /**
+     * HieuLD
+     * @param customerInfo
+     */
     @Override
     public void saveCustomer(CustomerInfo customerInfo) {
         iCustomerRepository.insertCustomer(customerInfo.getName(),customerInfo.getEmail(),customerInfo.getPhone(),
@@ -42,12 +46,21 @@ public class CustomerService implements ICustomerService {
 
     }
 
+    /**
+     * HieuLD
+     * @param id
+     * @return
+     */
     @Override
     public Customer findById(Long id) {
         return iCustomerRepository.findById(id).orElse(null);
     }
 
-
+    /**
+     * HieuLD
+     * @param customerInfo
+     * @param id
+     */
     @Override
     public void update(CustomerInfo customerInfo, Long id) {
         iCustomerRepository.updateCustomer(id, customerInfo.getName(),customerInfo.getEmail(),customerInfo.getPhone(),
