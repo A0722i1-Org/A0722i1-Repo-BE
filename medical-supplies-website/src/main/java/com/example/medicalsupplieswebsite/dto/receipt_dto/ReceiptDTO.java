@@ -26,10 +26,8 @@ public class ReceiptDTO {
     @NotBlank(message = "Không được để trống")
     private String invoiceCode;
     private Date dateOfCreate;
-    @NotNull(message = "Không được để trống")
     private Long employeeId;
     @NotNull(message = "Không được để trống")
     private Long customerId;
-    private String customerAddress;
     private List<ReceiptDetailDTO> receiptDetailDTOS;
 }

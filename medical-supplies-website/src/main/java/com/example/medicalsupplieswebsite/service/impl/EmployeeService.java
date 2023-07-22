@@ -30,6 +30,7 @@ public class EmployeeService implements IEmployeeService {
     public Page<Employee> findAll(Pageable pageable) {
         return null;
     }
+
     @Override
     public Employee save(Employee employee) {
         return null;
@@ -142,6 +143,12 @@ public class EmployeeService implements IEmployeeService {
     public Employee findEmployeeByID(Long id) {
         return iEmployeeRepository.getEmployeeById(id);
     }
+
+    @Override
+    public Employee findEmployeeByUserName(String userName) {
+        return iEmployeeRepository.findEmployeeByUserName(userName).orElse(null);
+    }
+
 
     /*
      * NhanTQ
