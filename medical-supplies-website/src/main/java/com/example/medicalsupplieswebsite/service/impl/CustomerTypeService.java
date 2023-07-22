@@ -27,7 +27,7 @@ public class CustomerTypeService implements ICustomerTypeService {
     }
 
     @Override
-    public CustomerType save(CustomerType customerType) {
+    public CustomerType update(CustomerType customerType) {
         return null;
     }
 

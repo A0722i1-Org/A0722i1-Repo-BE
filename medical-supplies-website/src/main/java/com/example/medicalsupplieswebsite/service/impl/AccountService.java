@@ -28,7 +28,7 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public Account save(Account account) {
+    public Account update(Account account) {
         return null;
     }
 

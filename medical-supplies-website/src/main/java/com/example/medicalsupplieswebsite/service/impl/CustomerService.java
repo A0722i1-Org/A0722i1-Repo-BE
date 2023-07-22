@@ -33,7 +33,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Customer save(Customer customer) {
+    public Customer update(Customer customer) {
         return null;
     }
 

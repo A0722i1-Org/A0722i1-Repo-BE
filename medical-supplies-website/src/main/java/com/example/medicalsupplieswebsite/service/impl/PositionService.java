@@ -24,7 +24,7 @@ public class PositionService implements IPositionService {
     }
 
     @Override
-    public Position save(Position position) {
+    public Position update(Position position) {
         return null;
     }
 
