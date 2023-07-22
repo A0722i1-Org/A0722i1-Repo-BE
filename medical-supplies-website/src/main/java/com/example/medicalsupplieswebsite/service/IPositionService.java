@@ -4,6 +4,12 @@ import com.example.medicalsupplieswebsite.entity.Position;
 
 import java.util.List;
 
-public interface IPositionService extends IService<Position>{
-    List<Position> findAllPos();
+
+public interface IPositionService {
+    List<Position> findAll();
+    Position findById(Long id);
+
+    Position save(Position position);
+
+    void deleteById(Long id);
 }

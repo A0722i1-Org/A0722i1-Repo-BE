@@ -4,8 +4,8 @@ import com.example.medicalsupplieswebsite.entity.Position;
 import com.example.medicalsupplieswebsite.repository.IPositionRepository;
 import com.example.medicalsupplieswebsite.service.IPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,16 +13,25 @@ import java.util.List;
 @Service
 public class PositionService implements IPositionService {
     @Autowired
-    IPositionRepository positionRepository;
+    private IPositionRepository iPositionRepository;
+    /**
+     * Created by: PhongTD
+     * Date created: 12/07/2023
+     * @return List position
+     */
+    public List<Position> findAll() {
+        return iPositionRepository.findAll();
 
-    @Override
-    public Page<Position> findAll(Pageable pageable) {
-        return (Page<Position>) positionRepository.findAll();
     }
-
+    /**
+     * Created by: PhongTD
+     * Date created: 12/07/2023
+     * @param id
+     * @return position was found by id
+     */
     @Override
     public Position findById(Long id) {
-        return positionRepository.findById(id).orElse(null);
+        return iPositionRepository.findAllById(id);
     }
 
     @Override
@@ -35,8 +44,5 @@ public class PositionService implements IPositionService {
 
     }
 
-    @Override
-    public List<Position> findAllPos() {
-        return positionRepository.findAll();
-    }
+
 }
