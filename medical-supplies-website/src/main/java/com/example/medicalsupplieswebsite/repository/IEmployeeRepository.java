@@ -3,19 +3,27 @@ package com.example.medicalsupplieswebsite.repository;
 import com.example.medicalsupplieswebsite.entity.Employee;
 import com.example.medicalsupplieswebsite.entity.Position;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.Tuple;
 import javax.transaction.Transactional;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
+
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.repository.query.Param;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
+import javax.persistence.Tuple;
+import javax.transaction.Transactional;
 
 @Transactional
-public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
+public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
+
+
+
     /**
      * Create by: PhongTD
      * Date create: 12/07/2023
@@ -122,4 +130,21 @@ public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
     Employee getEmployeeById(Long id);
     @Query(value = "select employee_id,date_of_birth,employee_address,employee_img,employee_name,gender,e.is_enable,salary,e.account_id,position_id,e.email,employee_code,id_card,phone  from employee as e inner join account as a on e.account_id = a.account_id where username = ?1", nativeQuery = true)
     Optional<Employee> findEmployeeByUserName(String userName);
+
+    @Modifying
+    @Query(value = "UPDATE employee e " +
+            "inner join account a using(account_id)" +
+            "SET e.employee_name= :employee_name,e.employee_img= :employee_img, " +
+            "e.gender =:gender, e.date_of_birth =:date_of_birth, e.employee_address =:employee_address," +
+            "e.phone =:phone, a.email = :email " +
+            "where (e.is_enable = true) and (a.is_enable = true) and (a.username = :username)",
+            nativeQuery = true)
+    void updateEmployeeDto(@Param("employee_name") String name,
+                         @Param("employee_img") String employeeImg,
+                         @Param("gender") boolean gender,
+                         @Param("date_of_birth") Date date,
+                         @Param("employee_address") String employeeAddress,
+                         @Param("phone") String phone,
+                         @Param("email") String email,
+                         @Param("username") String username);
 }

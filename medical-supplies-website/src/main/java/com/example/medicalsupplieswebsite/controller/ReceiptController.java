@@ -6,6 +6,7 @@ import com.example.medicalsupplieswebsite.dto.receipt_dto.ReceiptDetailDTO;
 import com.example.medicalsupplieswebsite.dto.receipt_dto.SupplierDTO;
 import com.example.medicalsupplieswebsite.entity.Customer;
 import com.example.medicalsupplieswebsite.entity.Employee;
+import com.example.medicalsupplieswebsite.entity.Receipt;
 import com.example.medicalsupplieswebsite.entity.ReceiptType;
 import com.example.medicalsupplieswebsite.service.*;
 import com.example.medicalsupplieswebsite.validate.ReceiptValidate;
@@ -50,9 +51,10 @@ public class ReceiptController {
         Employee employee = iEmployeeService.findEmployeeByUserName(username);
         iReceiptService.addNewReceipt(receiptDTO.getDateOfCreate(),receiptDTO.getInvoiceCode(),receiptDTO.getCustomerId(), employee.getEmployeeId(),receiptDTO.getReceiptTypeId());
         Long receiptId = iReceiptService.findByReceiptIdByInvoiceCode(receiptDTO.getInvoiceCode());
+        System.out.println(receiptDTO.getReceiptDetailDTOS());
         for(ReceiptDetailDTO listReceiptDetailDTO: receiptDTO.getReceiptDetailDTOS()){
             if(iProductService.findByProductId(listReceiptDetailDTO.getProductId()) != null){
-                iProductService.findByProductId(listReceiptDetailDTO.getProductId()).setProductQuantity(iProductService.findByProductId(listReceiptDetailDTO.getProductId()).getProductQuantity()+ listReceiptDetailDTO.getQuantity());
+                iProductService.findByProductId(listReceiptDetailDTO.getProductId()).setProductQuantity(iProductService.findByProductId(listReceiptDetailDTO.getProductId()).getProductQuantity() + listReceiptDetailDTO.getQuantity());
             }
             iReceiptDetailService.addNewReceiptDetail(listReceiptDetailDTO.getQuantity(), listReceiptDetailDTO.getProductId(),receiptId);
         }
@@ -108,5 +110,21 @@ public class ReceiptController {
             return new ResponseEntity<>(productDTO, HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(productDTO, HttpStatus.OK);
+    }
+    @GetMapping(value = "/getInvoiceCode/{invoiceCode}")
+    public ResponseEntity<?> getReceiptByInvoiceCode(@PathVariable("invoiceCode") String invoiceCode){
+        Receipt receipt = iReceiptService.findByReceiptInvoiceCode(invoiceCode);
+        if(receipt == null){
+            return new ResponseEntity<>(receipt, HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(receipt, HttpStatus.OK);
+    }
+    @GetMapping(value = "/findAllReceipt")
+    public ResponseEntity<?> findAllReceipt(){
+        List<Receipt> receipts = iReceiptService.findAllReceipt();
+        if(receipts == null){
+            return new ResponseEntity<>(receipts, HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(receipts, HttpStatus.OK);
     }
 }

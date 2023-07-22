@@ -54,6 +54,9 @@ public class ReceiptValidate implements Validator {
         if (iReceiptService.findByReceiptInvoiceCode(receiptDTO.getInvoiceCode()) != null) {
             errors.rejectValue("invoiceCode", "create.duplicateId", new String[]{receiptDTO.getInvoiceCode()},"Ma hoa don bị trùng lặp");
         }
+        if (receiptDTO.getReceiptDetailDTOS().size() == 0 ) {
+            errors.rejectValue("receiptDetailDTOS", "receiptDetailDTOS.null","Danh sách vật tư không được để trống");
+        }
         for(ReceiptDetailDTO receiptDetailDTO: receiptDTO.getReceiptDetailDTOS()){
             if(receiptDetailDTO.getQuantity() <= 0) {
                 errors.rejectValue("receiptDetailDTOS", "receiptDetailDTOS.pattern","So luong khong duoc nho hon hoac bang khong");

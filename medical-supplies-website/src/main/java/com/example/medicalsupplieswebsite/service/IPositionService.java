@@ -2,5 +2,13 @@ package com.example.medicalsupplieswebsite.service;
 
 import com.example.medicalsupplieswebsite.entity.Position;
 
-public interface IPositionService extends IService<Position>{
+import java.util.List;
+
+public interface IPositionService {
+    List<Position> findAll();
+    Position findById(Long id);
+
+    Position save(Position position);
+
+    void deleteById(Long id);
 }
