@@ -56,27 +56,6 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-//    /**
-//     * Created by: PhongTD
-//     * Date created: 12/07/2023
-//     * @param id
-//     * @return employee by id
-//     */
-//    @GetMapping("{id}")
-//    public Employee getEmployeeByIdToEdit(@PathVariable Long id) {
-//        return iEmployeeService.findById(id);
-//    }
-//
-//    /**
-//     * Created by: PhongTD
-//     * Date created: 21/07/2023
-//     * @return List all employees
-//     */
-//    @GetMapping("")
-//    public List<Employee> findAll() {
-//        return iEmployeeService.findAll();
-//    }
-
     /**
      * Created by: PhongTD
      * Date created: 12/07/2023
