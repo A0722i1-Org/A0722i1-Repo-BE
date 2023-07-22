@@ -1,14 +1,18 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
 import com.example.medicalsupplieswebsite.entity.ReceiptDetail;
+import com.example.medicalsupplieswebsite.repository.IReceiptDetailRepository;
 import com.example.medicalsupplieswebsite.service.IReceiptDetailService;
 import com.example.medicalsupplieswebsite.service.IService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ReceiptDetailService implements IReceiptDetailService {
+    @Autowired
+    IReceiptDetailRepository iReceiptDetailRepository;
 
 
     @Override
@@ -29,5 +33,10 @@ public class ReceiptDetailService implements IReceiptDetailService {
     @Override
     public void deleteById(Long id) {
 
+    }
+
+    @Override
+    public void addNewReceiptDetail(int quantity, Long productId, Long receiptId) {
+        iReceiptDetailRepository.addNewReceiptDetail(quantity,productId,receiptId);
     }
 }

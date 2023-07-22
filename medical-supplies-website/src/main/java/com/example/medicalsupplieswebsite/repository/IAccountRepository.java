@@ -21,4 +21,14 @@ public interface IAccountRepository extends JpaRepository<Account, Long> {
     @Modifying
     @Transactional
     void setRoleForAccount(@Param("accountId") Long accountId, @Param("roleId") Long roleId);
+    /*
+     * ThanhNV - login, xac thuc va phan quyen
+     */
+    @Query(nativeQuery = true, value =
+            "select account_id, username, email, encrypt_password, is_enable " +
+                    "from account " +
+                    "where username = :username")
+    Optional<Account> findAccountByUsername(@Param("username") String username);
+
+    boolean existsByUsername(String username);
 }

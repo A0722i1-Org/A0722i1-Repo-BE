@@ -22,11 +22,16 @@ public class AccountService implements IAccountService {
     }
 
     public Account addAccount(Account account) {
-        //Mã hóa mật khẩu
-//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        String encodedPassword = passwordEncoder.encode(account.getEncryptPassword());
-//        account.setEncryptPassword(encodedPassword);
-        return accountRepository.save(account);
+        if (accountRepository.existsByUsername(account.getUsername())) {
+            throw new IllegalArgumentException("Tên tài khoản đã tồn tại. Vui lòng chọn tên tài khoản khác.");
+        }
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(account.getEncryptPassword());
+        account.setEncryptPassword(encodedPassword);
+
+        accountRepository.addAccount(account.getUsername(), account.getEncryptPassword(), account.isEnable());
+
+        return account;
     }
 
     public void setRoleForAccount(Long accountId, Long roleId) {
@@ -34,8 +39,7 @@ public class AccountService implements IAccountService {
         if (account != null) {
             Role role = roleRepository.findById(roleId).orElse(null);
             if (role != null) {
-                account.getRoles().add(role);
-                accountRepository.save(account);
+                accountRepository.setRoleForAccount(accountId, roleId);
             }
         }
 
