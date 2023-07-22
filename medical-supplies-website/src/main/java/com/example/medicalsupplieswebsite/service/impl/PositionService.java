@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PositionService implements IPositionService {
     @Autowired
@@ -15,7 +17,7 @@ public class PositionService implements IPositionService {
 
     @Override
     public Page<Position> findAll(Pageable pageable) {
-        return null;
+        return (Page<Position>) positionRepository.findAll();
     }
 
     @Override
@@ -31,5 +33,10 @@ public class PositionService implements IPositionService {
     @Override
     public void deleteById(Long id) {
 
+    }
+
+    @Override
+    public List<Position> findAllPos() {
+        return positionRepository.findAll();
     }
 }

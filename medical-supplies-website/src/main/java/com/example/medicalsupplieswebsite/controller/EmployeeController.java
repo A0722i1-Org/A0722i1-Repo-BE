@@ -3,8 +3,12 @@ package com.example.medicalsupplieswebsite.controller;
 import com.example.medicalsupplieswebsite.dto.EmployeeDTO;
 import com.example.medicalsupplieswebsite.dto.EmployeeUserDetailDto;
 import com.example.medicalsupplieswebsite.entity.Employee;
+import com.example.medicalsupplieswebsite.entity.Position;
 import com.example.medicalsupplieswebsite.service.IEmployeeService;
+import com.example.medicalsupplieswebsite.service.IPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -21,6 +25,8 @@ import java.util.List;
 public class EmployeeController {
     @Autowired
     private IEmployeeService iEmployeeService;
+    @Autowired
+    private IPositionService iPositionService;
 
     /**
      * A0722I1-KhanhNL
@@ -48,13 +54,10 @@ public class EmployeeController {
      * @return list of employee
      */
     @GetMapping("")
-    public ResponseEntity<List<Employee>> findAllEmployees(@RequestParam(defaultValue = "") String name,
-                                                           @RequestParam(defaultValue = "") String date,
-                                                           @RequestParam(defaultValue = "") String pos) {
+    public ResponseEntity<List<Employee>> findAllEmployees(@RequestParam(name = "name",defaultValue = "") String name,
+                                                           @RequestParam(name="date",defaultValue = "") String date,
+                                                           @RequestParam(name="pos",defaultValue = "") String pos) {
         List<Employee> listEmployee = iEmployeeService.findAllEmWithNameAndDateAndPositions(name, date, pos);
-        if (listEmployee.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(listEmployee, HttpStatus.OK);
     }
 
@@ -80,7 +83,7 @@ public class EmployeeController {
     public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id_employee) {
         Employee employee = iEmployeeService.findEmployeeByID(id_employee);
         if (employee == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
@@ -103,5 +106,13 @@ public class EmployeeController {
                 employeeDTO.getPhone(), employeeDTO.getEmail(), username);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+    /**
+     * Created by: PhongTD
+     * Date created: 12/07/2023
+     * @return list position
+     */
+    @GetMapping("/positions")
+    public List<Position> getListPosition() {
+        return iPositionService.findAllPos();
+    }
 }

@@ -60,6 +60,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
+                .cors()
+                .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtEntryPoint)
                 .and()
