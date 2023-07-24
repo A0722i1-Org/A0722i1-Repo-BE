@@ -24,7 +24,6 @@ public class ProductController {
 
     /**
      * VanNT
-     *
      * @param
      * @return list all product and paging
      */
@@ -60,6 +59,7 @@ public class ProductController {
         }
         return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
+
     /**
      * VanNT
      * @param categoryId
@@ -81,7 +81,6 @@ public class ProductController {
 
     /**
      * VanNT
-     *
      * @return highest price list product
      */
     @GetMapping("/home/highest")
@@ -92,6 +91,5 @@ public class ProductController {
         }
         return new ResponseEntity<>(productPriceList, HttpStatus.OK);
     }
-
 
 }
