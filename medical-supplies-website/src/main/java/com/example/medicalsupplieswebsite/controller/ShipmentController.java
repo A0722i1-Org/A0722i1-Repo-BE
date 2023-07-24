@@ -54,13 +54,13 @@ public class ShipmentController {
     }
 
     /*PhucND code select theo phone*/
-    @GetMapping("/phone/{phone}")
-    public ResponseEntity<?> findByPhoneCustomer(@PathVariable("phone") String phone) {
-        CustomerDto customer = customerService.findByPhoneCustomer(phone);
-        if (customer != null) {
-            return ResponseEntity.ok(customer);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+//    @GetMapping("/phone/{phone}")
+//    public ResponseEntity<?> findByPhoneCustomer(@PathVariable("phone") String phone) {
+//        CustomerDto customer = customerService.findByPhoneCustomer(phone);
+//        if (customer != null) {
+//            return ResponseEntity.ok(customer);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 }

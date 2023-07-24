@@ -29,7 +29,7 @@ public class ShipmentService implements IShipmentService {
     }
 
     @Override
-    public Shipment save(Shipment shipment) {
+    public Shipment update(Shipment shipment) {
         return null;
     }
 
