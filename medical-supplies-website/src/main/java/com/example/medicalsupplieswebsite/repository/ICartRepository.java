@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
-
+@Transactional
 public interface ICartRepository extends JpaRepository<Cart, Long> {
     @Query(nativeQuery = true,
             value = "SELECT c.cart_id, receiver_address, receiver_email, receiver_name, receiver_phone FROM cart c JOIN customer USING (cart_id) JOIN account a USING(account_id) WHERE a.username = :username")
@@ -35,4 +36,5 @@ public interface ICartRepository extends JpaRepository<Cart, Long> {
     @Query(value = "DELETE FROM cart  WHERE cart_id = :id",
             nativeQuery = true)
     void deleteById(@Param("id") Long id);
+
 }

@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CartService implements ICartService {
     private final ICartRepository cartRepository;
@@ -32,7 +34,7 @@ public class CartService implements ICartService {
     }
 
     // Method này dùng để tạo cart khi tạo customer
-    public void createCart(String username) {
+    public Optional<Cart> createCart(String username) {
         Customer customer = this.customerRepository.findByUsername(username).orElse(null);
         if (customer != null) {
             Cart cart = new Cart();
@@ -40,24 +42,20 @@ public class CartService implements ICartService {
             cart.setReceiverAddress(customer.getCustomerAddress());
             cart.setReceiverPhone(customer.getPhone());
             cart.setReceiverEmail(customer.getAccount().getEmail());
-            this.save(cart);
+            this.cartRepository.insertCart(customer.getName(), customer.getCustomerAddress(), customer.getPhone(), customer.getAccount().getEmail());
         }
+        return this.cartRepository.findLastCart();
     }
 
     @Override
-    public Cart save(Cart cart) {
+    public Cart update(Cart cart) {
         Long id = cart.getCartId();
         String name = cart.getReceiverName();
         String address = cart.getReceiverAddress();
         String phone = cart.getReceiverPhone();
         String email = cart.getReceiverEmail();
-        if (id == null) {
-            this.cartRepository.insertCart(name, address, phone, email);
-            return this.cartRepository.findLastCart().orElse(null);
-        } else {
-            this.cartRepository.updateCart(id, name, address, phone, email);
-            return cart;
-        }
+        this.cartRepository.updateCart(id, name, address, phone, email);
+        return cart;
     }
 
     @Override
