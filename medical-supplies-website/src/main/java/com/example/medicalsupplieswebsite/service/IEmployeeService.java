@@ -6,6 +6,7 @@ import com.example.medicalsupplieswebsite.entity.Employee;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface IEmployeeService extends IService<Employee>{
 
@@ -42,6 +43,9 @@ public interface IEmployeeService extends IService<Employee>{
      * @return none
      */
     Employee findEmployeeByID(Long id);
+
+    Optional<Employee> findEmployeeIdByUserName(String userName);
+    Employee findEmployeeByUserName(String userName);
 
     /*
     * NhanTQ

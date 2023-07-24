@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.Tuple;
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService implements IEmployeeService {
@@ -30,8 +31,9 @@ public class EmployeeService implements IEmployeeService {
     public Page<Employee> findAll(Pageable pageable) {
         return null;
     }
+
     @Override
-    public Employee save(Employee employee) {
+    public Employee update(Employee employee) {
         return null;
     }
 
@@ -143,11 +145,22 @@ public class EmployeeService implements IEmployeeService {
         return iEmployeeRepository.getEmployeeById(id);
     }
 
+    @Override
+    public Employee findEmployeeByUserName(String userName) {
+        return iEmployeeRepository.findEmployeeByUserName(userName).orElse(null);
+    }
+
+
     /*
      * NhanTQ
      */
     @Override
     public void updateEmployeeByFieldsDTO(String employeeName, String employeeImg, boolean gender, Date dateOfBirth, String employeeAddress, String phone, String email, String username) {
         iEmployeeRepository.updateEmployeeDto(employeeName,employeeImg,gender,dateOfBirth,employeeAddress,phone,email,username);
+    }
+
+    @Override
+    public Optional<Employee> findEmployeeIdByUserName(String userName) {
+        return iEmployeeRepository.findEmployeeIdByUserName(userName);
     }
 }

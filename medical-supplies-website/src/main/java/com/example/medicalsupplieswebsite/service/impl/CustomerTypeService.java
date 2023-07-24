@@ -28,6 +28,11 @@ public class CustomerTypeService implements ICustomerTypeService {
     }
 
     @Override
+    public CustomerType update(CustomerType customerType) {
+        return null;
+    }
+
+    @Override
     public CustomerType save(CustomerType customerType) {
         return customerTypeRepository.save(customerType);
     }
