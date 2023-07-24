@@ -83,7 +83,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
             " employee_img, employee_name, gender, " +
             "employee.is_enable, salary, employee.account_id, " +
             "employee.position_id, position_name, username,employee.email," +
-            "employee_code,id_card,phone\n" +
+            "employee_code,id_card,phone,employee.salary\n" +
             "FROM employee\n" +
             "JOIN account ON employee.account_id = account.account_id\n" +
             "JOIN position ON employee.position_id = position.position_id\n" +

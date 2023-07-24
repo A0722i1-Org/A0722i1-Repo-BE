@@ -6,7 +6,6 @@ import com.example.medicalsupplieswebsite.dto.ValidationError;
 import com.example.medicalsupplieswebsite.dto.EmployeeDTO;
 import com.example.medicalsupplieswebsite.dto.EmployeeUserDetailDto;
 import com.example.medicalsupplieswebsite.entity.Employee;
-import com.example.medicalsupplieswebsite.entity.Position;
 import com.example.medicalsupplieswebsite.service.IEmployeeService;
 import com.example.medicalsupplieswebsite.service.IPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
