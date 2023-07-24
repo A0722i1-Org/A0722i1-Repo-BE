@@ -120,4 +120,8 @@ public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
             "  AND employee.is_enable = false \n" +
             "LIMIT 0, 300;",nativeQuery = true)
     Employee getEmployeeById(Long id);
+
+    /*PhucND tìm kiếm employeeId theo username*/
+    @Query(value = "select employee_id,date_of_birth,employee_address,employee_img,employee_name,gender,e.is_enable,salary,e.account_id,position_id,e.email,employee_code,id_card,phone  from employee as e inner join account as a on e.account_id = a.account_id where username = ?1", nativeQuery = true)
+    Optional<Employee> findEmployeeIdByUserName(String userName);
 }

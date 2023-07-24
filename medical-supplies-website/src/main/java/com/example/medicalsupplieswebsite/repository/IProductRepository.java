@@ -1,6 +1,7 @@
 package com.example.medicalsupplieswebsite.repository;
 
 import com.example.medicalsupplieswebsite.dto.Supply;
+import com.example.medicalsupplieswebsite.dto.shipmentdto.ProductDto;
 import com.example.medicalsupplieswebsite.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,12 +10,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.Tuple;
+import java.util.List;
+import java.util.Optional;
 
 public interface IProductRepository extends JpaRepository<Product,Long> {
-    @Query(value = "select p.product_id,expire_date,is_enable,product_code,product_img,product_name,product_price," +
-            "product_quantity,category_id,p.customer_id,\n" + "product_info_id from shipment as s inner join shipment_detail " +
-            "as sd on \n" + "s.shipment_id = sd.shipment_id inner join product as p on sd.product_id = p.product_id " +
-            "where p.product_id = ?1", nativeQuery = true)
+    /*PhucND tìm kiếm id product trong shipment*/
+    @Query(value = "select product_id,expire_date,is_enable,product_code,product_img,product_name,product_price,\n" +
+            "            product_quantity,category_id,customer_id,product_info_id from product\n" +
+            "            where product_id = ?", nativeQuery = true)
     Product findByIdProductShipment(Long productId);
     @Query(nativeQuery = true,
             value = "select p.product_code, p.product_name, ct.category_name, p.product_price, p.expire_date, c.name " +
@@ -49,5 +52,12 @@ public interface IProductRepository extends JpaRepository<Product,Long> {
     Page<Supply> searchSupplies(String productCode, String productName,
                                 String categoryName, String customerName,
                                 String expireDateStart, String expireDateEnd, Pageable pageable);
+
+    /*PhucND hiển thị thông tin vật tư để xuất kho*/
+    @Query(value = "select product_id,product_name,product_quantity,product_price from product", nativeQuery = true)
+    List<ProductDto> findAllProductCreateShipment();
+
+    /*PhucND findById productShipment*/
+    Product findByProductIdIs(Long productId);
 
 }

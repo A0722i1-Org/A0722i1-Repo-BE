@@ -5,6 +5,7 @@ import com.example.medicalsupplieswebsite.dto.EmployeeInfo;
 import com.example.medicalsupplieswebsite.entity.Employee;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IEmployeeService extends IService<Employee>{
     Employee findByUsername(String username);
@@ -36,4 +37,6 @@ public interface IEmployeeService extends IService<Employee>{
      * @return none
      */
     Employee findEmployeeByID(Long id);
+
+    Optional<Employee> findEmployeeIdByUserName(String userName);
 }

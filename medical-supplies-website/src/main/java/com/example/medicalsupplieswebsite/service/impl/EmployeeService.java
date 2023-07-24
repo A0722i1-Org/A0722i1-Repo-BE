@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.Tuple;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService implements IEmployeeService {
@@ -117,5 +118,10 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public Employee findEmployeeByID(Long id) {
         return iEmployeeRepository.getEmployeeById(id);
+    }
+
+    @Override
+    public Optional<Employee> findEmployeeIdByUserName(String userName) {
+        return iEmployeeRepository.findEmployeeIdByUserName(userName);
     }
 }
