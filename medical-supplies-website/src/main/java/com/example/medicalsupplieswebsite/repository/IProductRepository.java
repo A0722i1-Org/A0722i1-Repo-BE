@@ -12,13 +12,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import javax.persistence.Tuple;
-import java.util.List;
-import java.util.Optional;
-import java.util.List;
-
-import org.springframework.data.jpa.repository.Query;
-
 import java.util.List;
 
 public interface IProductRepository extends JpaRepository<Product, Long> {
