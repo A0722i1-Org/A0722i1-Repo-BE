@@ -39,6 +39,6 @@ public class RoleService implements IRoleService {
 
     @Override
     public List<Role> getAllRoles() {
-        return roleRepository.findAll();
+        return roleRepository.findSalesAndAccountantRoles();
     }
 }
