@@ -28,3 +28,16 @@ public interface IAccountRepository extends JpaRepository<Account, Long> {
 
     boolean existsByUsername(String username);
 }
+
+
+    /*
+     * NhanTQ
+     * @param username
+     * @param pass -> new pass
+     */
+    @Modifying
+    @Query(value = "update `account` a set a.encrypt_password =:pass " +
+            "where (a.is_enable = true) and (username = :username) ",
+            nativeQuery = true)
+    void changePassword(@Param("username") String username,
+                        @Param("pass") String pass);

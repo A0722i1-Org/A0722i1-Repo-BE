@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ReceiptService implements IReceiptService {
@@ -28,7 +29,7 @@ public class ReceiptService implements IReceiptService {
     }
 
     @Override
-    public Receipt save(Receipt receipt) {
+    public Receipt update(Receipt receipt) {
         return null;
     }
 
@@ -50,6 +51,11 @@ public class ReceiptService implements IReceiptService {
     @Override
     public Receipt findByReceiptInvoiceCode(String invoidceCode) {
         return iReceiptRepository.findByReceiptInvoiceCode(invoidceCode);
+    }
+
+    @Override
+    public List<Receipt> findAllReceipt() {
+        return iReceiptRepository.findAllReceipt();
     }
 
 

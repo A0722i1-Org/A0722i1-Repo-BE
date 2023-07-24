@@ -57,12 +57,22 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public Account save(Account account) {
+    public Account update(Account account) {
         return null;
     }
 
     @Override
     public void deleteById(Long id) {
 
+    }
+
+    /*
+     * NhanTQ
+     * @param username
+     * @param newPass
+     */
+    @Override
+    public void changePassword(String username, String newPass) {
+        accountRepository.changePassword(username,newPass);
     }
 }

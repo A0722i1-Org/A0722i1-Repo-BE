@@ -28,7 +28,7 @@ public class RoleService implements IRoleService {
     }
 
     @Override
-    public Role save(Role role) {
+    public Role update(Role role) {
         return null;
     }
 

@@ -10,3 +10,11 @@ public interface IAccountService extends IService<Account>{
 
 
 }
+
+
+    /*
+     * NhanTQ
+     * @param username
+     * @param newPass
+     */
+    void changePassword(String username,String newPass);

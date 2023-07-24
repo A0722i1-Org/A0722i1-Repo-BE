@@ -31,7 +31,6 @@ public class Account {
     @Size(min = 6,max = 30,message = "Tên email chỉ được phép chứa từ 6 đến 30 kí tự")
     private String email;
     private boolean isEnable;
-
     @ManyToMany
     @JoinTable(name = "account_roles",
             joinColumns = @JoinColumn(name = "account_id"),
