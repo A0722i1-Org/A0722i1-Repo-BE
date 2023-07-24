@@ -30,7 +30,7 @@ public class ReceiptTypeService implements IReceiptTypeService {
     }
 
     @Override
-    public Receipt save(Receipt receipt) {
+    public Receipt update(Receipt receipt) {
         return null;
     }
 

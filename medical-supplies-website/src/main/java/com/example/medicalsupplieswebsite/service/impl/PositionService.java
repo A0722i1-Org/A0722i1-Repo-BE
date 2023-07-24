@@ -35,6 +35,11 @@ public class PositionService implements IPositionService {
     }
 
     @Override
+    public Position save(Position position) {
+        return null;
+    }
+
+    @Override
     public Position update(Position position) {
         return null;
     }

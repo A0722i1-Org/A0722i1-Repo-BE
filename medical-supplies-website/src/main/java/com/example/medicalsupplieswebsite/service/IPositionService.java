@@ -10,5 +10,7 @@ public interface IPositionService {
 
     Position save(Position position);
 
+    Position update(Position position);
+
     void deleteById(Long id);
 }
