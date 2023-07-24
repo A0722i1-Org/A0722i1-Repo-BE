@@ -43,10 +43,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
     }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable();
+    // Config goc cua ThanhNV
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.cors().and().csrf().disable();
 //        http.csrf()
 //                .disable()
 //                .authorizeRequests()
@@ -69,5 +69,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .sessionManagement()
 //                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 //        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+//      }
+
+    //Config cua NhatLH
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.cors().and().csrf().disable();
     }
 }
