@@ -5,6 +5,7 @@ import com.example.medicalsupplieswebsite.dto.ProductPriceDto;
 import com.example.medicalsupplieswebsite.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -28,8 +29,12 @@ public class ProductController {
      */
     @GetMapping("/home")
     public ResponseEntity<Page<ProductHomeDto>> getAllProduct(
-            @PageableDefault(value = 8) Pageable pageable) {
-        Page<ProductHomeDto> productPage  = productService.findAllProducts(pageable);
+            @RequestParam("page") Optional<Integer> page,
+            @RequestParam("size") Optional<Integer> size) {
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(8);
+        Page<ProductHomeDto> productPage = productService.findAllProducts(
+                PageRequest.of(currentPage - 1, pageSize));
         if (productPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
