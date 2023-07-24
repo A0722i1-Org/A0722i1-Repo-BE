@@ -74,6 +74,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //Config cua NhatLH
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable();
+        http.csrf()
+                .disable()
+                .authorizeRequests()
+                .antMatchers("/api/v1/public/**")
+                .permitAll()
+                .antMatchers("/api/v1/cart/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/api/v1/employee/**").hasAnyRole("SALE", "ACCOUNTANT", "ADMIN")
+                .antMatchers("/api/v1/customer/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("api/v1/admin/**").hasRole("ADMIN")
+                .antMatchers("/api/v1/supply/**").hasRole("ADMIN")
+                .antMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/api/v1/shipment").hasAnyRole("ACCOUNTANT", "ADMIN")
+                .antMatchers("/api/v1/receipt").hasAnyRole("ACCOUNTANT", "ADMIN")
+                .anyRequest()
+                .authenticated()
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtEntryPoint)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }
