@@ -1,26 +1,33 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
 import com.example.medicalsupplieswebsite.dto.Supply;
+import com.example.medicalsupplieswebsite.dto.receipt_dto.ProductDTO;
 import com.example.medicalsupplieswebsite.dto.ProductHomeDto;
 import com.example.medicalsupplieswebsite.dto.ProductPriceDto;
 import com.example.medicalsupplieswebsite.entity.Product;
+import com.example.medicalsupplieswebsite.entity.ProductInfo;
+import com.example.medicalsupplieswebsite.repository.IProductRepository;
+import com.example.medicalsupplieswebsite.repository.IProductRepository;
 import com.example.medicalsupplieswebsite.repository.IProductRepository;
 import com.example.medicalsupplieswebsite.service.IProductService;
+import com.example.medicalsupplieswebsite.service.IService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Tuple;
+import java.util.List;
+
 import java.util.List;
 
 @Service
 public class ProductService implements IProductService {
-    private final IProductRepository productRepository;
-
     @Autowired
-    ProductService(IProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+    private IProductRepository iProductRepository;
+
 
     @Override
     public Page<Product> findAll(Pageable pageable) {
@@ -33,7 +40,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product update(Product product) {
+    public Product save(Product product) {
         return null;
     }
 
@@ -41,43 +48,52 @@ public class ProductService implements IProductService {
     public void deleteById(Long id) {
 
     }
-
     @Override
     public Product findByIdProductShipment(Long productId) {
-        return productRepository.findByIdProductShipment(productId);
+        return iProductRepository.findByIdProductShipment(productId);
     }
 
     @Override
     public Product findByProductId(Long productId) {
-        return productRepository.findByProductId(productId);
+        return iProductRepository.findByProductId(productId);
     }
 
     @Override
     public Page<Supply> findAllSuppliesForAdmin(Pageable pageable) {
-        return productRepository.findAllSuppliesForAdmin(pageable);
+        return iProductRepository.findAllSuppliesForAdmin(pageable);
     }
 
     @Override
     public Page<Supply> searchSupplies(String productCode, String productName, String categoryName,
                                        String customerName, String expireDateStart, String expireDateEnd,
                                        Pageable pageable) {
-        return productRepository.searchSupplies(productCode, productName, categoryName, customerName, expireDateStart, expireDateEnd, pageable);
+        return iProductRepository.searchSupplies(productCode, productName, categoryName, customerName, expireDateStart, expireDateEnd, pageable);
+    }
+
+    @Override
+    public List<ProductDTO> getAllProductByCustomerID(Long customerId) {
+        return iProductRepository.getAllProductByCustomerID(customerId);
+    }
+
+    @Override
+    public ProductDTO findProductDTOByProductId(Long productId) {
+        return iProductRepository.findProductDTOByProductId(productId);
     }
 
     @Override
     public Page<ProductHomeDto> findAllProducts(Pageable pageable) {
-        return productRepository.findAllProduct(pageable);
+        return iProductRepository.findAllProduct(pageable);
     }
 
     @Override
     public Page<ProductHomeDto> searchProduct(String productName, String categoryName,
                                               String minPrice, String maxPrice, Pageable pageable) {
-        return productRepository.searchProduct(productName, categoryName, minPrice, maxPrice, pageable);
+        return iProductRepository.searchProduct(productName,categoryName,minPrice,maxPrice, pageable);
     }
 
     @Override
     public List<ProductPriceDto> getProductListPrice() {
-        return productRepository.getProductPrice();
+        return iProductRepository.getProductPrice();
     }
 
 }

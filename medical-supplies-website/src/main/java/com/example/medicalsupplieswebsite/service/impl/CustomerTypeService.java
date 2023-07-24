@@ -1,38 +1,44 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
-import com.example.medicalsupplieswebsite.entity.Customer;
 import com.example.medicalsupplieswebsite.entity.CustomerType;
-import com.example.medicalsupplieswebsite.repository.ICustomerRepository;
+import com.example.medicalsupplieswebsite.repository.ICustomerTypeRepository;
 import com.example.medicalsupplieswebsite.service.ICustomerTypeService;
-import com.example.medicalsupplieswebsite.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerTypeService implements ICustomerTypeService {
 
     @Autowired
-    private ICustomerRepository customerRepository;
+    private ICustomerTypeRepository customerRepository;
+    private ICustomerTypeRepository customerTypeRepository;
 
     @Override
     public Page<CustomerType> findAll(Pageable pageable) {
-        return null;
+        return customerTypeRepository.findAll(pageable);
     }
 
     @Override
     public CustomerType findById(Long id) {
-        return null;
+        return customerTypeRepository.findById(id).orElse(null);
     }
 
     @Override
-    public CustomerType update(CustomerType customerType) {
-        return null;
+    public CustomerType save(CustomerType customerType) {
+        return customerTypeRepository.save(customerType);
     }
 
     @Override
     public void deleteById(Long id) {
 
+    }
+
+    @Override
+    public List<CustomerType> findAllCustomerType() {
+        return customerRepository.findAll();
     }
 }

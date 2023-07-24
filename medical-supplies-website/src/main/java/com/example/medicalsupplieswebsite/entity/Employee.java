@@ -26,10 +26,12 @@ public class Employee {
     private Integer salary;
     private String employeeImg;
     private Boolean isEnable;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
     private Account account;
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne
     @JoinColumn(name = "position_id")
     private Position position;
     public Employee(Long employeeId, String employeeCode, String employeeName, String email, String phone, String employeeAddress, Integer gender, String idCard, Date dateOfBirth, String employeeImg, boolean isEnable, Position position) {

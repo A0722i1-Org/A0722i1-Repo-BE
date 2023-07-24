@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 public interface IReceiptRepository extends JpaRepository<Receipt,Long> {
     @Modifying
@@ -17,5 +18,7 @@ public interface IReceiptRepository extends JpaRepository<Receipt,Long> {
     Long findByReceiptIdByInvoiceCode(String invoiceCode);
     @Query(value = "select receipt_id,date_of_create,invoice_code,customer_id,employee_id,receipt_type_id from receipt where invoice_code = ?1", nativeQuery = true)
     Receipt findByReceiptInvoiceCode(String invoiceCode);
+    @Query(value = "select receipt_id,date_of_create,invoice_code,customer_id,employee_id,receipt_type_id from receipt", nativeQuery = true)
+    List<Receipt> findAllReceipt();
 
 }
