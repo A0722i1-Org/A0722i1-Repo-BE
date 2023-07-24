@@ -7,4 +7,6 @@ public interface IAccountService extends IService<Account>{
     public Account addAccount(Account account);
 
     public void setRoleForAccount(Long accountId, Long roleId);
+
+
 }

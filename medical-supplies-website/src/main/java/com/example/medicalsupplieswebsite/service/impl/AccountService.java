@@ -28,11 +28,12 @@ public class AccountService implements IAccountService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(account.getEncryptPassword());
         account.setEncryptPassword(encodedPassword);
+        account.setEnable(true);
 
-        accountRepository.addAccount(account.getUsername(), account.getEncryptPassword(), account.isEnable());
-
+        accountRepository.save(account);
         return account;
     }
+
 
     public void setRoleForAccount(Long accountId, Long roleId) {
         Account account = accountRepository.findById(accountId).orElse(null);

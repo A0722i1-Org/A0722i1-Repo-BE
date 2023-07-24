@@ -2,8 +2,10 @@ package com.example.medicalsupplieswebsite.controller;
 
 import com.example.medicalsupplieswebsite.entity.Account;
 import com.example.medicalsupplieswebsite.entity.Employee;
+import com.example.medicalsupplieswebsite.entity.Role;
 import com.example.medicalsupplieswebsite.service.impl.AccountService;
 import com.example.medicalsupplieswebsite.service.impl.EmployeeService;
+import com.example.medicalsupplieswebsite.service.impl.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,16 +26,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/account")
 public class AccountController {
     private final AccountService accountService;
-    private final EmployeeService employeeService;
+    private final RoleService roleService;
 
-    public AccountController(AccountService accountService, EmployeeService employeeService) {
+    public AccountController(AccountService accountService, RoleService roleService) {
         this.accountService = accountService;
-        this.employeeService = employeeService;
+        this.roleService = roleService;
     }
 
-/*ThienTDV thêm Tài khoản và setRole cho tài khoản*/
+    /*ThienTDV thêm Tài khoản và setRole cho tài khoản*/
     @PostMapping("/addAccount")
-    public ResponseEntity<?> addAccountForEmployee(@Valid @RequestBody Account account, BindingResult bindingResult, @RequestParam Long roleId) {
+    public ResponseEntity<?> addAccount(@Valid @RequestBody Account account, BindingResult bindingResult, @RequestParam Long roleId) {
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = new HashMap<>();
             bindingResult.getFieldErrors().forEach(
@@ -43,13 +46,30 @@ public class AccountController {
                     });
             return ResponseEntity.badRequest().body(errors);
         }
+
+        // Kiểm tra xem roleId có tồn tại trong danh sách các roles hợp lệ không
+        Role role = roleService.findById(roleId);
+        if (role == null) {
+            return ResponseEntity.badRequest().body("Invalid roleId");
+        }
+
         // Lưu tài khoản
         Account savedAccount = accountService.addAccount(account);
-        account.setEnable(true);
+
+        Long AccountId = savedAccount.getAccountId();
 
         // Thiết lập vai trò cho tài khoản
-        accountService.setRoleForAccount(savedAccount.getAccountId(), roleId);
+        accountService.setRoleForAccount(AccountId, roleId);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return ResponseEntity.ok(savedAccount);
     }
+
+
+    //Hiển thị thông tin role
+    @GetMapping("/roles")
+    public ResponseEntity<List<Role>> getAllRoles() {
+        List<Role> roles = roleService.getAllRoles();
+        return ResponseEntity.ok(roles);
+    }
+
 }
