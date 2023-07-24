@@ -25,7 +25,7 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public Category save(Category category) {
+    public Category update(Category category) {
         return null;
     }
 

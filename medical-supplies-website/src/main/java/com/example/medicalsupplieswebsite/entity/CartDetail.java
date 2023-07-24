@@ -16,10 +16,7 @@ public class CartDetail {
     private Long cartDetailId;
     private int quantity;
     private boolean status;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
+    private Long cartId;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")

@@ -26,7 +26,7 @@ public class ReceiptDetailService implements IReceiptDetailService {
     }
 
     @Override
-    public ReceiptDetail save(ReceiptDetail receiptDetail) {
+    public ReceiptDetail update(ReceiptDetail receiptDetail) {
         return null;
     }
 

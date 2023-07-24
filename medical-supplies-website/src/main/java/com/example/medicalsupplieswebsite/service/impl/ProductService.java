@@ -1,8 +1,10 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
 import com.example.medicalsupplieswebsite.dto.Supply;
+import com.example.medicalsupplieswebsite.dto.receipt_dto.ProductDTO;
 import com.example.medicalsupplieswebsite.dto.ProductHomeDto;
 import com.example.medicalsupplieswebsite.dto.ProductPriceDto;
+import com.example.medicalsupplieswebsite.dto.shipmentdto.ProductDto;
 import com.example.medicalsupplieswebsite.entity.Product;
 import com.example.medicalsupplieswebsite.repository.IProductRepository;
 import com.example.medicalsupplieswebsite.service.IProductService;
@@ -12,6 +14,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import javax.persistence.Tuple;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService implements IProductService {
@@ -26,6 +31,11 @@ public class ProductService implements IProductService {
 
     @Override
     public Product findById(Long id) {
+        return null;
+    }
+
+    @Override
+    public Product update(Product product) {
         return null;
     }
 
@@ -62,6 +72,16 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public List<ProductDTO> getAllProductByCustomerID(Long customerId) {
+        return iProductRepository.getAllProductByCustomerID(customerId);
+    }
+
+    @Override
+    public ProductDTO findProductDTOByProductId(Long productId) {
+        return iProductRepository.findProductDTOByProductId(productId);
+    }
+
+    @Override
     public Page<ProductHomeDto> findAllProducts(Pageable pageable) {
         return iProductRepository.findAllProduct(pageable);
     }
@@ -82,4 +102,14 @@ public class ProductService implements IProductService {
         return iProductRepository.getProductPrice();
     }
 
+
+    @Override
+    public List<ProductDto> findAllProductCreateShipment() {
+        return iProductRepository.findAllProductCreateShipment();
+    }
+
+    @Override
+    public Product findByProductIdIs(Long productId) {
+        return iProductRepository.findByProductIdIs(productId);
+    }
 }

@@ -1,11 +1,10 @@
 package com.example.medicalsupplieswebsite.dto.shipmentdto;
 
-import com.example.medicalsupplieswebsite.entity.Product;
+
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.apache.catalina.webresources.StandardRoot;
+
 
 @Getter
 @Setter
