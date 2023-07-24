@@ -17,7 +17,6 @@ public class JwtResponse {
     private String type = "Bearer";
     private Long id;
     private String username;
-    @JsonBackReference
     private List<String> roles;
 
     public JwtResponse(String accessToken, Long id, String username, List<String> roles) {
