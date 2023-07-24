@@ -112,10 +112,6 @@ public interface IProductRepository extends JpaRepository<Product,Long> {
             value = "SELECT product_id, product_img, product_price " +
                     "FROM product "+
                     "ORDER BY product_price DESC " +
-                    "LIMIT 3",
-            countQuery = "SELECT COUNT(product_id) " +
-                    "FROM product" +
-                    "ORDER BY product_price DESC " +
                     "LIMIT 3")
     List<ProductPriceDto> getProductPrice();
 }

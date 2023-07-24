@@ -38,7 +38,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
 
 
     @Modifying
-    @Query(value = "update from Customer set is_enable = false where customer_id = :id ", nativeQuery = true)
+    @Query(value = "update Customer set is_enable = false where customer_id = :id ", nativeQuery = true)
     void deleteCustomerId(@Param("id") Long id);
 
     @Modifying

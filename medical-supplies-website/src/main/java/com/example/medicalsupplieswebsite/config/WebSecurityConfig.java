@@ -43,29 +43,37 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
     }
+    // Config goc cua ThanhNV
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.cors().and().csrf().disable();
+//        http.csrf()
+//                .disable()
+//                .authorizeRequests()
+//                .antMatchers("/api/v1/public/**")
+//                .permitAll()
+//                .antMatchers("/api/v1/cart/**").hasAnyRole("USER", "ADMIN")
+//                .antMatchers("/api/v1/employee/**").hasAnyRole("SALE", "ACCOUNTANT", "ADMIN")
+//                .antMatchers("/api/v1/customer/**").hasAnyRole("USER", "ADMIN")
+//                .antMatchers("api/v1/admin/**").hasRole("ADMIN")
+//                .antMatchers("/api/v1/supply/**").hasRole("ADMIN")
+//                .antMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+//                .cors()
+//                .and()
+//                .exceptionHandling()
+//                .authenticationEntryPoint(jwtEntryPoint)
+//                .and()
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+//      }
 
+    //Config cua NhatLH
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf()
-                .disable()
-                .authorizeRequests()
-                .antMatchers("/api/v1/public/**", "/api/v1/product/home/**","/api/v1/employee/**","/api/v1/position/**")
-                .permitAll()
-                .antMatchers("/api/v1/cart/**").hasAnyRole("USER", "ADMIN")
-//                .antMatchers("/api/v1/employee/**").hasAnyRole("SALE", "ACCOUNTANT", "ADMIN")
-                .antMatchers("/api/v1/customer/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/api/v1/customer/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers("api/v1/admin/**").hasRole("ADMIN")
-                .antMatchers("/api/v1/supply/**").hasRole("ADMIN")
-                .antMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
-                .anyRequest()
-                .authenticated()
-                .and()
-                .exceptionHandling()
-                .authenticationEntryPoint(jwtEntryPoint)
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        http.cors().and().csrf().disable();
     }
 }

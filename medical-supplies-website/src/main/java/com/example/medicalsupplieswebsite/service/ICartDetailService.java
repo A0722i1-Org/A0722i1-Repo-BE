@@ -5,8 +5,11 @@ import com.example.medicalsupplieswebsite.entity.CartDetail;
 import java.util.List;
 
 public interface ICartDetailService extends IService<CartDetail>{
+    //Author: NhatLH
+    void add(Long productId, Long cartId);
+
     List<CartDetail> findByCartId(Long id);
 
-    CartDetail save(CartDetail cartDetail);
+    CartDetail update(CartDetail cartDetail);
 
 }

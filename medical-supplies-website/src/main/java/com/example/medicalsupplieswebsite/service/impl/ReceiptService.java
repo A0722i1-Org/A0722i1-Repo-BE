@@ -29,7 +29,7 @@ public class ReceiptService implements IReceiptService {
     }
 
     @Override
-    public Receipt save(Receipt receipt) {
+    public Receipt update(Receipt receipt) {
         return null;
     }
 

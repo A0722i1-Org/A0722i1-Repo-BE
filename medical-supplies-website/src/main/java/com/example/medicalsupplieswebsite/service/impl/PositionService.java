@@ -40,6 +40,11 @@ public class PositionService implements IPositionService {
     }
 
     @Override
+    public Position update(Position position) {
+        return null;
+    }
+
+    @Override
     public void deleteById(Long id) {
 
     }
