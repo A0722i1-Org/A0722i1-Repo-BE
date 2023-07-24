@@ -8,21 +8,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import javax.persistence.Tuple;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface IProductRepository extends JpaRepository<Product,Long> {
+public interface IProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "select p.product_id,expire_date,is_enable,product_code,product_img,product_name,product_price," +
             "product_quantity,category_id,p.customer_id,\n" + "product_info_id from shipment as s inner join shipment_detail " +
             "as sd on \n" + "s.shipment_id = sd.shipment_id inner join product as p on sd.product_id = p.product_id " +
             "where p.product_id = ?1", nativeQuery = true)
     Product findByIdProductShipment(Long productId);
+
     @Query(value = "select p.product_id,expire_date,is_enable,product_code,product_img,product_name,product_price,product_quantity,category_id,p.customer_id,product_info_id from receipt as r inner join receipt_detail as rd on r.receipt_id = rd.receipt_id inner join product as p on rd.product_id = p.product_id where p.product_id = ?1", nativeQuery = true)
     Product findByProductId(Long productId);
+
     @Query(nativeQuery = true,
             value = "select p.product_code, p.product_name, ct.category_name, p.product_price, p.expire_date, c.name " +
                     "from product p " +
@@ -59,6 +59,7 @@ public interface IProductRepository extends JpaRepository<Product,Long> {
 
     /**
      * VanNT
+     *
      * @param pageable
      * @return page product
      */
@@ -73,10 +74,8 @@ public interface IProductRepository extends JpaRepository<Product,Long> {
 
     /**
      * VanNT
+     *
      * @param productName
-     * @param categoryName
-     * @param minPrice
-     * @param maxPrice
      * @param pageable
      * @return search product with productNam and categoryNam and productPrice
      */
@@ -84,26 +83,39 @@ public interface IProductRepository extends JpaRepository<Product,Long> {
             value = "SELECT p.product_id, p.product_name, p.product_img, p.product_price, ct.category_name " +
                     "FROM product p " +
                     "INNER JOIN category ct ON p.category_id = ct.category_id " +
-                    "WHERE lower(p.product_name) LIKE lower(concat('%', :productName, '%')) " +
-                    "AND lower(ct.category_name) LIKE lower(concat('%', :categoryName, '%')) " +
-                    "AND p.product_price BETWEEN :minPrice AND :maxPrice",
+                    "WHERE lower(p.product_name) LIKE lower(concat('%', :productName, '%')) ",
             countQuery = "SELECT COUNT(p.product_id) " +
                     "FROM product p " +
                     "INNER JOIN category ct ON p.category_id = ct.category_id " +
-                    "WHERE lower(p.product_name) LIKE lower(concat('%', :productName, '%'))" +
-                    "AND lower(ct.category_name) LIKE lower(concat('%', :categoryName, '%')) " +
-                    "AND p.product_price BETWEEN :minPrice AND :maxPrice")
-
-    Page<ProductHomeDto> searchProduct(String productName,
-                                String categoryName, String minPrice, String maxPrice,Pageable pageable);
+                    "WHERE lower(p.product_name) LIKE lower(concat('%', :productName, '%'))")
+    Page<ProductHomeDto> searchProduct(@Param("productName") String productName, Pageable pageable);
 
     /**
      * VanNT
+     *
+     * @param categogy
+     * @param pageable
+     * @return search product with productNam and categoryNam and productPrice
+     */
+    @Query(nativeQuery = true,
+            value = "SELECT p.product_id, p.product_name, p.product_img, p.product_price, ct.category_name " +
+                    "FROM product p " +
+                    "INNER JOIN category ct ON p.category_id = ct.category_id " +
+                    "WHERE lower(p.category_id) LIKE lower(concat('%', :categoryId, '%')) ",
+            countQuery = "SELECT COUNT(p.product_id) " +
+                    "FROM product p " +
+                    "INNER JOIN category ct ON p.category_id = ct.category_id " +
+                    "WHERE lower(p.category_id) LIKE lower(concat('%', :categoryId, '%'))")
+    Page<ProductHomeDto> searchProductByCategory(@Param("categoryId") Long categoryId, Pageable pageable);
+
+    /**
+     * VanNT
+     *
      * @return list highest price product
      */
     @Query(nativeQuery = true,
             value = "SELECT product_id, product_img, product_price " +
-                    "FROM product "+
+                    "FROM product " +
                     "ORDER BY product_price DESC " +
                     "LIMIT 3",
             countQuery = "SELECT COUNT(product_id) " +
