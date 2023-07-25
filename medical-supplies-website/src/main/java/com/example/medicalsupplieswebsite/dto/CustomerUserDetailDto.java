@@ -16,9 +16,10 @@ import java.sql.Date;
 @AllArgsConstructor
 public class CustomerUserDetailDto {
     Long customerId;
+    String customerCode;
     String customerName;
     String phone;
-    Integer gender;
+    Boolean gender;
     Date dateOfBirth;
     String idCard;
     String customerAddress;
@@ -30,9 +31,10 @@ public class CustomerUserDetailDto {
     public static CustomerUserDetailDto TupleToCustomerDto(Tuple tuple) {
         return new CustomerUserDetailDto(
                 tuple.get("customer_id", BigInteger.class).longValue(),
+                tuple.get("customer_code", String.class),
                 tuple.get("name", String.class),
                 tuple.get("phone", String.class),
-                tuple.get("gender", Integer.class),
+                tuple.get("gender", Boolean.class),
                 tuple.get("date_of_birth", Date.class),
                 tuple.get("id_card", String.class),
                 tuple.get("customer_address", String.class),

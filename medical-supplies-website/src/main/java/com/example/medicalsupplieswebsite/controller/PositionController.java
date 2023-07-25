@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin(value = "http://localhost:4200")
 @RequestMapping("api/v1/position")
 public class PositionController {
     @Autowired
