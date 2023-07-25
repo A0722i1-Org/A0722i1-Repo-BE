@@ -5,6 +5,7 @@ import com.example.medicalsupplieswebsite.repository.IPositionRepository;
 import com.example.medicalsupplieswebsite.service.IPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,11 +19,10 @@ public class PositionService implements IPositionService {
      * Date created: 12/07/2023
      * @return List position
      */
-    @Override
     public List<Position> findAll() {
         return iPositionRepository.findAll();
-    }
 
+    }
     /**
      * Created by: PhongTD
      * Date created: 12/07/2023
@@ -48,4 +48,6 @@ public class PositionService implements IPositionService {
     public void deleteById(Long id) {
 
     }
+
+
 }
