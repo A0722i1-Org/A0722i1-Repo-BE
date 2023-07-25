@@ -3,19 +3,21 @@ package com.example.medicalsupplieswebsite.repository;
 import com.example.medicalsupplieswebsite.entity.Employee;
 import com.example.medicalsupplieswebsite.entity.Position;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import javax.persistence.Tuple;
-import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import javax.persistence.Tuple;
+import javax.transaction.Transactional;
 
+import org.springframework.data.repository.query.Param;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Transactional
-public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
+public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
+
+
+
     /**
      * Create by: PhongTD
      * Date create: 12/07/2023
@@ -81,13 +83,13 @@ public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
             " employee_img, employee_name, gender, " +
             "employee.is_enable, salary, employee.account_id, " +
             "employee.position_id, position_name, username,employee.email," +
-            "employee_code,id_card,phone\n" +
+            "employee_code,id_card,phone,employee.salary\n" +
             "FROM employee\n" +
             "JOIN account ON employee.account_id = account.account_id\n" +
             "JOIN position ON employee.position_id = position.position_id\n" +
-            "WHERE employee_name LIKE %?% \n" +
-            "  AND date_of_birth LIKE %?% \n" +
-            "  AND position_name LIKE %?% \n" +
+            "WHERE employee_name LIKE %?1% \n" +
+            "  AND date_of_birth LIKE %?2% \n" +
+            "  AND position_name LIKE %?3% \n" +
             "  AND employee.is_enable = false\n" +
             "LIMIT 0, 300;"
             ,nativeQuery = true)
@@ -120,6 +122,12 @@ public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
             "  AND employee.is_enable = false \n" +
             "LIMIT 0, 300;",nativeQuery = true)
     Employee getEmployeeById(Long id);
+
+    /*PhucND tìm kiếm employeeId theo username*/
+    @Query(value = "select employee_id,date_of_birth,employee_address,employee_img,employee_name,gender,e.is_enable,salary,e.account_id,position_id,e.email,employee_code,id_card,phone  from employee as e inner join account as a on e.account_id = a.account_id where username = ?1", nativeQuery = true)
+    Optional<Employee> findEmployeeIdByUserName(String userName);
+    @Query(value = "select employee_id,date_of_birth,employee_address,employee_img,employee_name,gender,e.is_enable,salary,e.account_id,position_id,e.email,employee_code,id_card,phone  from employee as e inner join account as a on e.account_id = a.account_id where username = ?1", nativeQuery = true)
+    Optional<Employee> findEmployeeByUserName(String userName);
 
     @Modifying
     @Query(value = "UPDATE employee e " +

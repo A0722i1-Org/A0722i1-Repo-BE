@@ -3,17 +3,17 @@ package com.example.medicalsupplieswebsite.controller;
 import com.example.medicalsupplieswebsite.entity.Position;
 import com.example.medicalsupplieswebsite.service.IPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @RestController
-@CrossOrigin("*")
-@RequestMapping("api/positions")
+@CrossOrigin("http://localhost:4200")
+@RequestMapping("api/v1/position")
 public class PositionController {
     @Autowired
     private IPositionService iPositionService;
@@ -24,7 +24,7 @@ public class PositionController {
      * @return list position
      */
     @GetMapping("")
-    public Page<Position> getListPosition() {
-        return iPositionService.findAll(Pageable.unpaged());
+    public List<Position> getListPosition() {
+        return iPositionService.findAll();
     }
 }
