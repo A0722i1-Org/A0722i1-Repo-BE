@@ -1,23 +1,23 @@
 package com.example.medicalsupplieswebsite.dto;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.sql.Date;
 
 public class EmployeeDTO {
     private String employeeImg;
     @NotBlank(message = "Vui lòng nhập họ và tên!")
+    @Size(min = 5,max = 100,message = "Họ và tên phải có độ dài từ 5 đến 100 ký tự.")
+//    @Pattern(regexp = "^[a-zA-ZÀ-Ỹà-ỹĂăÂâĐđÊêÔôƠơƯưá-ýÁ-Ý]*\\\\s?[a-zA-ZÀ-Ỹà-ỹĂăÂâĐđÊêÔôƠơƯưá-ýÁ-Ý]*\\\\s?[a-zA-ZÀ-Ỹà-ỹĂăÂâĐđÊêÔôƠơƯưá-ýÁ-Ý]*$",message = "Vui lòng nhập đúng định dạng !")
     private String employeeName;
     private boolean gender;
     @NotNull(message = "Vui lòng nhập ngày tháng năm sinh!")
-
+//    @Pattern(regexp = "^(0?[1-9]|[1-2][0-9]|3[0-1])/(0?[1-9]|1[0-2])/\\\\d{4}$",message = "Vui lòng nhập đúng định dạng")
     private Date dateOfBirth;
     @NotBlank(message = "Vui lòng nhập địa chỉ!")
-
+    @Size(min = 20,max = 255,message = "Họ và tên phải có độ dài từ 20 đến 255 ký tự.")
     private String employeeAddress;
-    @NotBlank(message = "Vui lòng nhập số điện thoại!")
-
+    @NotEmpty(message = "Vui lòng nhập số điện thoại!")
+    @Pattern(regexp = "(((\\+|)84)|0)(3|5|7|8|9)+([0-9]{8})",message = "Vui lòng nhập đúng định dạng")
     private String phone;
     @Email(message = "Vui lòng nhập đúng định dạng!")
     private String email;
