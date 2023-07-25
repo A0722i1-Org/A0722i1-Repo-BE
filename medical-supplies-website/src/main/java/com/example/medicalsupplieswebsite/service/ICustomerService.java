@@ -9,6 +9,7 @@ import com.example.medicalsupplieswebsite.dto.receipt_dto.SupplierDTO;
 import com.example.medicalsupplieswebsite.entity.Customer;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ICustomerService extends IService<Customer>{
     List<Customer> searchCustomers(String type , String name ,String address , String phone);
@@ -25,5 +26,6 @@ public interface ICustomerService extends IService<Customer>{
     CustomerUserDetailDto findUserDetailByUsername(String username);
     String findAddressByCustomerId(Long customerId );
     List<SupplierDTO> getALlCustomerByCustomerTypeSupplier();
+    CustomerDto findByPhoneCustomer(String phone);
 
 }

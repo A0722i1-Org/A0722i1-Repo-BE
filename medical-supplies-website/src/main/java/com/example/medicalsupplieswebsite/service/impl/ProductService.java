@@ -4,6 +4,7 @@ import com.example.medicalsupplieswebsite.dto.Supply;
 import com.example.medicalsupplieswebsite.dto.receipt_dto.ProductDTO;
 import com.example.medicalsupplieswebsite.dto.ProductHomeDto;
 import com.example.medicalsupplieswebsite.dto.ProductPriceDto;
+import com.example.medicalsupplieswebsite.dto.shipmentdto.ProductDto;
 import com.example.medicalsupplieswebsite.entity.Product;
 import com.example.medicalsupplieswebsite.repository.IProductRepository;
 import com.example.medicalsupplieswebsite.service.IProductService;
@@ -18,7 +19,6 @@ import java.util.List;
 public class ProductService implements IProductService {
     @Autowired
     private IProductRepository iProductRepository;
-
 
     @Override
     public Page<Product> findAll(Pageable pageable) {
@@ -36,14 +36,10 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product save(Product product) {
-        return null;
-    }
-
-    @Override
     public void deleteById(Long id) {
 
     }
+
     @Override
     public Product findByIdProductShipment(Long productId) {
         return iProductRepository.findByIdProductShipment(productId);
@@ -82,9 +78,13 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Page<ProductHomeDto> searchProduct(String productName, String categoryName,
-                                              String minPrice, String maxPrice, Pageable pageable) {
-        return iProductRepository.searchProduct(productName,categoryName,minPrice,maxPrice, pageable);
+    public Page<ProductHomeDto> searchProduct(String productName, Pageable pageable) {
+        return iProductRepository.searchProduct(productName, pageable);
+    }
+
+    @Override
+    public Page<ProductHomeDto> searchProductByCategory(Long categoryId, Pageable pageable) {
+        return iProductRepository.searchProductByCategory(categoryId, pageable);
     }
 
     @Override
@@ -92,4 +92,14 @@ public class ProductService implements IProductService {
         return iProductRepository.getProductPrice();
     }
 
+
+    @Override
+    public List<ProductDto> findAllProductCreateShipment() {
+        return iProductRepository.findAllProductCreateShipment();
+    }
+
+    @Override
+    public Product findByProductIdIs(Long productId) {
+        return iProductRepository.findByProductIdIs(productId);
+    }
 }
