@@ -26,7 +26,7 @@ public class AccountController {
      * A0722I1-NhanTQ
      */
 
-    @PatchMapping("change-password")
+    @PatchMapping("/change-password")
     public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDto changePasswordDto) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(changePasswordDto.getUsername(), changePasswordDto.getPresentPassword()));
