@@ -20,7 +20,7 @@ public class Employee {
     private String email;
     private String phone;
     private String employeeAddress;
-    private Integer gender;
+    private Boolean gender;
     private Date dateOfBirth;
     private String idCard;
     private Integer salary;
@@ -34,7 +34,7 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "position_id")
     private Position position;
-    public Employee(Long employeeId, String employeeCode, String employeeName, String email, String phone, String employeeAddress, Integer gender, String idCard, Date dateOfBirth, String employeeImg, boolean isEnable, Position position) {
+    public Employee(Long employeeId, String employeeCode, String employeeName, String email, String phone, String employeeAddress, Boolean gender, String idCard, Date dateOfBirth, String employeeImg, boolean isEnable, Position position) {
         this.employeeId = employeeId;
         this.employeeCode = employeeCode;
         this.employeeName = employeeName;
@@ -48,4 +48,5 @@ public class Employee {
         this.isEnable = isEnable;
         this.position = position;
     }
+
 }

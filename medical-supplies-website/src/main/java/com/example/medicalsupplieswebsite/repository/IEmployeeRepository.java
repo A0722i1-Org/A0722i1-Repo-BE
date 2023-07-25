@@ -34,17 +34,10 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
     @Modifying
     @Query("UPDATE Employee SET employeeName = ?1, email = ?2, phone = ?3, employeeAddress = ?4, gender = ?5, idCard = ?6," +
             " dateOfBirth = ?7,employeeImg = ?8 ,position = ?9 WHERE employeeId = ?10")
-    void updateEmployee(String employeeName, String email, String phone, String employeeAddress, Integer gender,
+    void updateEmployee(String employeeName, String email, String phone, String employeeAddress, Boolean gender,
                         String idCard, Date dateOfBirth, String avatar, Position position, Long id);
 
-    /**
-     * Created by: PhongTD
-     * Date created: 12/07/2023
-     * @param id
-     * @return Employee was found by id
-     */
-    @Query("SELECT employee FROM Employee employee WHERE employee.employeeId = ?1")
-    Employee findAllById(Long id);
+
 
     @Query(value =
             "select e.employee_id, e.employee_code, e.employee_name, e.email, e.phone, " +
