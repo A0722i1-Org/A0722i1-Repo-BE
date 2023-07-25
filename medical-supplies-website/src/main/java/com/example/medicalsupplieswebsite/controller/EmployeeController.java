@@ -182,6 +182,19 @@ public class EmployeeController {
         iEmployeeService.updateEmployeeByFieldsDTO(employeeDTO.getEmployeeName(), employeeDTO.getEmployeeImg(),
                 employeeDTO.isGender(), employeeDTO.getDateOfBirth(), employeeDTO.getEmployeeAddress(),
                 employeeDTO.getPhone(), employeeDTO.getEmail(), username);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(employeeDTO,HttpStatus.OK);
+    }
+    /*
+     *NhanTQ
+     */
+    @GetMapping("/user-detail-update")
+    public ResponseEntity<?> getUserInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Employee employee = iEmployeeService.findByUsername(username);
+        if (employee == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+            return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 }

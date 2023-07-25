@@ -40,12 +40,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountController {
     private final AccountService accountService;
     private final EmployeeService employeeService;
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    public AccountController(AccountService accountService, EmployeeService employeeService) {
+    @Autowired
+    public AccountController(AccountService accountService, EmployeeService employeeService, AuthenticationManager authenticationManager) {
         this.accountService = accountService;
         this.employeeService = employeeService;
+        this.authenticationManager = authenticationManager;
     }
 
     /*ThienTDV thêm Tài khoản và setRole cho tài khoản*/
