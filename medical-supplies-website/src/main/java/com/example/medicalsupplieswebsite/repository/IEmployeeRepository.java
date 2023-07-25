@@ -40,7 +40,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
     @Modifying
     @Query("UPDATE Employee SET employeeName = ?1, email = ?2, phone = ?3, employeeAddress = ?4, gender = ?5, idCard = ?6," +
             " dateOfBirth = ?7,employeeImg = ?8 ,position = ?9 WHERE employeeId = ?10")
-    void updateEmployee(String employeeName, String email, String phone, String employeeAddress, Integer gender,
+    void updateEmployee(String employeeName, String email, String phone, String employeeAddress, Boolean gender,
                         String idCard, Date dateOfBirth, String avatar, Position position, Long id);
 
     /**
