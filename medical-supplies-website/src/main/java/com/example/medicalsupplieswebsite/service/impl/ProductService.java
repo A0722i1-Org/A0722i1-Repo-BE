@@ -102,4 +102,8 @@ public class ProductService implements IProductService {
     public Product findByProductIdIs(Long productId) {
         return iProductRepository.findByProductIdIs(productId);
     }
+    @Override
+    public Product findByIdProductDetail(Long id) {
+        return iProductRepository.findByIdProductDetail(id);
+    }
 }
