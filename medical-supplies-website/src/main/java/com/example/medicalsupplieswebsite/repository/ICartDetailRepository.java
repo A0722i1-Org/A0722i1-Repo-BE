@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
+
 @Transactional
 public interface ICartDetailRepository extends JpaRepository<CartDetail,Long> {
     @Query(nativeQuery = true,
@@ -28,4 +30,8 @@ public interface ICartDetailRepository extends JpaRepository<CartDetail,Long> {
     @Query(value = "DELETE FROM cart_detail  WHERE cart_detail_id = :id",
             nativeQuery = true)
     void deleteById(@Param("id") Long id);
+
+    @Query(nativeQuery = true,
+            value = "SELECT * FROM cart_detail WHERE product_id = :product_id AND cart_id = :cart_id AND status = false")
+    Optional<CartDetail> checkAvailable(@Param("product_id") Long id, @Param("cart_id") Long cart_id);
 }
