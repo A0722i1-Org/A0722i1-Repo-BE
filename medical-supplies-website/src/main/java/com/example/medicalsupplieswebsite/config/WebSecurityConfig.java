@@ -44,21 +44,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(12);
     }
 
+    //Config cua NhatLH
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/public/**", "/api/v1/product/home/**","/api/v1/employee/**")
+                .antMatchers("/api/v1/public/**", "/api/v1/product/home/**", "/api/v1/category/home/**")
                 .permitAll()
                 .antMatchers("/api/v1/cart/**").hasAnyRole("USER", "ADMIN")
-//                .antMatchers("/api/v1/employee/**").hasAnyRole("SALE", "ACCOUNTANT", "ADMIN")
+                .antMatchers("/api/v1/employee/**").hasAnyRole("SALE", "ACCOUNTANT", "ADMIN")
                 .antMatchers("/api/v1/customer/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("api/v1/admin/**").hasRole("ADMIN")
                 .antMatchers("/api/v1/supply/**").hasRole("ADMIN")
                 .antMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/api/v1/shipment").hasAnyRole("ACCOUNTANT", "ADMIN")
+                .antMatchers("/api/v1/receipt").hasAnyRole("ACCOUNTANT", "ADMIN")
                 .anyRequest()
                 .authenticated()
+                .and()
+                .cors()
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtEntryPoint)

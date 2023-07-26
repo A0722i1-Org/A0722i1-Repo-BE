@@ -1,11 +1,9 @@
 package com.example.medicalsupplieswebsite.controller;
 
 import com.example.medicalsupplieswebsite.dto.CartWithDetail;
+import com.example.medicalsupplieswebsite.dto.EmailDetails;
 import com.example.medicalsupplieswebsite.entity.*;
-import com.example.medicalsupplieswebsite.service.ICartDetailService;
-import com.example.medicalsupplieswebsite.service.ICartService;
-import com.example.medicalsupplieswebsite.service.ICustomerService;
-import com.example.medicalsupplieswebsite.service.IShipmentService;
+import com.example.medicalsupplieswebsite.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,59 +18,73 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/cart")
 public class CartController {
+    //Author: NhatLH
     private final ICartService cartService;
     private final ICartDetailService cartDetailService;
-    private final ICustomerService customerService;
-    private final IShipmentService shipmentService;
+    private final IEmailService emailService;
 
     @Autowired
-    CartController(ICartService cartService, ICartDetailService cartDetailService, ICustomerService customerService, IShipmentService shipmentService) {
+    CartController(ICartService cartService, ICartDetailService cartDetailService, IEmailService emailService) {
         this.cartService = cartService;
         this.cartDetailService = cartDetailService;
-        this.customerService = customerService;
-        this.shipmentService = shipmentService;
+        this.emailService = emailService;
     }
 
     @GetMapping()
     public ResponseEntity<CartWithDetail> findCartByUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-//        Customer customer = this.customerService.findByUsername(username);
         Cart cart = this.cartService.findByUsername(username);
-        List<CartDetail> cartDetailList = this.cartDetailService.findByCartId(cart.getCartId());
-        CartWithDetail cartWithDetail = new CartWithDetail();
-//        cartWithDetail.setCartId(cart.getCartId());
-//        cartWithDetail.setReceiverName(cart.getReceiverName());
-//        cartWithDetail.setReceiverAddress(cart.getReceiverAddress());
-//        cartWithDetail.setReceiverEmail(cart.getReceiverEmail());
-//        cartWithDetail.setCustomer_id(customer.getCustomerId());
-        cartWithDetail.setCart(cart);
-        cartWithDetail.setCartDetailList(cartDetailList);
-        return new ResponseEntity<CartWithDetail>(cartWithDetail, HttpStatus.OK);
+        Long id = cart.getCartId();
+        List<CartDetail> cartDetailList = this.cartDetailService.findByCartId(id);
+        CartWithDetail cartWithDetail = new CartWithDetail(cart, cartDetailList);
+        return new ResponseEntity<>(cartWithDetail, HttpStatus.OK);
+    }
+
+    @GetMapping("/add/{productId}")
+    public ResponseEntity<CartWithDetail> addProductToCart(@PathVariable("productId") Long productId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Cart cart = this.cartService.findByUsername(username);
+        Long cartId = cart.getCartId();
+        this.cartDetailService.add(productId, cartId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<CartWithDetail> updateCart(@PathVariable("id") Long id, @RequestBody CartWithDetail cartWithDetail) {
+    public ResponseEntity<CartWithDetail> updateCart(@RequestBody CartWithDetail cartWithDetail) {
         Cart cart = cartWithDetail.getCart();
-        this.cartService.save(cart);
+        this.cartService.update(cart);
         List<CartDetail> cartDetailList = cartWithDetail.getCartDetailList();
         for (CartDetail cartDetail : cartDetailList) {
-            this.cartDetailService.save(cartDetail);
+            this.cartDetailService.update(cartDetail);
         }
-        return new ResponseEntity<CartWithDetail>(cartWithDetail, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/checkout")
-    public ResponseEntity<CartWithDetail> checkout(@PathVariable("id") Long id, @RequestBody CartWithDetail cartWithDetail) {
-        Shipment shipment = new Shipment();
-        List<CartDetail> checkoutList = new ArrayList<>();
+    public ResponseEntity<CartWithDetail> checkout(@RequestBody CartWithDetail cartWithDetail) {
         Cart cart = cartWithDetail.getCart();
-        this.cartService.save(cart);
         List<CartDetail> cartDetailList = cartWithDetail.getCartDetailList();
+        int totalAmount = 0;
+        this.cartService.update(cart);
         for (CartDetail cartDetail : cartDetailList) {
-            checkoutList.add(cartDetail);
-            this.cartDetailService.save(cartDetail);
+            if (cartDetail.isStatus()) {
+                totalAmount += cartDetail.getQuantity() * cartDetail.getProduct().getProductPrice();
+            }
+            this.cartDetailService.update(cartDetail);
         }
-        return new ResponseEntity<CartWithDetail>(cartWithDetail, HttpStatus.OK);
+        if (totalAmount != 0) {
+            this.emailProcess(cart, totalAmount);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private void emailProcess(Cart cart, int totalAmount) {
+        String recipient = cart.getReceiverEmail();
+        String subject = "Email xác nhận đơn hàng";
+        String body = "Xin chào quý khách: " + cart.getReceiverName() + ",\nĐơn hàng của quý khách đã được tiếp nhận.\nVà dự kiến sẽ được giao đến địa chỉ: " + cart.getReceiverAddress() + " trong vòng 3-5 ngày.\nTổng giá trị thanh toán là: " + totalAmount + " VND.\nXin cảm ơn quý khách đã tin dùng sản phẩm của công ty chúng tôi.\nA0722I1 Co.Ltd";
+        EmailDetails emailDetails = new EmailDetails(recipient, subject, body);
+        this.emailService.sendSimpleMail(emailDetails);
     }
 }

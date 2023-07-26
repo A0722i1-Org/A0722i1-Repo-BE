@@ -28,7 +28,7 @@ public class ShipmentTypeService implements IShipmentTypeService {
     }
 
     @Override
-    public ShipmentType save(ShipmentType shipmentType) {
+    public ShipmentType update(ShipmentType shipmentType) {
         return null;
     }
 
