@@ -15,8 +15,6 @@ import java.util.List;
 
 @Service
 public class CustomerService implements ICustomerService {
-
-    @Autowired
     private final ICustomerRepository customerRepository;
 
     @Autowired

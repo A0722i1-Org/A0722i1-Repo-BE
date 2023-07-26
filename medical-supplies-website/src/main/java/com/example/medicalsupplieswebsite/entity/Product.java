@@ -8,13 +8,14 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Table(name = "product")
 public class Product implements Serializable {
 

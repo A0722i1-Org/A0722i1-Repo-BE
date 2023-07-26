@@ -37,7 +37,4 @@ out/
 ### VS Code ###
 .vscode/
 
-# Ignore application.properties
-../src/main/resources/application.properties
-
-D:\CODEGYM\module_6\Spring\A0722i1-Repo-BE\medical-supplies-website\gradle\wrapper\gradle-wrapper.properties
+#Configure file

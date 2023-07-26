@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
@@ -18,7 +17,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Optional;
 
-@Repository
 public interface IProductRepository extends JpaRepository<Product,Long> {
 
     /*
@@ -39,8 +37,6 @@ public interface IProductRepository extends JpaRepository<Product,Long> {
     /*
      A0722I1-TaiPA
     */
-    @Modifying
-    @Transactional
     @Query(value = "insert into product(expire_date, is_enable, product_code, product_img, product_name, product_price, product_quantity, category_id, customer_id, product_info_id)" +
             " values(:expire_date, :is_enable, :product_code, :product_img, :product_name, :product_price, :product_quantity, :category_id, :customer_id, :product_info_id)",
             nativeQuery = true)
@@ -74,6 +70,6 @@ public interface IProductRepository extends JpaRepository<Product,Long> {
                               @Param("customer_id") String customer_id,
                               @Param("product_info_id") String product_info_id,
                               @Param("id") Long id
-
     );
+
 }

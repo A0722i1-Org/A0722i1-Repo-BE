@@ -21,7 +21,6 @@ public class ProductCreateDTO {
     private Long productId;
 
     @NotBlank(message = "Tên vật tư không được để trống")
-    @Pattern(regexp = "^[^!@#$%^&*()_+<>?'\\\"{}\\\\`~|/\\\\\\\\]+$" ,message = "Tên vật tư không chứa kí tự đặc biệt")
     private String productName;
 
     @NotNull(message = "Giá vật tư không được để trống")
@@ -66,6 +65,5 @@ public class ProductCreateDTO {
         this.productInfo = productInfo;
         this.customer = customer;
     }
-
 
 }
