@@ -47,8 +47,13 @@ public class CartController {
         String username = authentication.getName();
         Cart cart = this.cartService.findByUsername(username);
         Long cartId = cart.getCartId();
-        this.cartDetailService.add(productId, cartId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        CartDetail cartDetail = this.cartDetailService.checkAvailable(productId, cartId);
+        if (cartDetail == null) {
+            this.cartDetailService.add(productId, cartId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 
     @PutMapping("/update")
@@ -75,16 +80,10 @@ public class CartController {
             this.cartDetailService.update(cartDetail);
         }
         if (totalAmount != 0) {
-            this.emailProcess(cart, totalAmount);
+            this.emailService.emailProcess(cart, totalAmount);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private void emailProcess(Cart cart, int totalAmount) {
-        String recipient = cart.getReceiverEmail();
-        String subject = "Email xác nhận đơn hàng";
-        String body = "Xin chào quý khách: " + cart.getReceiverName() + ",\nĐơn hàng của quý khách đã được tiếp nhận.\nVà dự kiến sẽ được giao đến địa chỉ: " + cart.getReceiverAddress() + " trong vòng 3-5 ngày.\nTổng giá trị thanh toán là: " + totalAmount + " VND.\nXin cảm ơn quý khách đã tin dùng sản phẩm của công ty chúng tôi.\nA0722I1 Co.Ltd";
-        EmailDetails emailDetails = new EmailDetails(recipient, subject, body);
-        this.emailService.sendSimpleMail(emailDetails);
-    }
+
 }

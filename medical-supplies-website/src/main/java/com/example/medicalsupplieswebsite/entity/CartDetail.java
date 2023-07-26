@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 @Getter
@@ -14,8 +15,12 @@ public class CartDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartDetailId;
+    @NotNull
+    @Min(1)
     private int quantity;
+    @NotNull
     private boolean status;
+    @NotNull
     private Long cartId;
 
     @OneToOne(cascade = CascadeType.ALL)

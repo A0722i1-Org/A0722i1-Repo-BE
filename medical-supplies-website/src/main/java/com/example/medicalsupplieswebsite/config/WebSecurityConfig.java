@@ -44,6 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(12);
     }
 
+// Global configurations
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf()
@@ -71,4 +72,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
+  
+// Config cua NhatLH de test API
+//     @Override
+//     protected void configure(HttpSecurity http) throws Exception {
+//         http.cors().and().csrf().disable();
 }
