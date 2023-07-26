@@ -34,9 +34,7 @@ public class SecurityController {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         String jwt = jwtUtility.generateJwtToken(authentication);
-
         UserPrinciple userDetails = (UserPrinciple) SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getPrincipal();

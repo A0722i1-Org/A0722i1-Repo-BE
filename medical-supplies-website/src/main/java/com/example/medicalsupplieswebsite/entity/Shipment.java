@@ -19,8 +19,8 @@ public class Shipment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long shipmentId;
     private String invoiceCode;
-    private String note;
     private Date dateOfCreate;
+    private String note;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "shipment_type_id")
     private ShipmentType shipmentType;

@@ -22,14 +22,9 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
-
     private String productName;
-
-
     private Integer productPrice;
-
     private Integer productQuantity;
-
     private String productImg;
 
     @GeneratedValue(generator = "person-generator")
@@ -38,9 +33,7 @@ public class Product implements Serializable {
             strategy = "com.example.medicalsupplieswebsite.utils.PersonAutoGenerator")
     @Column(length = 45)
     private String productCode;
-
     private Date expireDate;
-
     private boolean isEnable;
 
 

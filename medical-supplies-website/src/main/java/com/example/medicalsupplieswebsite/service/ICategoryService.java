@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ICategoryService extends IService<Category>{
     List<Category> findAll();
+    List<Category> getCategoryList();
 }

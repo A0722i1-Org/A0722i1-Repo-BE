@@ -30,9 +30,10 @@ public class ProductInfoService implements IProductInfoService {
     }
 
     @Override
-    public ProductInfo save(ProductInfo productInfo) {
+    public ProductInfo update(ProductInfo productInfo) {
         return null;
     }
+
 
     @Override
     public void deleteById(Long id) {

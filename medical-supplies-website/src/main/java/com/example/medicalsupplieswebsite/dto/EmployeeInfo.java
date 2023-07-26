@@ -4,6 +4,7 @@ import com.example.medicalsupplieswebsite.entity.Position;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.validation.Errors;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -11,8 +12,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 public class EmployeeInfo {
-    private Long employeeId;
-
     private String employeeCode;
 
     @NotBlank(message = "Vui lòng nhập họ tên")
@@ -35,7 +34,7 @@ public class EmployeeInfo {
     private String employeeAddress;
 
     @NotNull(message = "Vui lòng chọn giới tính")
-    private Integer gender;
+    private Boolean gender;
 
     @NotBlank(message = "Hộ chiếu/CMND không được để trống")
     @Pattern(regexp = "^\\d{12}$",message = "Hộ chiếu/CMND phải chứa 12 số")
@@ -54,9 +53,9 @@ public class EmployeeInfo {
     }
 
     public EmployeeInfo(Long employeeId, String employeeCode, String employeeName, String email, String phone,
-                        String employeeAddress, Integer gender, String idCard, Date dateOfBirth, String employeeImg,
+                        String employeeAddress, Boolean gender, String idCard, Date dateOfBirth, String employeeImg,
                         Position position) {
-        this.employeeId = employeeId;
+
         this.employeeCode = employeeCode;
         this.employeeName = employeeName;
         this.email = email;
@@ -67,14 +66,6 @@ public class EmployeeInfo {
         this.dateOfBirth = dateOfBirth;
         this.employeeImg = employeeImg;
         this.position = position;
-    }
-
-    public Long getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
     }
 
     public String getEmployeeCode() {
@@ -117,11 +108,11 @@ public class EmployeeInfo {
         this.employeeAddress = employeeAddress;
     }
 
-    public Integer getGender() {
+    public Boolean getGender() {
         return gender;
     }
 
-    public void setGender(Integer gender) {
+    public void setGender(Boolean gender) {
         this.gender = gender;
     }
 
