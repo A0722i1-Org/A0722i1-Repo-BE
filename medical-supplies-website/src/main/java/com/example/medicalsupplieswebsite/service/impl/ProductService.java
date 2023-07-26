@@ -84,4 +84,8 @@ public class ProductService implements IProductService {
         return iProductRepository.getProductPrice();
     }
 
+    @Override
+    public Product findByIdProductDetail(Long id) {
+        return iProductRepository.findByIdProductDetail(id);
+    }
 }
