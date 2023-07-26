@@ -21,7 +21,7 @@ public class CategoryController {
     @Autowired
     private ICategoryService categoryService;
 
-    @GetMapping("")
+    @GetMapping("/list")
     public ResponseEntity<List<Category>> findAll(){
         return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
     }

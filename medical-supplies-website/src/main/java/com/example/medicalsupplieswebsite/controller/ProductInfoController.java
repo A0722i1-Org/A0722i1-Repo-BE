@@ -19,7 +19,7 @@ public class ProductInfoController {
     @Autowired
     private IProductInfoService productInfoService;
 
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<List<ProductInfo>> productList(){
         return new ResponseEntity<>(productInfoService.productList(), HttpStatus.OK);
     }

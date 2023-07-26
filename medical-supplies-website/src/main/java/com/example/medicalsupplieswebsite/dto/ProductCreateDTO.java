@@ -16,7 +16,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @ToString
 @AllArgsConstructor
-public class ProductDTO {
+public class ProductCreateDTO {
 
     private Long productId;
 
@@ -55,7 +55,7 @@ public class ProductDTO {
     private String customer;
 
 
-    public ProductDTO(String productName, Integer productPrice, Integer productQuantity, String productImg, String productCode, Date expireDate, String category, String productInfo, String customer) {
+    public ProductCreateDTO(String productName, Integer productPrice, Integer productQuantity, String productImg, String productCode, Date expireDate, String category, String productInfo, String customer) {
         this.productName = productName;
         this.productPrice = productPrice;
         this.productQuantity = productQuantity;

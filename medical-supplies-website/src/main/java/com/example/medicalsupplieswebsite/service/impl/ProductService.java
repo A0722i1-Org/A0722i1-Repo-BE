@@ -1,24 +1,16 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
-import com.example.medicalsupplieswebsite.dto.ProductDTO;
+import com.example.medicalsupplieswebsite.dto.ProductCreateDTO;
 import com.example.medicalsupplieswebsite.entity.Product;
-import com.example.medicalsupplieswebsite.entity.ProductInfo;
 import com.example.medicalsupplieswebsite.error.NotFoundById;
 import com.example.medicalsupplieswebsite.repository.IProductRepository;
 import com.example.medicalsupplieswebsite.service.IProductService;
-import com.example.medicalsupplieswebsite.service.IService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ReflectionUtils;
 
-import java.lang.reflect.Field;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -87,7 +79,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void updateProductValid(ProductDTO product) {
+    public void updateProductValid(ProductCreateDTO product) {
         productRepository.updateProduct(
                 product.getExpireDate(),
                 false,
