@@ -1,17 +1,13 @@
 package com.example.medicalsupplieswebsite.controller;
 
-import com.example.medicalsupplieswebsite.dto.CustomerUserDetailDto;
 import com.example.medicalsupplieswebsite.entity.CustomerType;
-import com.example.medicalsupplieswebsite.service.ICustomerService;
 import com.example.medicalsupplieswebsite.service.ICustomerTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
