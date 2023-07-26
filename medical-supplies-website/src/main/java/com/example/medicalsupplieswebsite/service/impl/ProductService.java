@@ -14,15 +14,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import javax.persistence.Tuple;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductService implements IProductService {
     @Autowired
     private IProductRepository iProductRepository;
-
 
     @Override
     public Page<Product> findAll(Pageable pageable) {
@@ -40,14 +36,10 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product save(Product product) {
-        return null;
-    }
-
-    @Override
     public void deleteById(Long id) {
 
     }
+
     @Override
     public Product findByIdProductShipment(Long productId) {
         return iProductRepository.findByIdProductShipment(productId);
@@ -86,9 +78,13 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Page<ProductHomeDto> searchProduct(String productName, String categoryName,
-                                              String minPrice, String maxPrice, Pageable pageable) {
-        return iProductRepository.searchProduct(productName,categoryName,minPrice,maxPrice, pageable);
+    public Page<ProductHomeDto> searchProduct(String productName, Pageable pageable) {
+        return iProductRepository.searchProduct(productName, pageable);
+    }
+
+    @Override
+    public Page<ProductHomeDto> searchProductByCategory(Long categoryId, Pageable pageable) {
+        return iProductRepository.searchProductByCategory(categoryId, pageable);
     }
 
     @Override

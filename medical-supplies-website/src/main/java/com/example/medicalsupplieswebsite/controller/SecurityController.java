@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/public")
-//@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SecurityController {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -34,9 +34,7 @@ public class SecurityController {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         String jwt = jwtUtility.generateJwtToken(authentication);
-
         UserPrinciple userDetails = (UserPrinciple) SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getPrincipal();

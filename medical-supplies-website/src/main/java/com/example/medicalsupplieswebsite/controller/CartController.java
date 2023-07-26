@@ -29,4 +29,61 @@ public class CartController {
         this.cartDetailService = cartDetailService;
         this.emailService = emailService;
     }
+
+    @GetMapping()
+    public ResponseEntity<CartWithDetail> findCartByUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Cart cart = this.cartService.findByUsername(username);
+        Long id = cart.getCartId();
+        List<CartDetail> cartDetailList = this.cartDetailService.findByCartId(id);
+        CartWithDetail cartWithDetail = new CartWithDetail(cart, cartDetailList);
+        return new ResponseEntity<>(cartWithDetail, HttpStatus.OK);
+    }
+
+    @GetMapping("/add/{productId}")
+    public ResponseEntity<CartWithDetail> addProductToCart(@PathVariable("productId") Long productId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Cart cart = this.cartService.findByUsername(username);
+        Long cartId = cart.getCartId();
+        CartDetail cartDetail = this.cartDetailService.checkAvailable(productId, cartId);
+        if (cartDetail == null) {
+            this.cartDetailService.add(productId, cartId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<CartWithDetail> updateCart(@RequestBody CartWithDetail cartWithDetail) {
+        Cart cart = cartWithDetail.getCart();
+        this.cartService.update(cart);
+        List<CartDetail> cartDetailList = cartWithDetail.getCartDetailList();
+        for (CartDetail cartDetail : cartDetailList) {
+            this.cartDetailService.update(cartDetail);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/checkout")
+    public ResponseEntity<CartWithDetail> checkout(@RequestBody CartWithDetail cartWithDetail) {
+        Cart cart = cartWithDetail.getCart();
+        List<CartDetail> cartDetailList = cartWithDetail.getCartDetailList();
+        int totalAmount = 0;
+        this.cartService.update(cart);
+        for (CartDetail cartDetail : cartDetailList) {
+            if (cartDetail.isStatus()) {
+                totalAmount += cartDetail.getQuantity() * cartDetail.getProduct().getProductPrice();
+            }
+            this.cartDetailService.update(cartDetail);
+        }
+        if (totalAmount != 0) {
+            this.emailService.emailProcess(cart, totalAmount);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }

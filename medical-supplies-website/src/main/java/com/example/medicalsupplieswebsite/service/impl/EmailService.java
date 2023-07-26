@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService implements IEmailService {
     //Author: NhatLH
+
+    private final JavaMailSender javaMailSender;
     private JavaMailSender javaMailSender;
 
     @Autowired
@@ -20,7 +22,6 @@ public class EmailService implements IEmailService {
 
     @Value("${spring.mail.username}")
     private String sender;
-
     public String sendSimpleMail(EmailDetails details) {
 
         // Try block to check for exceptions
@@ -45,5 +46,13 @@ public class EmailService implements IEmailService {
         catch (Exception e) {
             return "Error while Sending Mail";
         }
+    }
+
+    public void emailProcess(Cart cart, int totalAmount) {
+        String recipient = cart.getReceiverEmail();
+        String subject = "Email xác nhận đơn hàng";
+        String body = "Xin chào quý khách: " + cart.getReceiverName() + ",\nĐơn hàng của quý khách đã được tiếp nhận.\nVà dự kiến sẽ được giao đến địa chỉ: " + cart.getReceiverAddress() + " trong vòng 3-5 ngày.\nTổng giá trị thanh toán là: " + totalAmount + " VND.\nXin cảm ơn quý khách đã tin dùng sản phẩm của công ty chúng tôi.\nA0722I1 Co.Ltd";
+        EmailDetails emailDetails = new EmailDetails(recipient, subject, body);
+        this.sendSimpleMail(emailDetails);
     }
 }

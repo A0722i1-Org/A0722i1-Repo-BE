@@ -33,17 +33,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountController {
     private final AccountService accountService;
     private final RoleService roleService;
+    private final EmployeeService employeeService;
+    private final AuthenticationManager authenticationManager;
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
     public AccountController(AccountService accountService, RoleService roleService) {
+    public AccountController(AccountService accountService, EmployeeService employeeService, AuthenticationManager authenticationManager) {
         this.accountService = accountService;
         this.roleService = roleService;
+        this.employeeService = employeeService;
+        this.authenticationManager = authenticationManager;
     }
 
     /*ThienTDV thêm Tài khoản và setRole cho tài khoản*/
     @PostMapping("/addAccount")
-    public ResponseEntity<?> addAccount(@Valid @RequestBody Account account, BindingResult bindingResult, @RequestParam Long roleId) {
+    public ResponseEntity<?> addAccountForEmployee(@Valid @RequestBody Account account, BindingResult bindingResult, @RequestParam Long roleId) {
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = new HashMap<>();
             bindingResult.getFieldErrors().forEach(

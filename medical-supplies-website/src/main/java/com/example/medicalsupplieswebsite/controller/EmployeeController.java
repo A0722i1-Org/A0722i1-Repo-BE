@@ -7,7 +7,10 @@ import com.example.medicalsupplieswebsite.dto.EmployeeDTO;
 import com.example.medicalsupplieswebsite.dto.EmployeeUserDetailDto;
 import com.example.medicalsupplieswebsite.entity.Employee;
 import com.example.medicalsupplieswebsite.service.IEmployeeService;
+import com.example.medicalsupplieswebsite.service.IPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -50,27 +53,6 @@ public class EmployeeController {
             iEmployeeService.save(employeeInfo);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    /**
-     * Created by: PhongTD
-     * Date created: 12/07/2023
-     * @param id
-     * @return employee by id
-     */
-    @GetMapping("{id}")
-    public Employee getEmployeeByIdToEdit(@PathVariable Long id) {
-        return iEmployeeService.findById(id);
-    }
-
-    /**
-     * Created by: PhongTD
-     * Date created: 21/07/2023
-     * @return List all employees
-     */
-    @GetMapping("")
-    public List<Employee> findAll() {
-        return iEmployeeService.findAll();
     }
 
     /**
@@ -124,16 +106,14 @@ public class EmployeeController {
      * @param pos
      * @return list of employee
      */
-//    @GetMapping("")
-//    public ResponseEntity<List<Employee>> findAllEmployees(@RequestParam(defaultValue = "") String name,
-//                                                           @RequestParam(defaultValue = "") String date,
-//                                                           @RequestParam(defaultValue = "") String pos) {
-//        List<Employee> listEmployee = iEmployeeService.findAllEmWithNameAndDateAndPositions(name, date, pos);
-//        if (listEmployee.isEmpty()) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity<>(listEmployee, HttpStatus.OK);
-//    }
+    @GetMapping("")
+    public ResponseEntity<List<Employee>> findAllEmployees(@RequestParam(name = "name",defaultValue = "") String name,
+                                                           @RequestParam(name="date",defaultValue = "") String date,
+                                                           @RequestParam(name="pos",defaultValue = "") String pos) {
+        List<Employee> listEmployee = iEmployeeService.findAllEmWithNameAndDateAndPositions(name, date, pos);
+        return new ResponseEntity<>(listEmployee, HttpStatus.OK);
+    }
+
 
     /**
      * this function could return 1 employee of employee table by id employee
@@ -175,14 +155,16 @@ public class EmployeeController {
      * @param id_employee
      * @return none
      */
-//    @GetMapping("/{id_employee}")
-//    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id_employee) {
-//        Employee employee = iEmployeeService.findEmployeeByID(id_employee);
-//        if (employee == null) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity<>(employee, HttpStatus.OK);
-//    }
+
+    @GetMapping("/{id_employee}")
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id_employee) {
+        Employee employee = iEmployeeService.findEmployeeByID(id_employee);
+        if (employee == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(employee, HttpStatus.OK);
+    }
+
 
     /*
      *NhanTQ
@@ -200,7 +182,19 @@ public class EmployeeController {
         iEmployeeService.updateEmployeeByFieldsDTO(employeeDTO.getEmployeeName(), employeeDTO.getEmployeeImg(),
                 employeeDTO.isGender(), employeeDTO.getDateOfBirth(), employeeDTO.getEmployeeAddress(),
                 employeeDTO.getPhone(), employeeDTO.getEmail(), username);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(employeeDTO,HttpStatus.OK);
     }
-
+    /*
+     *NhanTQ
+     */
+    @GetMapping("/user-detail-update")
+    public ResponseEntity<?> getUserInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Employee employee = iEmployeeService.findByUsername(username);
+        if (employee == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+            return new ResponseEntity<>(employee, HttpStatus.OK);
+    }
 }
