@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/account")
+
 public class AccountController {
     private final AccountService accountService;
     private final EmployeeService employeeService;
