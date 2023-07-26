@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/v1/public/**", "/api/v1/home/**", "/api/v1/category/home/**")
                 .permitAll()
-                .antMatchers("/api/v1/cart/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/api/v1/cart/**").hasAnyRole("USER", "ADMIN", "SALE", "ACCOUNTANT")
                 .antMatchers("/api/v1/employee/**").hasAnyRole("SALE", "ACCOUNTANT", "ADMIN")
                 .antMatchers("/api/v1/customer/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("api/v1/admin/**").hasRole("ADMIN")
@@ -77,4 +77,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //     @Override
 //     protected void configure(HttpSecurity http) throws Exception {
 //         http.cors().and().csrf().disable();
+//     }
 }
