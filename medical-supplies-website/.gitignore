@@ -35,6 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+application.properties
 
 #Configure file
-application.properties
+**/src/main/resources/application.properties

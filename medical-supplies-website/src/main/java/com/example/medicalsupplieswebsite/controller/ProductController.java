@@ -1,5 +1,9 @@
 package com.example.medicalsupplieswebsite.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.medicalsupplieswebsite.dto.ProductHomeDto;
 import com.example.medicalsupplieswebsite.dto.ProductPriceDto;
 import com.example.medicalsupplieswebsite.entity.Employee;
@@ -20,8 +24,9 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api/v1/product")
+@RequestMapping("api/v1/product")
 public class ProductController {
+
     @Autowired
     private IProductService productService;
 
