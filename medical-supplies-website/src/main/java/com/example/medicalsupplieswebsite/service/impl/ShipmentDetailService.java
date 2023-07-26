@@ -26,7 +26,7 @@ public class ShipmentDetailService implements IShipmentDetailService {
     }
 
     @Override
-    public ShipmentDetail save(ShipmentDetail shipmentDetail) {
+    public ShipmentDetail update(ShipmentDetail shipmentDetail) {
         return null;
     }
 

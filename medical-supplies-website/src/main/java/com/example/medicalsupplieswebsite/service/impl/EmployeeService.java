@@ -10,6 +10,8 @@ import com.example.medicalsupplieswebsite.dto.EmployeeUserDetailDto;
 import com.example.medicalsupplieswebsite.dto.EmployeeInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.Tuple;
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService implements IEmployeeService {
@@ -29,20 +32,8 @@ public class EmployeeService implements IEmployeeService {
         return null;
     }
 
-    /**
-     * Created by: PhongTD
-     * Date created: 12/07/2023
-     *
-     * @param id
-     * @return Employee was found by id
-     */
     @Override
-    public Employee findById(Long id) {
-        return iEmployeeRepository.findAllById(id);
-    }
-
-    @Override
-    public Employee save(Employee employee) {
+    public Employee update(Employee employee) {
         return null;
     }
 
@@ -54,11 +45,24 @@ public class EmployeeService implements IEmployeeService {
      */
     @Override
     public void save(EmployeeInfo employeeInfo) {
-        Employee employee = new Employee(employeeInfo.getEmployeeId(), employeeInfo.getEmployeeCode(), employeeInfo.getEmployeeName(),
+
+        Employee employee = new Employee(null, employeeInfo.getEmployeeCode(), employeeInfo.getEmployeeName(),
                 employeeInfo.getEmail(), employeeInfo.getPhone(), employeeInfo.getEmployeeAddress(), employeeInfo.getGender(),
                 employeeInfo.getIdCard(), employeeInfo.getDateOfBirth(), employeeInfo.getEmployeeImg(), false,
                 employeeInfo.getPosition());
         iEmployeeRepository.save(employee);
+    }
+
+    /**
+     * Created by: PhongTD
+     * Date created: 12/07/2023
+     * @param id
+     * @return Employee was found by id
+     */
+    @Override
+    public Employee findById(Long id) {
+        return iEmployeeRepository.findAllById(id);
+        return null;
     }
 
     /**
@@ -73,6 +77,16 @@ public class EmployeeService implements IEmployeeService {
         iEmployeeRepository.updateEmployee(employeeInfo.getEmployeeName(), employeeInfo.getEmail(), employeeInfo.getPhone(),
                 employeeInfo.getEmployeeAddress(), employeeInfo.getGender(), employeeInfo.getIdCard(), employeeInfo.getDateOfBirth(),
                 employeeInfo.getEmployeeImg(), employeeInfo.getPosition(), id);
+    }
+
+    /**
+     * Created by PhongTD
+     * Date created: 21/07/2023
+     * @return List all employee
+     */
+    @Override
+    public List<Employee> findAll() {
+        return iEmployeeRepository.findAll();
     }
 
     @Override
@@ -132,11 +146,22 @@ public class EmployeeService implements IEmployeeService {
         return iEmployeeRepository.getEmployeeById(id);
     }
 
+    @Override
+    public Employee findEmployeeByUserName(String userName) {
+        return iEmployeeRepository.findEmployeeByUserName(userName).orElse(null);
+    }
+
+
     /*
      * NhanTQ
      */
     @Override
     public void updateEmployeeByFieldsDTO(String employeeName, String employeeImg, boolean gender, Date dateOfBirth, String employeeAddress, String phone, String email, String username) {
         iEmployeeRepository.updateEmployeeDto(employeeName,employeeImg,gender,dateOfBirth,employeeAddress,phone,email,username);
+    }
+
+    @Override
+    public Optional<Employee> findEmployeeIdByUserName(String userName) {
+        return iEmployeeRepository.findEmployeeIdByUserName(userName);
     }
 }

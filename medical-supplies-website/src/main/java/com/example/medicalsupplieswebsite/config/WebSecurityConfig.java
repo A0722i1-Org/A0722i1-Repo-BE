@@ -49,15 +49,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/public/**", "/api/v1/product/home/**","/api/v1/employee/**","/api/v1/customer-type/**")
+                .antMatchers("/api/v1/public/**", "/api/v1/product/**","/api/v1/employee/**","/api/v1/customer-type/**")
                 .permitAll()
-                .antMatchers("/api/v1/cart/**","/api/v1/customer/**").hasAnyRole("USER", "ADMIN")
-//                .antMatchers("/api/v1/employee/**").hasAnyRole("SALE", "ACCOUNTANT", "ADMIN")
+                .antMatchers("/api/v1/cart/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/api/v1/employee/**").hasAnyRole("SALE", "ACCOUNTANT", "ADMIN")
+                .antMatchers("/api/v1/customer/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("api/v1/admin/**").hasRole("ADMIN")
                 .antMatchers("/api/v1/supply/**").hasRole("ADMIN")
                 .antMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/api/v1/shipment").hasAnyRole("ACCOUNTANT", "ADMIN")
+                .antMatchers("/api/v1/receipt").hasAnyRole("ACCOUNTANT", "ADMIN")
                 .anyRequest()
                 .authenticated()
+                .and()
+                .cors()
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtEntryPoint)
@@ -66,4 +71,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
+
+// Config cua NhatLH de test API
+//     @Override
+//     protected void configure(HttpSecurity http) throws Exception {
+//         http.cors().and().csrf().disable();
 }

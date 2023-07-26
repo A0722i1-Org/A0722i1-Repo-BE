@@ -1,7 +1,15 @@
 package com.example.medicalsupplieswebsite.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.medicalsupplieswebsite.dto.ProductHomeDto;
 import com.example.medicalsupplieswebsite.dto.ProductPriceDto;
+import com.example.medicalsupplieswebsite.entity.Employee;
+import com.example.medicalsupplieswebsite.entity.Position;
+import com.example.medicalsupplieswebsite.entity.Product;
+import com.example.medicalsupplieswebsite.error.NotFoundById;
 import com.example.medicalsupplieswebsite.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,20 +24,22 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api/v1/product")
+@RequestMapping("api/v1/product")
 public class ProductController {
+
     @Autowired
     private IProductService productService;
 
     /**
      * VanNT
+     *
      * @param pageable (8 item/page)
      * @return list all product and paging
      */
     @GetMapping("/home")
     public ResponseEntity<Page<ProductHomeDto>> getAllProduct(
             @PageableDefault(value = 8) Pageable pageable) {
-        Page<ProductHomeDto> productPage  = productService.findAllProducts(pageable);
+        Page<ProductHomeDto> productPage = productService.findAllProducts(pageable);
         if (productPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -38,6 +48,7 @@ public class ProductController {
 
     /**
      * VanNT
+     *
      * @param productName
      * @param categoryName
      * @param minPrice
@@ -47,13 +58,13 @@ public class ProductController {
      */
     @GetMapping("/home/search")
     public ResponseEntity<Page<ProductHomeDto>> searchProducts(
-            @RequestParam("productName") Optional<String> productName ,
+            @RequestParam("productName") Optional<String> productName,
             @RequestParam("categoryName") Optional<String> categoryName,
             @RequestParam("minPrice") Optional<String> minPrice,
             @RequestParam("maxPrice") Optional<String> maxPrice,
             @PageableDefault(size = 8) Pageable pageable) {
         Page<ProductHomeDto> check = productService.findAllProducts(Pageable.unpaged());
-        String productNameSearch,categoryNameSearch, minPriceSearch, maxPriceSearch;
+        String productNameSearch, categoryNameSearch, minPriceSearch, maxPriceSearch;
         productNameSearch = productName.orElse("");
         categoryNameSearch = categoryName.orElse("");
         minPriceSearch = minPrice.orElse("0");
@@ -67,17 +78,29 @@ public class ProductController {
 
     /**
      * VanNT
-     * @return  highest price list product
+     *
+     * @return highest price list product
      */
     @GetMapping("/home/highest")
-    public ResponseEntity<List<ProductPriceDto>> getProductPrice(){
-        List<ProductPriceDto> productPriceList  = productService.getProductListPrice();
+    public ResponseEntity<List<ProductPriceDto>> getProductPrice() {
+        List<ProductPriceDto> productPriceList = productService.getProductListPrice();
         if (productPriceList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(productPriceList, HttpStatus.OK);
     }
 
-
-
+    /**
+     * A0722I1 - ThanhDT
+     * @param id
+     * @return
+     */
+    @GetMapping("/detail/{id}")
+    private ResponseEntity<Product> findByIdProductDetail(@PathVariable Long id) {
+        Product product = productService.findByIdProductDetail(id);
+        if (product == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(product, HttpStatus.OK);
+    }
 }

@@ -1,11 +1,8 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
-import com.example.medicalsupplieswebsite.entity.Customer;
 import com.example.medicalsupplieswebsite.entity.CustomerType;
-import com.example.medicalsupplieswebsite.repository.ICustomerRepository;
 import com.example.medicalsupplieswebsite.repository.ICustomerTypeRepository;
 import com.example.medicalsupplieswebsite.service.ICustomerTypeService;
-import com.example.medicalsupplieswebsite.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +14,7 @@ import java.util.List;
 public class CustomerTypeService implements ICustomerTypeService {
 
     @Autowired
+
     private ICustomerTypeRepository customerTypeRepository;
 
     @Override
@@ -27,6 +25,11 @@ public class CustomerTypeService implements ICustomerTypeService {
     @Override
     public CustomerType findById(Long id) {
         return customerTypeRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public CustomerType update(CustomerType customerType) {
+        return null;
     }
 
     @Override
