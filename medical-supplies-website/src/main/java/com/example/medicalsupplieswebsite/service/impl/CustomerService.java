@@ -16,6 +16,7 @@ import javax.persistence.Tuple;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class CustomerService implements ICustomerService {
     private final ICustomerRepository iCustomerRepository;
@@ -110,19 +111,7 @@ public class CustomerService implements ICustomerService {
 
 
     @Override
-    public List<Customer> searchCustomers(String type, String name, String address, String phone) {
-        if (type == null) {
-            type = "";
-        }
-        if (name == null) {
-            name = "";
-        }
-        if (address == null) {
-            address = "";
-        }
-        if (phone == null) {
-            phone = "";
-        }
-        return this.iCustomerRepository.searchCustomer(type, name, address, phone);
+    public List<Customer> searchCustomers(String keyword) {
+        return this.iCustomerRepository.searchCustomer(keyword);
     }
 }

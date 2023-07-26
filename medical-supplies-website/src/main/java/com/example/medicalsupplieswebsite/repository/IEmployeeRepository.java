@@ -43,9 +43,6 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
      * @param id
      * @return Employee was found by id
      */
-    @Query("SELECT employee FROM Employee employee WHERE employee.employeeId = ?1")
-    Employee findAllById(Long id);
-
     @Query(value =
             "select e.employee_id, e.employee_code, e.employee_name, e.email, e.phone, " +
             "e.employee_address, e.gender, e.date_of_birth, e.id_card, e.salary, e.employee_img, " +
