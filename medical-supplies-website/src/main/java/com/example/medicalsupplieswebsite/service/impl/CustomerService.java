@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import javax.persistence.Tuple;
 import java.util.List;
 
-import java.util.List;
 
 @Service
 public class CustomerService implements ICustomerService {
@@ -68,7 +67,6 @@ public class CustomerService implements ICustomerService {
         iCustomerRepository.deleteCustomerId(id);
     }
 
-}
 
     @Override
     public Customer findByUsername(String username) {
@@ -100,19 +98,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public List<Customer> searchCustomers(String type, String name, String address, String phone) {
-        if (type == null) {
-            type = "";
-        }
-        if (name == null) {
-            name = "";
-        }
-        if (address == null) {
-            address = "";
-        }
-        if (phone == null) {
-            phone = "";
-        }
-        return this.iCustomerRepository.searchCustomer(type, name, address, phone);
+    public List<Customer> searchCustomers(String keyword) {
+        return this.iCustomerRepository.searchCustomer(keyword);
     }
 }
