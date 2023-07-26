@@ -1,6 +1,7 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
 import com.example.medicalsupplieswebsite.dto.EmailDetails;
+import com.example.medicalsupplieswebsite.entity.Cart;
 import com.example.medicalsupplieswebsite.service.IEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +14,6 @@ public class EmailService implements IEmailService {
     //Author: NhatLH
 
     private final JavaMailSender javaMailSender;
-    private JavaMailSender javaMailSender;
 
     @Autowired
     EmailService(JavaMailSender javaMailSender) {

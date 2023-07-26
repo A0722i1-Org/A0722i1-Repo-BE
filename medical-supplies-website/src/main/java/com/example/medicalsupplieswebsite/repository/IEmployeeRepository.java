@@ -40,7 +40,6 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
     /**
      * Created by: PhongTD
      * Date created: 12/07/2023
-     * @param id
      * @return Employee was found by id
      */
     @Query(value =

@@ -32,24 +32,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/account")
 public class AccountController {
     private final AccountService accountService;
-    private final RoleService roleService;
     private final EmployeeService employeeService;
+    private final RoleService roleService;
     private final AuthenticationManager authenticationManager;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
-
-    public AccountController(AccountService accountService, RoleService roleService) {
-    public AccountController(AccountService accountService, EmployeeService employeeService, AuthenticationManager authenticationManager) {
+    public AccountController(AccountService accountService, EmployeeService employeeService,RoleService roleService, AuthenticationManager authenticationManager) {
         this.accountService = accountService;
-        this.roleService = roleService;
         this.employeeService = employeeService;
+        this.roleService = roleService;
         this.authenticationManager = authenticationManager;
     }
 
     /*ThienTDV thêm Tài khoản và setRole cho tài khoản*/
     @PostMapping("/addAccount")
-    public ResponseEntity<?> addAccountForEmployee(@Valid @RequestBody Account account, BindingResult bindingResult, @RequestParam Long roleId) {
+    public ResponseEntity<?> addAccount(@Valid @RequestBody Account account, BindingResult bindingResult, @RequestParam Long roleId) {
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = new HashMap<>();
             bindingResult.getFieldErrors().forEach(
@@ -91,7 +88,7 @@ public class AccountController {
      */
 
     @PatchMapping("change-password")
-    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDto changePasswordDto) {
+    public ResponseEntity<?> changePassword (@RequestBody ChangePasswordDto changePasswordDto){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(changePasswordDto.getUsername(), changePasswordDto.getPresentPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -104,4 +101,3 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
-
