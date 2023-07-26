@@ -10,6 +10,7 @@ import java.util.Set;
 @Getter
 @RequiredArgsConstructor
 @Entity
+@Table(name = "account")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +19,7 @@ public class Account {
     private String encryptPassword;
     private String email;
     private boolean isEnable;
+
     @ManyToMany
     @JoinTable(name = "account_roles",
             joinColumns = @JoinColumn(name = "account_id"),

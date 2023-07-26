@@ -2,12 +2,17 @@ package com.example.medicalsupplieswebsite.entity;
 
 import com.example.medicalsupplieswebsite.dto.ProductDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.print.attribute.standard.MediaSize;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.sql.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -18,7 +23,8 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
+@Table(name = "product")
+public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +39,6 @@ public class Product {
 
     private String productImg;
 
-    @Getter
     @GeneratedValue(generator = "person-generator")
     @GenericGenerator(name = "person-generator",
             parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "VT"),
@@ -47,17 +52,17 @@ public class Product {
 
 
     @ManyToOne
-    @JsonIgnore
+    @JsonManagedReference
     @JoinColumn(name = "category_id",nullable = false,referencedColumnName = "categoryId")
     private Category category;
 
     @OneToOne
-    @JsonIgnore
+    @JsonManagedReference
     @JoinColumn(name = "product_info_id",nullable = false,referencedColumnName = "infoId")
     private ProductInfo productInfo;
 
-    @JsonIgnore
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "customer_id",nullable = false,referencedColumnName = "customerId")
     private Customer customer;
 

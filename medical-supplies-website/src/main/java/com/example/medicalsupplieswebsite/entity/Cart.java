@@ -13,6 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @RequiredArgsConstructor
+@Table(name = "cart")
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +23,7 @@ public class Cart {
     private String receiverEmail;
 
     @JsonBackReference
-    @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL)
+    @OneToOne( cascade = CascadeType.ALL)
     private Customer customer;
 
 }

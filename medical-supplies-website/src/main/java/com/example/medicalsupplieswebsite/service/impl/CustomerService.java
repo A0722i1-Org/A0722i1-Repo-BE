@@ -11,8 +11,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerService implements ICustomerService {
+
+    @Autowired
     private final ICustomerRepository customerRepository;
 
     @Autowired
@@ -39,5 +43,10 @@ public class CustomerService implements ICustomerService {
     @Override
     public void deleteById(Long id) {
 
+    }
+
+    @Override
+    public List<Customer> customerList() {
+        return customerRepository.supplierList();
     }
 }
