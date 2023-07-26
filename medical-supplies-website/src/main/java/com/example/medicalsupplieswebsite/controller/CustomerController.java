@@ -64,7 +64,7 @@ public class CustomerController {
      * @return
      * HieuLD
      */
-    @PostMapping("")
+    @PostMapping("/create")
     public ResponseEntity<?> saveCustomer(@Valid @RequestBody CustomerInfo customerInfo, BindingResult bindingResult) {
         new CustomerInfo().validate(customerInfo,bindingResult);
         if (bindingResult.hasErrors()) {
@@ -89,8 +89,8 @@ public class CustomerController {
      * @return
      */
     @GetMapping("{id}")
-    public Customer getCustomerById(@PathVariable Long id) {
-        return iCustomerService.findById(id);
+    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
+        return new ResponseEntity<>(iCustomerService.findById(id),HttpStatus.OK);
     }
 
 
@@ -101,7 +101,7 @@ public class CustomerController {
      * @param bindingResult
      * @return
      */
-    @PutMapping("{id}")
+    @PutMapping("/edit/{id}")
 public ResponseEntity<?> updateCustomer(@Valid @PathVariable Long id, @RequestBody CustomerInfo employeeInfo, BindingResult bindingResult) {
     new CustomerInfo().validate(employeeInfo, bindingResult);
     if (bindingResult.hasErrors()) {

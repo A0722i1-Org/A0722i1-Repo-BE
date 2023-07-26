@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerTypeService implements ICustomerTypeService {
 
@@ -35,5 +37,10 @@ public class CustomerTypeService implements ICustomerTypeService {
     @Override
     public void deleteById(Long id) {
 
+    }
+
+    @Override
+    public List<CustomerType> findAllCustomerType() {
+        return customerTypeRepository.findAll();
     }
 }

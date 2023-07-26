@@ -20,7 +20,7 @@ public class CustomerInfo {
     /** HieuLD
      *
      */
-    private Long CustomerId;
+    private Long customerId;
 
     private String customerCode;
 
@@ -61,13 +61,17 @@ public class CustomerInfo {
 
     private Cart cart;
     private Account account;
+    private boolean enable;
 
 
 
     public CustomerInfo() {
     }
 
-    public CustomerInfo( String customerCode, String name, String phone, boolean gender, Date dateOfBirth, String email, String idCard, String customerAddress, String customerImg, CustomerType customerType, Cart cart, Account account) {
+    public CustomerInfo( String customerCode, String name, String phone, boolean gender,
+                         Date dateOfBirth, String email, String idCard, String customerAddress,
+                         String customerImg, CustomerType customerType, Cart cart,
+                         Account account, boolean enable) {
         this.customerCode = customerCode;
         this.name = name;
         this.phone = phone;
@@ -80,7 +84,9 @@ public class CustomerInfo {
         this.customerType = customerType;
         this.cart = cart;
         this.account = account;
+        this.enable = enable;
     }
+
 
     public void validate(Object target, Errors errors) {
         CustomerInfo customerInfo = (CustomerInfo) target;
@@ -97,12 +103,20 @@ public class CustomerInfo {
         }
     }
 
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
     public Long getCustomerId() {
-        return CustomerId;
+        return customerId;
     }
 
     public void setCustomerId(Long customerId) {
-        CustomerId = customerId;
+        this.customerId = customerId;
     }
 
     public String getCustomerCode() {
