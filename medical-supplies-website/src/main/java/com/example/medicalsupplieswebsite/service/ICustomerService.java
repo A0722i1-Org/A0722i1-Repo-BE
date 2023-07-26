@@ -5,8 +5,6 @@ import com.example.medicalsupplieswebsite.dto.CustomerUserDetailDto;
 import com.example.medicalsupplieswebsite.dto.CustomerInfo;
 import com.example.medicalsupplieswebsite.entity.Customer;
 
-
-
 public interface ICustomerService extends IService<Customer>{
  /**
   * HieuLD
@@ -17,10 +15,10 @@ public interface ICustomerService extends IService<Customer>{
 
     Customer findByUsername(String username);
     CustomerDto findByPhoneCustomer(String phone);
-
     /**
      * A0722I1-KhanhNL
      */
     CustomerUserDetailDto findUserDetailByUsername(String username);
     String findAddressByCustomerId(Long customerId );
+
 }

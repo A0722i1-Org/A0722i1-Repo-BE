@@ -1,6 +1,7 @@
 package com.example.medicalsupplieswebsite.controller;
-
+import com.example.medicalsupplieswebsite.dto.CustomerInfo;
 import com.example.medicalsupplieswebsite.dto.CustomerUserDetailDto;
+import com.example.medicalsupplieswebsite.entity.Customer;
 import com.example.medicalsupplieswebsite.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,30 +12,18 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.medicalsupplieswebsite.dto.CustomerInfo;
-import com.example.medicalsupplieswebsite.entity.Customer;
-import com.example.medicalsupplieswebsite.service.ICustomerService;
-import com.example.medicalsupplieswebsite.service.ICustomerTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import org.springframework.data.domain.Pageable;
-
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
+
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/customer")
 public class CustomerController {
+
     @Autowired
     private ICustomerService iCustomerService;
 
@@ -57,6 +46,7 @@ public class CustomerController {
     }
 
 
+
     /**
      *
      * @param customerInfo
@@ -64,6 +54,7 @@ public class CustomerController {
      * @return
      * HieuLD
      */
+
     @PostMapping("/create")
     public ResponseEntity<?> saveCustomer(@Valid @RequestBody CustomerInfo customerInfo, BindingResult bindingResult) {
         new CustomerInfo().validate(customerInfo,bindingResult);
@@ -102,7 +93,7 @@ public class CustomerController {
      * @return
      */
     @PutMapping("/edit/{id}")
-public ResponseEntity<?> updateCustomer(@Valid @PathVariable Long id, @RequestBody CustomerInfo employeeInfo, BindingResult bindingResult) {
+    public ResponseEntity<?> updateCustomer(@Valid @PathVariable Long id, @RequestBody CustomerInfo employeeInfo, BindingResult bindingResult) {
     new CustomerInfo().validate(employeeInfo, bindingResult);
     if (bindingResult.hasErrors()) {
         Map<String, String> errors = new HashMap<>();
@@ -119,5 +110,6 @@ public ResponseEntity<?> updateCustomer(@Valid @PathVariable Long id, @RequestBo
     }
     return new ResponseEntity<>(HttpStatus.OK);
 }
+
 
 }

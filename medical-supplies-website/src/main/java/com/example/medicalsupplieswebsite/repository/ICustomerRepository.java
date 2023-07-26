@@ -10,33 +10,12 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
-
+import javax.transaction.Transactional;
+import java.sql.Date;
 import javax.persistence.Tuple;
 import java.util.Optional;
-
-import java.sql.Date;
-import java.util.List;
 @Repository
 public interface ICustomerRepository extends JpaRepository<Customer,Long> {
-
-
-    /**
-     * HieuLD
-     * @param name
-     * @param email
-     * @param phone
-     * @param gender
-     * @param date_of_birth
-     * @param id_card
-     * @param address
-     * @param img
-     * @param customer_type_id
-     * @param customer_code
-     * @param is_enable
-     */
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO `medical_supplies`.`customer` (`customer_address`,`customer_code`,`customer_img`,`customer_type_id`," +
@@ -55,23 +34,7 @@ public interface ICustomerRepository extends JpaRepository<Customer,Long> {
                         @Param("is_enable")Boolean is_enable);
 
 
-    /**
-     * HieuLD
-     * @param id
-     * @param name
-     * @param email
-     * @param phone
-     * @param gender
-     * @param date_of_birth
-     * @param id_card
-     * @param address
-     * @param img
-     * @param customer_type_id
-     * @param cart
-     * @param account
-     * @param customer_code
-     * @param is_enable
-     */
+
     @Modifying
     @Transactional
     @Query(value = "UPDATE `medical_supplies`.`customer` SET `account_id`=:account_id,`cart_id`=:cart_id,`customer_address`=:customer_address," +
@@ -95,6 +58,8 @@ public interface ICustomerRepository extends JpaRepository<Customer,Long> {
 
     @Query("SELECT customer FROM Customer customer WHERE customer.customerId = ?1")
     Customer findAllById(Long id);
+
+
 
 
 
@@ -126,4 +91,5 @@ public interface ICustomerRepository extends JpaRepository<Customer,Long> {
 
     @Query(value = "select customer_address from customer where customer_id = ?1", nativeQuery = true)
     String findAddressByCustomerId(Long customerId );
+
 }
