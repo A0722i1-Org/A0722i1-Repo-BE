@@ -100,7 +100,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
     /**
      * VanNT
      *
-     * @param categogy
+     * @param
      * @param pageable
      * @return search product with productNam and categoryNam and productPrice
      */
