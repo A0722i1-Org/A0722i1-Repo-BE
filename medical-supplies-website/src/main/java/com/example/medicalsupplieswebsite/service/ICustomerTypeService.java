@@ -10,5 +10,7 @@ import java.util.List;
 import java.util.List;
 
 public interface ICustomerTypeService extends IService<CustomerType>{
+    CustomerType save(CustomerType customerType);
+
     List<CustomerType> findAllCustomerType();
 }

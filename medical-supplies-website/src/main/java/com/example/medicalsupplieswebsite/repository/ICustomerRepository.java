@@ -1,5 +1,7 @@
 package com.example.medicalsupplieswebsite.repository;
 
+
+import com.example.medicalsupplieswebsite.dto.receipt_dto.SupplierDTO;
 import com.example.medicalsupplieswebsite.entity.Account;
 import com.example.medicalsupplieswebsite.entity.Cart;
 import com.example.medicalsupplieswebsite.dto.shipmentdto.CustomerDto;
@@ -13,6 +15,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import javax.persistence.Tuple;
+import java.util.List;
 import javax.transaction.Transactional;
 
 import java.sql.Date;
@@ -94,7 +97,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     /**
      * A0722I1-KhanhNL
      */
-    @Query(value = "select c.customer_id,c.customer_code, c.name, c.phone, c.gender, c.date_of_birth, " +
+    @Query(value = "select c.customer_id, c.customer_code, c.name, c.phone, c.gender, c.date_of_birth, " +
             "c.id_card, c.customer_address, c.customer_img,  ct.customer_type_name, a.username, a.email " +
             "from customer c " +
             "inner join customer_type ct on c.customer_type_id = ct.customer_type_id " +
@@ -103,7 +106,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             nativeQuery = true)
     Optional<Tuple> findUserDetailByUsername(@Param("username") String username);
 
-
+    /*PhucND dùng phone tìm kiếm khách hàng*/
     /*PhucND*/
     @Query(value = "select customer_id, name,phone, customer_address from customer where phone = ?1", nativeQuery = true)
     Optional<CustomerDto> findByPhoneCustomer(String phone);
@@ -111,6 +114,8 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     @Query(value = "select customer_address from customer where customer_id = ?1", nativeQuery = true)
     String findAddressByCustomerId(Long customerId);
 
+    @Query(value = "select customer_id,`name`,customer_address  from customer as c join customer_type as ct on c.customer_type_id = ct.customer_type_id where ct.customer_type_id = 2", nativeQuery = true)
+   Optional< List<SupplierDTO>> getALlCustomerByCustomerTypeSupplier();
 
     @Query(value = "select c.customer_id, c.customer_address,c.customer_code,c.email, c.customer_img, c.date_of_birth, c.gender, c.id_card, c.is_enable, c.name, c.phone,ct.customer_type_name,ct.customer_type_id,a.account_id, r.cart_id" +
             " from customer c  join customer_type ct on c.customer_type_id = ct.customer_type_id  join account a " +

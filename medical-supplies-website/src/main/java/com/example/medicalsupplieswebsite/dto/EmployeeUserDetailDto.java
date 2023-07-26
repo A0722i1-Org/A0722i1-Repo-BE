@@ -20,7 +20,7 @@ public class EmployeeUserDetailDto {
     String employeeName;
     String phone;
     String employeeAddress;
-    Integer gender;
+    Boolean gender;
     Date dateOfBirth;
     String idCard;
     Integer salary;
@@ -36,7 +36,7 @@ public class EmployeeUserDetailDto {
                 tuple.get("employee_name", String.class),
                 tuple.get("phone", String.class),
                 tuple.get("employee_address", String.class),
-                tuple.get("gender", Integer.class),
+                tuple.get("gender", Boolean.class),
                 tuple.get("date_of_birth", Date.class),
                 tuple.get("id_card", String.class),
                 tuple.get("salary", Integer.class),
