@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService implements IEmailService {
     //Author: NhatLH
-
     private JavaMailSender javaMailSender;
 
     @Autowired
@@ -21,6 +20,7 @@ public class EmailService implements IEmailService {
 
     @Value("${spring.mail.username}")
     private String sender;
+
     public String sendSimpleMail(EmailDetails details) {
 
         // Try block to check for exceptions

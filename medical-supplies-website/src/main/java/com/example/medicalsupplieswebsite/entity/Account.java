@@ -23,9 +23,10 @@ public class Account {
     private String username;
 
 //    @NotBlank(message = "Vui lòng nhập mật khẩu")
-//    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,32}$", message = "Mật khẩu không hợp lệ")
+//    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{6,32}$", message = "Mật khẩu không hợp lệ")
 //    @Size(min = 6, max = 32, message = "Mật khẩu phải có độ dài từ 6 đến 32 ký tự")
     private String encryptPassword;
+
     @NotBlank(message = "Vui lòng nhập email")
     @Pattern(regexp = "^[a-zA-Z0-9_.+-]+@gmail.com+$",message = "Email không đúng định dạng, vui lòng nhập lại. Ex: tên_email@gmail.com")
     @Size(min = 6,max = 30,message = "Tên email chỉ được phép chứa từ 6 đến 30 kí tự")

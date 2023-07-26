@@ -27,8 +27,6 @@ public interface IAccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> findAccountByUsername(@Param("username") String username);
 
     boolean existsByUsername(String username);
-}
-
 
     /*
      * NhanTQ
@@ -41,3 +39,6 @@ public interface IAccountRepository extends JpaRepository<Account, Long> {
             nativeQuery = true)
     void changePassword(@Param("username") String username,
                         @Param("pass") String pass);
+}
+
+
