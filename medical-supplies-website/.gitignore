@@ -39,3 +39,4 @@ out/
 application.properties
 
 #Configure file
+**/src/main/resources/application.properties

@@ -20,17 +20,17 @@ public class SupplyController {
     private IProductService iProductService;
 
     @GetMapping()
-    public ResponseEntity<Supply> findAllSuppliesForAdmin() {
+    public ResponseEntity<Page<Supply>> findAllSuppliesForAdmin() {
         Page<Supply> supplies = iProductService.findAllSuppliesForAdmin(Pageable.unpaged());
         if (supplies.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity(supplies, HttpStatus.OK);
+            return new ResponseEntity<>(supplies, HttpStatus.OK);
         }
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Supply> searchSupplies(@RequestParam("productCode") Optional<String> productCode,
+    public ResponseEntity<Page<Supply>> searchSupplies(@RequestParam("productCode") Optional<String> productCode,
                                                  @RequestParam("productName") Optional<String> productName,
                                                  @RequestParam("categoryName") Optional<String> categoryName,
                                                  @RequestParam("customerName") Optional<String> customerName,
@@ -50,7 +50,7 @@ public class SupplyController {
         if (supplies.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity(supplies, HttpStatus.OK);
+            return new ResponseEntity<>(supplies, HttpStatus.OK);
         }
     }
 }
