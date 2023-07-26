@@ -1,5 +1,6 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
+import com.example.medicalsupplieswebsite.entity.Cart;
 import com.example.medicalsupplieswebsite.entity.CartDetail;
 import com.example.medicalsupplieswebsite.repository.ICartDetailRepository;
 import com.example.medicalsupplieswebsite.service.ICartDetailService;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CartDetailService implements ICartDetailService {
@@ -42,6 +44,11 @@ public class CartDetailService implements ICartDetailService {
             }
         }
         return cartDetail;
+    }
+
+    @Override
+    public CartDetail checkAvailable(Long product_id,Long cart_id) {
+        return this.cartDetailRepository.checkAvailable(product_id, cart_id).orElse(null);
     }
 
     @Override

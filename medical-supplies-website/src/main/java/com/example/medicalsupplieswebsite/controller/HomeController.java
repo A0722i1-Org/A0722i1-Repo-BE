@@ -48,12 +48,13 @@ public class HomeController {
      */
     @GetMapping("/search-name")
     public ResponseEntity<Page<ProductHomeDto>> searchProducts(
-            @RequestParam("productName") String productName,
+            @RequestParam("productName") Optional<String> productName,
             @RequestParam("page") Optional<Integer> page,
             @RequestParam("size") Optional<Integer> size) {
+        String productNameSearch = productName.orElse("");
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(8);
-        Page<ProductHomeDto> productPage = productService.searchProduct(productName, PageRequest.of(currentPage - 1, pageSize));
+        Page<ProductHomeDto> productPage = productService.searchProduct(productNameSearch, PageRequest.of(currentPage - 1, pageSize));
         if (productPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
