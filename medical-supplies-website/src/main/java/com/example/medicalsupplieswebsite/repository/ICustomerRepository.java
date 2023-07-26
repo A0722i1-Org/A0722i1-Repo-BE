@@ -95,7 +95,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     /**
      * A0722I1-KhanhNL
      */
-    @Query(value = "select c.customer_id, c.name, c.phone, c.gender, c.date_of_birth, " +
+    @Query(value = "select c.customer_id, c.customer_code, c.name, c.phone, c.gender, c.date_of_birth, " +
             "c.id_card, c.customer_address, c.customer_img,  ct.customer_type_name, a.username, a.email " +
             "from customer c " +
             "inner join customer_type ct on c.customer_type_id = ct.customer_type_id " +

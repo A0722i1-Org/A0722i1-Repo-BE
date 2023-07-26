@@ -34,7 +34,7 @@ public class EmployeeInfo {
     private String employeeAddress;
 
     @NotNull(message = "Vui lòng chọn giới tính")
-    private Integer gender;
+    private Boolean gender;
 
     @NotBlank(message = "Hộ chiếu/CMND không được để trống")
     @Pattern(regexp = "^\\d{12}$",message = "Hộ chiếu/CMND phải chứa 12 số")
@@ -53,7 +53,7 @@ public class EmployeeInfo {
     }
 
     public EmployeeInfo(Long employeeId, String employeeCode, String employeeName, String email, String phone,
-                        String employeeAddress, Integer gender, String idCard, Date dateOfBirth, String employeeImg,
+                        String employeeAddress, Boolean gender, String idCard, Date dateOfBirth, String employeeImg,
                         Position position) {
 
         this.employeeCode = employeeCode;
@@ -108,11 +108,11 @@ public class EmployeeInfo {
         this.employeeAddress = employeeAddress;
     }
 
-    public Integer getGender() {
+    public Boolean getGender() {
         return gender;
     }
 
-    public void setGender(Integer gender) {
+    public void setGender(Boolean gender) {
         this.gender = gender;
     }
 
