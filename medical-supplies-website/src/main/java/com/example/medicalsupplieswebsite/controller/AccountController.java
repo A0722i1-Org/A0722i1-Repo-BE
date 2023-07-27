@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,13 +33,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/account")
 
 public class AccountController {
-    private final AccountService accountService;
+    //    private final AccountService accountService;
     private final EmployeeService employeeService;
     private final RoleService roleService;
     private final AuthenticationManager authenticationManager;
+    @Autowired
+    AccountService accountService;
 
     @Autowired
-    public AccountController(AccountService accountService, EmployeeService employeeService,RoleService roleService, AuthenticationManager authenticationManager) {
+    public AccountController(AccountService accountService, EmployeeService employeeService, RoleService roleService, AuthenticationManager authenticationManager) {
         this.accountService = accountService;
         this.employeeService = employeeService;
         this.roleService = roleService;
@@ -58,21 +61,16 @@ public class AccountController {
                     });
             return ResponseEntity.badRequest().body(errors);
         }
-
         // Kiểm tra xem roleId có tồn tại trong danh sách các roles hợp lệ không
         Role role = roleService.findById(roleId);
         if (role == null) {
             return ResponseEntity.badRequest().body("Invalid roleId");
         }
-
         // Lưu tài khoản
         Account savedAccount = accountService.addAccount(account);
-
         Long AccountId = savedAccount.getAccountId();
-
         // Thiết lập vai trò cho tài khoản
         accountService.setRoleForAccount(AccountId, roleId);
-
         return ResponseEntity.ok(savedAccount);
     }
 
@@ -88,17 +86,18 @@ public class AccountController {
      * A0722I1-NhanTQ
      */
 
-    @PatchMapping("change-password")
-    public ResponseEntity<?> changePassword (@RequestBody ChangePasswordDto changePasswordDto){
+    @PatchMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDto changePasswordDto) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(changePasswordDto.getUsername(), changePasswordDto.getPresentPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String newPass = encoder.encode(changePasswordDto.getConfirmPassword());
-
         accountService.changePassword(username, newPass);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(new ChangePasswordDto(
+                changePasswordDto.getUsername(),
+                "", ""), HttpStatus.OK);
     }
 }
+

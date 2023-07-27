@@ -104,7 +104,6 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
     /**
      * VanNT
      *
-     * @param
      * @param pageable
      * @return search product with productNam and categoryNam and productPrice
      */
@@ -121,7 +120,6 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
 
     /**
      * VanNT
-     *
      * @return list highest price product
      */
     @Query(nativeQuery = true,
