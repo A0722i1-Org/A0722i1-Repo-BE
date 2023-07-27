@@ -34,26 +34,22 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
     @Modifying
     @Query("UPDATE Employee SET employeeName = ?1, email = ?2, phone = ?3, employeeAddress = ?4, gender = ?5, idCard = ?6," +
             " dateOfBirth = ?7,employeeImg = ?8 ,position = ?9 WHERE employeeId = ?10")
-    void updateEmployee(String employeeName, String email, String phone, String employeeAddress, Integer gender,
+    void updateEmployee(String employeeName, String email, String phone, String employeeAddress, Boolean gender,
                         String idCard, Date dateOfBirth, String avatar, Position position, Long id);
 
     /**
      * Created by: PhongTD
      * Date created: 12/07/2023
-     * @param id
      * @return Employee was found by id
      */
-    @Query("SELECT employee FROM Employee employee WHERE employee.employeeId = ?1")
-    Employee findAllById(Long id);
-
     @Query(value =
             "select e.employee_id, e.employee_code, e.employee_name, e.email, e.phone, " +
-            "e.employee_address, e.gender, e.date_of_birth, e.id_card, e.salary, e.employee_img, " +
-            "e.is_enable, p.position_id, a.account_id " +
-            "from employee e " +
-            "inner join position p on e.position_id = p.position_id " +
-            "inner join account a on e.account_id = a.account_id " +
-            "where (e.is_enable = true) and (a.is_enable = true) and (a.username = :username)",
+                    "e.employee_address, e.gender, e.date_of_birth, e.id_card, e.salary, e.employee_img, " +
+                    "e.is_enable, p.position_id, a.account_id " +
+                    "from employee e " +
+                    "inner join position p on e.position_id = p.position_id " +
+                    "inner join account a on e.account_id = a.account_id " +
+                    "where (e.is_enable = true) and (a.is_enable = true) and (a.username = :username)",
             nativeQuery = true)
     Optional<Employee> findByUsername(@Param("username") String username);
 
@@ -83,13 +79,13 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
             " employee_img, employee_name, gender, " +
             "employee.is_enable, salary, employee.account_id, " +
             "employee.position_id, position_name, username,employee.email," +
-            "employee_code,id_card,phone\n" +
+            "employee_code,id_card,phone,employee.salary\n" +
             "FROM employee\n" +
             "JOIN account ON employee.account_id = account.account_id\n" +
             "JOIN position ON employee.position_id = position.position_id\n" +
-            "WHERE employee_name LIKE %?% \n" +
-            "  AND date_of_birth LIKE %?% \n" +
-            "  AND position_name LIKE %?% \n" +
+            "WHERE employee_name LIKE %?1% \n" +
+            "  AND date_of_birth LIKE %?2% \n" +
+            "  AND position_name LIKE %?3% \n" +
             "  AND employee.is_enable = false\n" +
             "LIMIT 0, 300;"
             ,nativeQuery = true)
@@ -138,11 +134,11 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
             "where (e.is_enable = true) and (a.is_enable = true) and (a.username = :username)",
             nativeQuery = true)
     void updateEmployeeDto(@Param("employee_name") String name,
-                         @Param("employee_img") String employeeImg,
-                         @Param("gender") boolean gender,
-                         @Param("date_of_birth") Date date,
-                         @Param("employee_address") String employeeAddress,
-                         @Param("phone") String phone,
-                         @Param("email") String email,
-                         @Param("username") String username);
+                           @Param("employee_img") String employeeImg,
+                           @Param("gender") boolean gender,
+                           @Param("date_of_birth") Date date,
+                           @Param("employee_address") String employeeAddress,
+                           @Param("phone") String phone,
+                           @Param("email") String email,
+                           @Param("username") String username);
 }
