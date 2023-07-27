@@ -7,6 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 
-public interface ICustomerTypeService extends IService<CustomerType>{
+import java.util.List;
 
+public interface ICustomerTypeService extends IService<CustomerType>{
+    CustomerType save(CustomerType customerType);
+
+    List<CustomerType> findAllCustomerType();
 }

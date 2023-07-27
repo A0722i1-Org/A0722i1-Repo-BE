@@ -8,7 +8,7 @@ public interface IService<T> {
 
     T findById(Long id);
 
-    T save(T t);
+    T update(T t);
 
     void deleteById(Long id);
 }

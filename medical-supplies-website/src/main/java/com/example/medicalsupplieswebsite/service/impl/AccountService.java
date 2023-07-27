@@ -22,20 +22,25 @@ public class AccountService implements IAccountService {
     }
 
     public Account addAccount(Account account) {
-        //Mã hóa mật khẩu
-//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        String encodedPassword = passwordEncoder.encode(account.getEncryptPassword());
-//        account.setEncryptPassword(encodedPassword);
-        return accountRepository.save(account);
+        if (accountRepository.existsByUsername(account.getUsername())) {
+            throw new IllegalArgumentException("Tên tài khoản đã tồn tại. Vui lòng chọn tên tài khoản khác.");
+        }
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(account.getEncryptPassword());
+        account.setEncryptPassword(encodedPassword);
+        account.setEnable(true);
+
+        accountRepository.save(account);
+        return account;
     }
+
 
     public void setRoleForAccount(Long accountId, Long roleId) {
         Account account = accountRepository.findById(accountId).orElse(null);
         if (account != null) {
             Role role = roleRepository.findById(roleId).orElse(null);
             if (role != null) {
-                account.getRoles().add(role);
-                accountRepository.save(account);
+                accountRepository.setRoleForAccount(accountId, roleId);
             }
         }
 
@@ -52,12 +57,22 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public Account save(Account account) {
+    public Account update(Account account) {
         return null;
     }
 
     @Override
     public void deleteById(Long id) {
 
+    }
+
+    /*
+     * NhanTQ
+     * @param username
+     * @param newPass
+     */
+    @Override
+    public void changePassword(String username, String newPass) {
+        accountRepository.changePassword(username,newPass);
     }
 }
