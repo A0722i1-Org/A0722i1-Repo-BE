@@ -14,7 +14,7 @@ import java.util.Date;
 public class JwtUtility implements Serializable {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtility.class);
     private static final String jwtSecret = "secretkey.a0722i1";
-    private static final int jwtExpiration = 60 * 60 * 24 * 1000;
+    private static final int jwtExpiration = 60 * 60 * 24 ;
 
     public String generateJwtToken(Authentication authentication) {
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
