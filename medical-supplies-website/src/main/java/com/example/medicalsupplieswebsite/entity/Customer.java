@@ -1,6 +1,7 @@
 package com.example.medicalsupplieswebsite.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,6 +21,8 @@ public class Customer {
     private String name;
     private String phone;
     private boolean gender;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
     private String email;
     private String idCard;
