@@ -60,21 +60,16 @@ public class AccountController {
                     });
             return ResponseEntity.badRequest().body(errors);
         }
-
         // Kiểm tra xem roleId có tồn tại trong danh sách các roles hợp lệ không
         Role role = roleService.findById(roleId);
         if (role == null) {
             return ResponseEntity.badRequest().body("Invalid roleId");
         }
-
         // Lưu tài khoản
         Account savedAccount = accountService.addAccount(account);
-
         Long AccountId = savedAccount.getAccountId();
-
         // Thiết lập vai trò cho tài khoản
         accountService.setRoleForAccount(AccountId, roleId);
-
         return ResponseEntity.ok(savedAccount);
     }
 
