@@ -28,10 +28,6 @@ public class EmployeeService implements IEmployeeService {
         return null;
     }
 
-    @Override
-    public Employee findById(Long id) {
-        return null;
-    }
 
     @Override
     public Employee update(Employee employee) {
@@ -65,6 +61,10 @@ public class EmployeeService implements IEmployeeService {
 //    public Employee findById(Long id) {
 //    return null;
 //    }
+    @Override
+    public Employee findById(Long id) {
+return null;
+    }
 
     /**
      * Created by: PhongTD

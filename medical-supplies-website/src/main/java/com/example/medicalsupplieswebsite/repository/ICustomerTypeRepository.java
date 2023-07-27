@@ -8,9 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface ICustomerTypeRepository extends JpaRepository<CustomerType,Long> {
-    @Query("SELECT customertype from CustomerType  customertype")
-    List<CustomerType> findAll();
-
+//
     @Query("SELECT customertype FROM CustomerType customertype WHERE customertype.customerTypeId = ?1")
     CustomerType findAllById(Long id);
 }
