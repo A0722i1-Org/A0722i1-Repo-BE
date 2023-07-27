@@ -6,18 +6,19 @@ import java.sql.Date;
 public class EmployeeDTO {
     private String employeeImg;
     @NotBlank(message = "Vui lòng nhập họ và tên!")
-    @Size(min = 5,max = 100,message = "Họ và tên phải có độ dài từ 5 đến 100 ký tự.")
-//    @Pattern(regexp = "^[a-zA-ZÀ-Ỹà-ỹĂăÂâĐđÊêÔôƠơƯưá-ýÁ-Ý]*\\\\s?[a-zA-ZÀ-Ỹà-ỹĂăÂâĐđÊêÔôƠơƯưá-ýÁ-Ý]*\\\\s?[a-zA-ZÀ-Ỹà-ỹĂăÂâĐđÊêÔôƠơƯưá-ýÁ-Ý]*$",message = "Vui lòng nhập đúng định dạng !")
+    @Size(min = 5, max = 100, message = "Họ và tên phải có độ dài từ 5 đến 100 ký tự.")
+    @Pattern(regexp = "^(?:[A-Z][a-zÀ-ỹ]*(?: [A-Z][a-zÀ-ỹ]*)+)$", message = "Họ và tên chưa đúng định dạng")
     private String employeeName;
     private boolean gender;
     @NotNull(message = "Vui lòng nhập ngày tháng năm sinh!")
 //    @Pattern(regexp = "^(0?[1-9]|[1-2][0-9]|3[0-1])/(0?[1-9]|1[0-2])/\\\\d{4}$",message = "Vui lòng nhập đúng định dạng")
     private Date dateOfBirth;
     @NotBlank(message = "Vui lòng nhập địa chỉ!")
-    @Size(min = 20,max = 255,message = "Họ và tên phải có độ dài từ 20 đến 255 ký tự.")
+    @Size(min = 20, max = 255, message = "Họ và tên phải có độ dài từ 20 đến 255 ký tự.")
+    @Pattern(regexp = "^[^!@#$%^&*()_+<>?'\"{}\\`~|/\\\\]+$", message = "Địa chỉ không được chứa các kí tự đặc biệt")
     private String employeeAddress;
     @NotEmpty(message = "Vui lòng nhập số điện thoại!")
-    @Pattern(regexp = "(((\\+|)84)|0)(3|5|7|8|9)+([0-9]{8})",message = "Vui lòng nhập đúng định dạng")
+    @Pattern(regexp = "(((\\+|)84)|0)(3|5|7|8|9)+([0-9]{8})", message = "Vui lòng nhập đúng định dạng")
     private String phone;
     @Email(message = "Vui lòng nhập đúng định dạng!")
     private String email;
