@@ -100,4 +100,33 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             "inner join customer_type ct on ct.customer_type_id = c.customer_type_id\n" +
             "where ct.customer_type_id = 2",nativeQuery = true)
     List<Customer> supplierList();
+
+    @Query(value = "select customer_address from customer where customer_id = ?1", nativeQuery = true)
+    String findAddressByCustomerId(Long customerId);
+
+    @Query(value = "select customer_id,`name`,customer_address  from customer as c join customer_type as ct on c.customer_type_id = ct.customer_type_id where ct.customer_type_id = 2", nativeQuery = true)
+    Optional< List<SupplierDTO>> getALlCustomerByCustomerTypeSupplier();
+
+    /**
+     * A0722I1-KhanhNL
+     */
+    @Query(value = "select c.customer_id, c.customer_code, c.name, c.phone, c.gender, c.date_of_birth, " +
+            "c.id_card, c.customer_address, c.customer_img,  ct.customer_type_name, a.username, a.email " +
+            "from customer c " +
+            "inner join customer_type ct on c.customer_type_id = ct.customer_type_id " +
+            "inner join account a on c.account_id = a.account_id " +
+            "where (c.is_enable = true) and (a.is_enable = true) and (a.username = :username)",
+            nativeQuery = true)
+    Optional<Tuple> findUserDetailByUsername(@Param("username") String username);
+
+    /*PhucND dùng phone tìm kiếm khách hàng*/
+    /*PhucND*/
+    @Query(value = "select customer_id, name,phone, customer_address from customer where phone = ?1", nativeQuery = true)
+    Optional<CustomerDto> findByPhoneCustomer(String phone);
+
+    @Query(value = "select c.customer_id, c.customer_address,c.customer_code,c.email, c.customer_img, c.date_of_birth, c.gender, c.id_card, c.is_enable, c.name, c.phone,ct.customer_type_name,ct.customer_type_id,a.account_id, r.cart_id" +
+            " from customer c  join customer_type ct on c.customer_type_id = ct.customer_type_id  join account a " +
+            " on c.account_id = a.account_id  join cart r on c.cart_id = r.cart_id" +
+            " where (ct.customer_type_name like concat('%',:keyword,'%') or c.name like concat('%',:keyword,'%') or c.customer_address like concat('%',:keyword,'%') or c.phone like concat('%',:keyword,'%')) and (c.is_enable = true)", nativeQuery = true)
+    List<Customer> searchCustomer(@Param("keyword") String keyword);
 }

@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(12);
     }
 
-// Global configurations
+    // Global configurations
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf()
@@ -58,7 +58,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/account/**").hasAnyRole("ADMIN")
                 .antMatchers("api/v1/admin/**").hasRole("ADMIN")
                 .antMatchers("/api/v1/supply/**").hasRole("ADMIN")
-                .antMatchers("/api/v1/product/**").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/api/v1/shipment").hasAnyRole("ACCOUNTANT", "ADMIN")
                 .antMatchers("/api/v1/receipt").hasAnyRole("ACCOUNTANT", "ADMIN")

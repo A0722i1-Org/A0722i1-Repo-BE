@@ -20,15 +20,15 @@ public class SupplyController {
     @Autowired
     private IProductService iProductService;
 
-//    @GetMapping()
-//    public ResponseEntity<Supply> findAllSuppliesForAdmin() {
-//        Page<Supply> supplies = iProductService.findAllSuppliesForAdmin(Pageable.unpaged());
-//        if (supplies.isEmpty()) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        } else {
-//            return new ResponseEntity(supplies, HttpStatus.OK);
-//        }
-//    }
+    @GetMapping()
+    public ResponseEntity<Supply> findAllSuppliesForAdmin() {
+        Page<Supply> supplies = iProductService.findAllSuppliesForAdmin(Pageable.unpaged());
+        if (supplies.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity(supplies, HttpStatus.OK);
+        }
+    }
 
     @GetMapping("")
     public ResponseEntity<Page<Supply>> searchSupplies(@RequestParam("productCode") Optional<String> productCode,
