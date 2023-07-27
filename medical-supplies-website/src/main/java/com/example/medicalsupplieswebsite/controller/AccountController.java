@@ -32,15 +32,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/account")
 
 public class AccountController {
-//    private final AccountService accountService;
+    //    private final AccountService accountService;
     private final EmployeeService employeeService;
     private final RoleService roleService;
     private final AuthenticationManager authenticationManager;
+    @Autowired
+    AccountService accountService;
 
     @Autowired
-   AccountService accountService;
-    @Autowired
-    public AccountController(AccountService accountService, EmployeeService employeeService,RoleService roleService, AuthenticationManager authenticationManager) {
+    public AccountController(AccountService accountService, EmployeeService employeeService, RoleService roleService, AuthenticationManager authenticationManager) {
         this.accountService = accountService;
         this.employeeService = employeeService;
         this.roleService = roleService;
@@ -104,3 +104,4 @@ public class AccountController {
                 "", ""), HttpStatus.OK);
     }
 }
+

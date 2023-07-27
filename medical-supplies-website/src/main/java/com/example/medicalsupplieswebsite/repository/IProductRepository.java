@@ -103,7 +103,8 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
 //                    "WHERE lower(p.product_name) LIKE lower(concat('%', :productName, '%'))" +
 //                    "AND lower(ct.category_name) LIKE lower(concat('%', :categoryName, '%')) " +
 //                    "AND p.product_price BETWEEN :minPrice AND :maxPrice")
-    Page<ProductHomeDto> searchProduct(@Param("productName") String productName , Pageable pageable);
+    Page<ProductHomeDto> searchProduct(String productName,
+                                       String categoryName, String minPrice, String maxPrice, Pageable pageable);
 
     /**
      * VanNT
