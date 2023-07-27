@@ -28,7 +28,7 @@ public class ProductController {
 
     /**
      * VanNT
-     * @param pageable (8 item/page)
+     * @parampageable (8 item/page)
      * @return list all product and paging
      */
     @GetMapping("/home")
