@@ -14,7 +14,7 @@ import java.util.List;
 public class CustomerTypeService implements ICustomerTypeService {
 
     @Autowired
-    private ICustomerTypeRepository customerRepository;
+
     private ICustomerTypeRepository customerTypeRepository;
 
     @Override
@@ -44,6 +44,6 @@ public class CustomerTypeService implements ICustomerTypeService {
 
     @Override
     public List<CustomerType> findAllCustomerType() {
-        return customerRepository.findAll();
+        return customerTypeRepository.findAll();
     }
 }

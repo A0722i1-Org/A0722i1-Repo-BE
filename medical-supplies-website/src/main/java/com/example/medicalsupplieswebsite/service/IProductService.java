@@ -6,6 +6,7 @@ import com.example.medicalsupplieswebsite.dto.receipt_dto.ProductDTO;
 import com.example.medicalsupplieswebsite.dto.ProductHomeDto;
 import com.example.medicalsupplieswebsite.dto.ProductPriceDto;
 import com.example.medicalsupplieswebsite.entity.Product;
+import com.example.medicalsupplieswebsite.entity.ProductInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -37,4 +38,5 @@ public interface IProductService extends IService<Product> {
     Page<ProductHomeDto> searchProductByCategory(Long categoryId, Pageable pageable);
 
     List<ProductPriceDto> getProductListPrice();
+    Product findByIdProductDetail(Long id);
 }

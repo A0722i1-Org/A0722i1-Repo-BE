@@ -58,6 +58,18 @@ public class EmployeeService implements IEmployeeService {
      * Created by: PhongTD
      * Date created: 12/07/2023
      *
+     * @param id
+     * @return Employee was found by id
+     */
+//    @Override
+//    public Employee findById(Long id) {
+//    return null;
+//    }
+
+    /**
+     * Created by: PhongTD
+     * Date created: 12/07/2023
+     *
      * @param employeeInfo
      * @param id
      */
@@ -69,6 +81,16 @@ public class EmployeeService implements IEmployeeService {
     }
 
 
+    /**
+     * Created by PhongTD
+     * Date created: 21/07/2023
+     *
+     * @return List all employee
+     */
+//    @Override
+//    public List<Employee> findAll() {
+//        return iEmployeeRepository.findAll();
+//    }
 
     @Override
     public void deleteById(Long id) {
@@ -138,7 +160,7 @@ public class EmployeeService implements IEmployeeService {
      */
     @Override
     public void updateEmployeeByFieldsDTO(String employeeName, String employeeImg, boolean gender, Date dateOfBirth, String employeeAddress, String phone, String email, String username) {
-        iEmployeeRepository.updateEmployeeDto(employeeName,employeeImg,gender,dateOfBirth,employeeAddress,phone,email,username);
+        iEmployeeRepository.updateEmployeeDto(employeeName, employeeImg, gender, dateOfBirth, employeeAddress, phone, email, username);
     }
 
     @Override
