@@ -44,13 +44,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(12);
     }
 
-// Global configurations
+    // Global configurations
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/public/**", "/api/v1/product/**","/api/v1/employee/**")
+                .antMatchers("/api/v1/public/**", "/api/v1/product/**", "/api/v1/employee/**",
+                        "/api/v1/home/**", "/api/v1/category/home")
                 .permitAll()
                 .antMatchers("/api/v1/cart/**").hasAnyRole("USER", "ADMIN", "SALE", "ACCOUNTANT")
                 .antMatchers("/api/v1/employee/**").hasAnyRole("SALE", "ACCOUNTANT", "ADMIN")
