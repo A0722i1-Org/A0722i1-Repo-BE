@@ -13,15 +13,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.Tuple;
 import java.util.List;
 import javax.transaction.Transactional;
 
 import java.sql.Date;
+import javax.persistence.Tuple;
 import java.util.List;
 import java.util.Optional;
-
+@Repository
 public interface ICustomerRepository extends JpaRepository<Customer, Long> {
 
     @Query(value = "select c.customer_id, c.customer_address ,c.customer_code,c.email, c.customer_img, " +
@@ -43,6 +45,10 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     @Query(value = "update customer set is_enable = false where customer_id = :id", nativeQuery = true)
     void deleteCustomerId(@Param("id") Long id);
 
+    /**
+     *
+     * A0722I1-HieuLD
+     */
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO `medical_supplies`.`customer` (`customer_address`,`customer_code`,`customer_img`,`customer_type_id`," +
@@ -60,6 +66,10 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
                         @Param("customer_code") String customer_code,
                         @Param("is_enable") Boolean is_enable);
 
+    /**
+     *
+     * A0722I1-HieuLD
+     */
     @Modifying
     @Transactional
     @Query(value = "UPDATE `medical_supplies`.`customer` SET `account_id`=:account_id,`cart_id`=:cart_id,`customer_address`=:customer_address," +
@@ -81,6 +91,10 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
                         @Param("customer_code") String customer_code,
                         @Param("is_enable") Boolean is_enable);
 
+    /**
+     *
+     * A0722I1-HieuLD
+     */
     @Query("SELECT customer FROM Customer customer WHERE customer.customerId = ?1")
     Customer findAllById(Long id);
 
