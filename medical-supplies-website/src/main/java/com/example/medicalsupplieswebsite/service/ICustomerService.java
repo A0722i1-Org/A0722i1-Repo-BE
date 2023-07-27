@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ICustomerService extends IService<Customer>{
-    List<Customer> searchCustomers(String type , String name ,String address , String phone);
+    List<Customer> searchCustomers(String search);
     void saveCustomer(CustomerInfo customerInfo);
     void update(CustomerInfo customerInfo, Long id);
 

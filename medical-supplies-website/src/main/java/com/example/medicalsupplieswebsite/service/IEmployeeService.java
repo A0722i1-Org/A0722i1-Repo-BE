@@ -48,7 +48,7 @@ public interface IEmployeeService extends IService<Employee>{
     Employee findEmployeeByUserName(String userName);
 
     /*
-    * NhanTQ
+     * NhanTQ
      */
 
     void updateEmployeeByFieldsDTO(String employeeName, String employeeImg, boolean gender, Date dateOfBirth, String employeeAddress, String phone, String email, String username);
