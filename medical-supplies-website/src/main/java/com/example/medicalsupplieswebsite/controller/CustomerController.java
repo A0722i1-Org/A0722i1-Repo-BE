@@ -48,10 +48,7 @@ public class CustomerController {
 
     /**
      *
-     * @param customerInfo
-     * @param bindingResult
-     * @return
-     * HieuLD
+     * A0722I1-HieuLD
      */
     @PostMapping("/create")
     public ResponseEntity<?> saveCustomer(@Valid @RequestBody CustomerInfo customerInfo, BindingResult bindingResult) {
@@ -73,9 +70,8 @@ public class CustomerController {
     }
 
     /**
-     * HieuLD
-     * @param id
-     * @return
+     *
+     * A0722I1-HieuLD
      */
     @GetMapping("{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
@@ -84,11 +80,8 @@ public class CustomerController {
 
 
     /**
-     * HieuLD
-     * @param id
-     * @param employeeInfo
-     * @param bindingResult
-     * @return
+     *
+     * A0722I1-HieuLD
      */
     @PutMapping("/edit/{id}")
     public ResponseEntity<?> updateCustomer(@Valid @PathVariable Long id, @RequestBody CustomerInfo employeeInfo, BindingResult bindingResult) {

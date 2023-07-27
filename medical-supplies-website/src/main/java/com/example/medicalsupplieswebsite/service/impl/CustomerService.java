@@ -41,9 +41,8 @@ public class CustomerService implements ICustomerService {
     }
 
     /**
-     * HieuLD
      *
-     * @param customerInfo
+     * A0722I1-HieuLD
      */
     @Override
     public void saveCustomer(CustomerInfo customerInfo) {
@@ -56,10 +55,8 @@ public class CustomerService implements ICustomerService {
     }
 
     /**
-     * HieuLD
      *
-     * @param id
-     * @return
+     * A0722I1-HieuLD
      */
     @Override
     public Customer findById(Long id) {
@@ -74,10 +71,8 @@ public class CustomerService implements ICustomerService {
 
 
     /**
-     * HieuLD
      *
-     * @param customerInfo
-     * @param id
+     * A0722I1-HieuLD
      */
     @Override
     public void update(CustomerInfo customerInfo, Long id) {

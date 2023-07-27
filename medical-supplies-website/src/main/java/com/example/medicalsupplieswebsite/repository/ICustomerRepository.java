@@ -45,6 +45,10 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     @Query(value = "update customer set is_enable = false where customer_id = :id", nativeQuery = true)
     void deleteCustomerId(@Param("id") Long id);
 
+    /**
+     *
+     * A0722I1-HieuLD
+     */
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO `medical_supplies`.`customer` (`customer_address`,`customer_code`,`customer_img`,`customer_type_id`," +
@@ -62,6 +66,10 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
                         @Param("customer_code") String customer_code,
                         @Param("is_enable") Boolean is_enable);
 
+    /**
+     *
+     * A0722I1-HieuLD
+     */
     @Modifying
     @Transactional
     @Query(value = "UPDATE `medical_supplies`.`customer` SET `account_id`=:account_id,`cart_id`=:cart_id,`customer_address`=:customer_address," +
@@ -83,6 +91,10 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
                         @Param("customer_code") String customer_code,
                         @Param("is_enable") Boolean is_enable);
 
+    /**
+     *
+     * A0722I1-HieuLD
+     */
     @Query("SELECT customer FROM Customer customer WHERE customer.customerId = ?1")
     Customer findAllById(Long id);
 
