@@ -12,6 +12,7 @@ public interface IEmployeeService extends IService<Employee>{
 
 
     Employee findByUsername(String username);
+    List<Employee> findAll();
 
     /**
      * A0722I1-KhanhNL
