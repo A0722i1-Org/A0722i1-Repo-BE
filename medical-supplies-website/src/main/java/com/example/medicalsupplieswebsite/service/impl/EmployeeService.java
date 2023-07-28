@@ -13,11 +13,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.persistence.Tuple;
+import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class EmployeeService implements IEmployeeService {
 
     @Autowired

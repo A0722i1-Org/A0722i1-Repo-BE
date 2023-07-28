@@ -8,6 +8,10 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+/*
+ * Author: NhatLH
+ * Created: 2023-07-15
+ *  */
 @Entity
 @Getter
 @Setter

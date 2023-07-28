@@ -68,7 +68,7 @@ public class EmployeeController {
      * @param bindingResult
      * @return if info of employee valid return httpStatus.OK else return error
      */
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateEmployee(@Valid @PathVariable Long id, @RequestBody EmployeeInfo employeeInfo, BindingResult bindingResult) {
         new EmployeeInfo().validate(employeeInfo, bindingResult);
         if (bindingResult.hasErrors()) {
