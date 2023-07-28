@@ -14,16 +14,13 @@ import java.util.*;
  * Created: 2023-07-25
  */
 public class VnPayConfig {
-
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
     public static String vnp_ReturnUrl = "http://localhost:4200/carts";
     public static String vnp_TmnCode = "WRDQGJ5R";
     public static String vnp_HashSecret = "NMCCKFKVBCHDEUVZNRGXTODKVZXUYCOV";
     public static String vnp_apiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
-
     public static String vnp_Version = "2.1.0";
     public static String vnp_Command = "pay";
-
     public static String md5(String message) {
         String digest = null;
         try {

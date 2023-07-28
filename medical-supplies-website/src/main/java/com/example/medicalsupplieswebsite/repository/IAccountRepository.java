@@ -8,13 +8,12 @@ import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
-
+@Transactional
 public interface IAccountRepository extends JpaRepository<Account, Long> {
 
     @Query(value = "INSERT INTO account_roles (account_id, role_id) " +
             "VALUES (:accountId, :roleId)", nativeQuery = true)
     @Modifying
-    @Transactional
     void setRoleForAccount(@Param("accountId") Long accountId, @Param("roleId") Long roleId);
 
     /*
