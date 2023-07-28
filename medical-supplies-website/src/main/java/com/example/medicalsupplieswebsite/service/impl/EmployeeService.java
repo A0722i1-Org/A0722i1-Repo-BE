@@ -44,7 +44,7 @@ public class EmployeeService implements IEmployeeService {
     public void save(EmployeeInfo employeeInfo) {
         Employee employee = new Employee(null, employeeInfo.getEmployeeCode(), employeeInfo.getEmployeeName(),
                 employeeInfo.getEmail(), employeeInfo.getPhone(), employeeInfo.getEmployeeAddress(), employeeInfo.getGender(),
-                employeeInfo.getIdCard(), employeeInfo.getDateOfBirth(), employeeInfo.getEmployeeImg(), false,
+                employeeInfo.getIdCard(), employeeInfo.getDateOfBirth(), employeeInfo.getEmployeeImg(), true,
                 employeeInfo.getPosition());
         iEmployeeRepository.save(employee);
     }
