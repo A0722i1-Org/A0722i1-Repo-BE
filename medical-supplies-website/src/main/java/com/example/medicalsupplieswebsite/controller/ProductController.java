@@ -65,7 +65,7 @@ public class ProductController {
 
     @PatchMapping("update")
     public ResponseEntity<?> updateProduct(@Valid @RequestBody ProductCreateDTO productCreateDTO){
-        Product product = productService.findById(productCreateDTO.getProductId());
+        productService.findById(productCreateDTO.getProductId());
         productService.updateProductValid(productCreateDTO);
         return new ResponseEntity<>(productService.findByIdNative(productCreateDTO.getProductId()),HttpStatus.OK);
     }
