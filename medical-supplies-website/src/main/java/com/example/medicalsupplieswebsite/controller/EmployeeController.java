@@ -55,6 +55,11 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @GetMapping("/getAll")
+    public List<Employee> getAllEmployee() {
+        return iEmployeeService.findAll();
+    }
+
     /**
      * Created by: PhongTD
      * Date created: 12/07/2023
