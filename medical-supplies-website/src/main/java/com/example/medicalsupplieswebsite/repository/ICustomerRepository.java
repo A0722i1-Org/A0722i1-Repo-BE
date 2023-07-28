@@ -20,8 +20,6 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import java.sql.Date;
-import javax.persistence.Tuple;
-import java.util.List;
 import java.util.Optional;
 @Repository
 public interface ICustomerRepository extends JpaRepository<Customer, Long> {

@@ -3,14 +3,10 @@ package com.example.medicalsupplieswebsite.service.impl;
 import com.example.medicalsupplieswebsite.dto.CustomerInfo;
 import com.example.medicalsupplieswebsite.dto.CustomerUserDetailDto;
 import com.example.medicalsupplieswebsite.dto.shipmentdto.CustomerDto;
-import com.example.medicalsupplieswebsite.entity.Account;
 import com.example.medicalsupplieswebsite.dto.receipt_dto.SupplierDTO;
-import com.example.medicalsupplieswebsite.dto.shipmentdto.CustomerDto;
 import com.example.medicalsupplieswebsite.entity.Customer;
-import com.example.medicalsupplieswebsite.repository.IAccountRepository;
 import com.example.medicalsupplieswebsite.repository.ICustomerRepository;
 import com.example.medicalsupplieswebsite.service.ICustomerService;
-import com.example.medicalsupplieswebsite.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.Tuple;
 import java.util.List;
-import java.util.Optional;
 
 
 
@@ -107,7 +102,7 @@ public class CustomerService implements ICustomerService {
         Tuple tuple = iCustomerRepository.findUserDetailByUsername(username).orElse(null);
 
         if (tuple != null) {
-            return CustomerUserDetailDto.TupleToCustomerDto(tuple);
+            return CustomerUserDetailDto.tupleToCustomerDto(tuple);
         }
 
         return null;
