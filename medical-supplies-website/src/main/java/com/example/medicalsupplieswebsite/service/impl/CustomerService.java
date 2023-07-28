@@ -125,7 +125,7 @@ public class CustomerService implements ICustomerService {
 
 
     @Override
-    public List<Customer> searchCustomers(String keyword) {
-        return this.iCustomerRepository.searchCustomer(keyword);
+    public Page<Customer> searchCustomers(String keyword, Pageable pageable) {
+        return this.iCustomerRepository.searchCustomer(keyword, pageable);
     }
 }

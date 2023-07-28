@@ -32,7 +32,6 @@ public class EmployeeInfo {
     @Pattern(regexp = "^[^!@#$%^&*()_+<>?'\"{}\\`~|/\\\\]+$",message = "Địa chỉ không được chứa các kí tự đặc biệt")
     @Length(min = 5,max = 100,message = "Địa chỉ phải có ít nhất 5 và tối đa 100 kí tự")
     private String employeeAddress;
-
     @NotNull(message = "Vui lòng chọn giới tính")
     private Boolean gender;
 
