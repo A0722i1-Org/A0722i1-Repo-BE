@@ -117,9 +117,7 @@ public class CustomerService implements ICustomerService {
     public String findAddressByCustomerId(Long customerId) {
         return iCustomerRepository.findAddressByCustomerId(customerId);
     }
-    public List<Customer> customerList() {
-        return iCustomerRepository.supplierList();
-    }
+
 
     @Override
     public List<SupplierDTO> getALlCustomerByCustomerTypeSupplier() {
@@ -129,6 +127,11 @@ public class CustomerService implements ICustomerService {
     @Override
     public CustomerDto findByPhoneCustomer(String phone) {
         return iCustomerRepository.findByPhoneCustomer(phone).orElse(null);
+    }
+
+    @Override
+    public List<Customer> customerList() {
+        return iCustomerRepository.supplierList();
     }
 
 
