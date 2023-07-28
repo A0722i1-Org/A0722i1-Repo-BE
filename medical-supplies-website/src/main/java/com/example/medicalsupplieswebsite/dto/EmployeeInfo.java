@@ -21,7 +21,7 @@ public class EmployeeInfo {
 
     @NotBlank(message = "Vui lòng nhập email")
     @Pattern(regexp = "^[a-zA-Z0-9_.+-]+@gmail.com+$",message = "Email không đúng định dạng, vui lòng nhập lại. Ex: tên_email@gmail.com")
-    @Length(min = 6,max = 30,message = "Tên email chỉ được phép chứa từ 6 đến 30 kí tự")
+    @Length(min = 6,max = 50,message = "Tên email chỉ được phép chứa từ 6 đến 30 kí tự")
     private String email;
 
     @NotBlank(message = "Vui lòng nhập số điện thoại")
@@ -151,10 +151,10 @@ public class EmployeeInfo {
         EmployeeInfo employeeInfo = (EmployeeInfo) target;
         if (!(employeeInfo.dateOfBirth == null)) {
             LocalDate today = LocalDate.now();
-            LocalDate minAgeDate = today.minusYears(23);
+            LocalDate minAgeDate = today.minusYears(18);
             LocalDate maxAgeDate = today.minusYears(50);
             if (employeeInfo.dateOfBirth.toLocalDate().isAfter(minAgeDate)) {
-                errors.rejectValue("dateOfBirth", "", "chưa đủ 23 tuổi");
+                errors.rejectValue("dateOfBirth", "", "chưa đủ 18 tuổi");
             }
             if (employeeInfo.dateOfBirth.toLocalDate().isBefore(maxAgeDate)) {
                 errors.rejectValue("dateOfBirth", "", "lớn hơn 50 tuổi");

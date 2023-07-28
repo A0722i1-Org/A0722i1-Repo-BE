@@ -102,6 +102,11 @@ return null;
         return iEmployeeRepository.findByUsername(username).orElse(null);
     }
 
+    @Override
+    public List<Employee> findAll() {
+        return iEmployeeRepository.findAll();
+    }
+
     /**
      * A0722I1-KhanhNL
      */
