@@ -37,6 +37,8 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
     void updateEmployee(String employeeName, String email, String phone, String employeeAddress, Boolean gender,
                         String idCard, Date dateOfBirth, String avatar, Position position, Long id);
 
+
+
     /**
      * Created by: PhongTD
      * Date created: 12/07/2023
@@ -86,7 +88,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
             "WHERE employee_name LIKE %?1% \n" +
             "  AND date_of_birth LIKE %?2% \n" +
             "  AND position_name LIKE %?3% \n" +
-            "  AND employee.is_enable = false\n" +
+            "  AND employee.is_enable = true\n" +
             "LIMIT 0, 300;"
             ,nativeQuery = true)
     List<Employee> findAllByNameAndDobAndAndPosition(String nameEmployee, String dof, String position);
@@ -97,8 +99,8 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
      */
     @Modifying
     @Query(value = "UPDATE employee \n" +
-            "SET is_enable = true \n" +
-            "WHERE employee_id = ?1 AND is_enable = false; \n",nativeQuery = true)
+            "SET is_enable = false \n" +
+            "WHERE employee_id = ?1 AND is_enable = true; \n",nativeQuery = true)
     void deleteEmployeeByID(Long id);
 
     /**
@@ -115,7 +117,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
             "JOIN account ON employee.account_id = account.account_id\n" +
             "JOIN position ON employee.position_id = position.position_id\n" +
             "WHERE employee.employee_id = ? \n" +
-            "  AND employee.is_enable = false \n" +
+            "  AND employee.is_enable = true \n" +
             "LIMIT 0, 300;",nativeQuery = true)
     Employee getEmployeeById(Long id);
 
