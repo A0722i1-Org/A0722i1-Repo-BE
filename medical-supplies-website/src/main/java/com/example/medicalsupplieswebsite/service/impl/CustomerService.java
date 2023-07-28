@@ -2,6 +2,8 @@ package com.example.medicalsupplieswebsite.service.impl;
 
 import com.example.medicalsupplieswebsite.dto.CustomerInfo;
 import com.example.medicalsupplieswebsite.dto.CustomerUserDetailDto;
+import com.example.medicalsupplieswebsite.dto.shipmentdto.CustomerDto;
+import com.example.medicalsupplieswebsite.entity.Account;
 import com.example.medicalsupplieswebsite.dto.receipt_dto.SupplierDTO;
 import com.example.medicalsupplieswebsite.dto.shipmentdto.CustomerDto;
 import com.example.medicalsupplieswebsite.entity.Account;
@@ -20,6 +22,9 @@ import java.util.List;
 import java.util.Optional;
 
 
+
+
+
 @Service
 public class CustomerService implements ICustomerService {
     private final ICustomerRepository iCustomerRepository;
@@ -36,6 +41,10 @@ public class CustomerService implements ICustomerService {
         return customers;
     }
 
+    /**
+     *
+     * A0722I1-HieuLD
+     */
     @Override
     public void saveCustomer(CustomerInfo customerInfo) {
         iCustomerRepository.insertCustomer(customerInfo.getName(), customerInfo.getEmail(), customerInfo.getPhone(),
@@ -46,10 +55,15 @@ public class CustomerService implements ICustomerService {
 
     }
 
+    /**
+     *
+     * A0722I1-HieuLD
+     */
     @Override
     public Customer findById(Long id) {
         return iCustomerRepository.findById(id).orElse(null);
     }
+
 
     @Override
     public Customer update(Customer customer) {
@@ -57,6 +71,10 @@ public class CustomerService implements ICustomerService {
     }
 
 
+    /**
+     *
+     * A0722I1-HieuLD
+     */
     @Override
     public void update(CustomerInfo customerInfo, Long id) {
         iCustomerRepository.updateCustomer(id, customerInfo.getName(), customerInfo.getEmail(), customerInfo.getPhone(),
@@ -115,7 +133,7 @@ public class CustomerService implements ICustomerService {
 
 
     @Override
-    public List<Customer> searchCustomers(String keyword) {
-        return this.iCustomerRepository.searchCustomer(keyword);
+    public Page<Customer> searchCustomers(String keyword, Pageable pageable) {
+        return this.iCustomerRepository.searchCustomer(keyword, pageable);
     }
 }
