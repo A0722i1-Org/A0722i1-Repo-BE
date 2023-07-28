@@ -15,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import javax.persistence.Tuple;
 import javax.transaction.Transactional;
 import java.sql.Date;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -131,7 +133,15 @@ return null;
      */
     @Override
     public List<Employee> findAllEmWithNameAndDateAndPositions(String name, String date, String position) {
-        return iEmployeeRepository.findAllByNameAndDobAndAndPosition(name, date, position);
+        List<Employee> employeeList = iEmployeeRepository.findAllByNameAndDobAndAndPosition(name, date, position);
+        Collections.sort(employeeList, new Comparator<Employee>() {
+            @Override
+            public int compare(Employee employee, Employee t1) {
+                return employee.getEmployeeId() > t1.getEmployeeId() ? 1 : -1;
+            }
+        });
+        return employeeList;
+
     }
 
     /**
