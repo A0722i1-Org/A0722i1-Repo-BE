@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,6 +22,6 @@ public class Payment {
     private int totalAmount;
     @OneToMany
     private Set<CartDetail> cartDetails = new LinkedHashSet<>();
-    private String secureHash;
+    private String tnxRef;
     private boolean isPaid;
 }

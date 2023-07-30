@@ -111,7 +111,7 @@ public class PaymentController {
             payment.setCartDetails(cartDetails);
             payment.setTotalAmount(totalAmount);
             payment.setPaid(false);
-            payment.setSecureHash(vnp_SecureHash);
+            payment.setTnxRef(vnp_TxnRef);
             payment.setCartId(cart.getCartId());
             this.paymentService.update(payment);
 
@@ -125,17 +125,21 @@ public class PaymentController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/transaction")
-    public ResponseEntity<?> transactionChecking(@RequestParam("vnp_SecureHash") String hashCode) {
-        Payment payment = this.paymentService.findPaymentBySecureHash(hashCode);
-        int totalAmount = payment.getTotalAmount();
-        Cart cart = this.cartService.findById(payment.getCartId());
-        Set<CartDetail> cartDetails = payment.getCartDetails();
-        for(CartDetail cartDetail: cartDetails){
-            cartDetail.setStatus(true);
-            this.cartDetailService.update(cartDetail);
+    @GetMapping("/transaction/{tnxRef}")
+    public ResponseEntity<?> transactionChecking(@PathVariable("tnxRef") String tnxRef) {
+        Payment payment = this.paymentService.findPaymentByTnxRef(tnxRef);
+        if (!payment.isPaid()) {
+            payment.setPaid(true);
+            this.paymentService.update(payment);
+            int totalAmount = payment.getTotalAmount();
+            Cart cart = this.cartService.findById(payment.getCartId());
+            Set<CartDetail> cartDetails = payment.getCartDetails();
+            for (CartDetail cartDetail : cartDetails) {
+                cartDetail.setStatus(true);
+                this.cartDetailService.update(cartDetail);
+            }
+            this.emailService.emailProcess(cart, totalAmount);
         }
-        this.emailService.emailProcess(cart, totalAmount);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
