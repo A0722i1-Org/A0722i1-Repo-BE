@@ -21,25 +21,25 @@ import javax.transaction.Transactional;
 
 import java.sql.Date;
 import java.util.Optional;
-@Repository
+
+@Transactional
 public interface ICustomerRepository extends JpaRepository<Customer, Long> {
 
     @Query(value = "select c.customer_id, c.customer_address ,c.customer_code,c.email, c.customer_img, " +
             "c.date_of_birth, c.gender, c.id_card, c.is_enable," +
             " c.name, c.phone, ct.customer_type_id ," +
             " a.account_id, r.cart_id " +
-            "from customer c inner join customer_type ct on c.customer_type_id = ct.customer_type_id inner join account a" +
-            " on c.account_id = a.account_id inner join cart r on c.cart_id = r.cart_id where c.is_enable= true",
+            "from customer c inner join customer_type ct on c.customer_type_id = ct.customer_type_id left join account a" +
+            " on c.account_id = a.account_id left join cart r on c.cart_id = r.cart_id where c.is_enable= true",
             countQuery = "select count(c.customer_id)" +
                     " from customer c" +
-                    " inner join customer_type ct on c.customer_type_id = ct.customer_type_id inner join account a" +
-                    " on c.account_id = a.account_id inner join cart r on c.cart_id = r.cart_id where c.is_enable= true",
+                    " inner join customer_type ct on c.customer_type_id = ct.customer_type_id left join account a" +
+                    " on c.account_id = a.account_id left join cart r on c.cart_id = r.cart_id where c.is_enable= true",
             nativeQuery = true)
     Page<Customer> findAllCustomers(Pageable pageable);
 
 
     @Modifying
-    @Transactional
     @Query(value = "update customer set is_enable = false where customer_id = :id", nativeQuery = true)
     void deleteCustomerId(@Param("id") Long id);
 
@@ -48,10 +48,9 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
      * A0722I1-HieuLD
      */
     @Modifying
-    @Transactional
     @Query(value = "INSERT INTO `medical_supplies`.`customer` (`customer_address`,`customer_code`,`customer_img`,`customer_type_id`," +
-            "`date_of_birth`,`email`,`gender`,`id_card`,`is_enable`,`name`,`phone`) VALUES (:customer_address,:customer_code,:customer_img,:customer_type_id,:date_of_birth,:email,:gender,:id_card,:is_enable," +
-            ":name,:phone)", nativeQuery = true)
+            "`date_of_birth`,`email`,`gender`,`id_card`,`is_enable`,`name`,`phone`,`cart_id`) VALUES (:customer_address,:customer_code,:customer_img,:customer_type_id,:date_of_birth,:email,:gender,:id_card,:is_enable," +
+            ":name,:phone, :cart_id)", nativeQuery = true)
     void insertCustomer(@Param("name") String name,
                         @Param("email") String email,
                         @Param("phone") String phone,
@@ -62,14 +61,14 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
                         @Param("customer_img") String img,
                         @Param("customer_type_id") CustomerType customer_type_id,
                         @Param("customer_code") String customer_code,
-                        @Param("is_enable") Boolean is_enable);
+                        @Param("is_enable") Boolean is_enable,
+                        @Param("cart_id") Long cart_id);
 
     /**
      *
      * A0722I1-HieuLD
      */
     @Modifying
-    @Transactional
     @Query(value = "UPDATE `medical_supplies`.`customer` SET `account_id`=:account_id,`cart_id`=:cart_id,`customer_address`=:customer_address," +
             "`customer_code`=:customer_code,`customer_img`=:customer_img,`customer_type_id`=:customer_type_id," +
             "`date_of_birth`=:date_of_birth,`email`=:email,`gender`=:gender,`id_card`=:id_card,`is_enable`=:is_enable," +
@@ -130,10 +129,10 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     Optional< List<SupplierDTO>> getALlCustomerByCustomerTypeSupplier();
 
     @Query(value = "select c.customer_id, c.customer_address,c.customer_code,c.email, c.customer_img, c.date_of_birth, c.gender, c.id_card, c.is_enable, c.name, c.phone,ct.customer_type_name,ct.customer_type_id,a.account_id, r.cart_id" +
-            " from customer c  join customer_type ct on c.customer_type_id = ct.customer_type_id  join account a " +
-            " on c.account_id = a.account_id  join cart r on c.cart_id = r.cart_id"+
+            " from customer c  join customer_type ct on c.customer_type_id = ct.customer_type_id left join account a " +
+            " on c.account_id = a.account_id  left join cart r on c.cart_id = r.cart_id"+
             " where (ct.customer_type_name like concat('%',:keyword,'%') or c.name like concat('%',:keyword,'%') or c.customer_address like concat('%',:keyword,'%') or c.phone like concat('%',:keyword,'%')) and (c.is_enable = true)"
-            , countQuery = "select count(c.customer_id) from customer c join customer_type ct on c.customer_type_id = ct.customer_type_id  join account a on c.account_id = a.account_id  join cart r on c.cart_id = r.cart_id"+
+            , countQuery = "select count(c.customer_id) from customer c join customer_type ct on c.customer_type_id = ct.customer_type_id left join account a on c.account_id = a.account_id  left join cart r on c.cart_id = r.cart_id"+
             " where (ct.customer_type_name like concat('%',:keyword,'%') or c.name like concat('%',:keyword,'%') or c.customer_address like concat('%',:keyword,'%') or c.phone like concat('%',:keyword,'%')) and (c.is_enable = true)"
             , nativeQuery = true)
     Page<Customer> searchCustomer(@Param("keyword") String keyword ,Pageable pageable);

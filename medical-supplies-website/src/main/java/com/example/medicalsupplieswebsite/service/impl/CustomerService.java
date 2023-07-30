@@ -74,7 +74,7 @@ public class CustomerService implements ICustomerService {
         iCustomerRepository.updateCustomer(id, customerInfo.getName(), customerInfo.getEmail(), customerInfo.getPhone(),
                 customerInfo.isGender(), customerInfo.getDateOfBirth(), customerInfo.getIdCard(),
                 customerInfo.getCustomerAddress(), customerInfo.getCustomerImg(), customerInfo.getCustomerType(),
-                customerInfo.getCart(), customerInfo.getAccount(), customerInfo.getCustomerCode(), false);
+                customerInfo.getCart(), customerInfo.getAccount(), customerInfo.getCustomerCode(), true);
 
     }
 
