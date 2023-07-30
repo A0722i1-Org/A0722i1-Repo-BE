@@ -55,10 +55,8 @@ public class CartController {
         CartDetail cartDetail = this.cartDetailService.checkAvailable(productId, cartId);
         if (cartDetail == null) {
             this.cartDetailService.add(productId, cartId);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/update")
