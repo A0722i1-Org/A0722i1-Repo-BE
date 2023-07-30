@@ -31,8 +31,7 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Page<Customer> findAll(Pageable pageable) {
-        Page<Customer> customers = this.iCustomerRepository.findAllCustomers(pageable);
-        return customers;
+        return this.iCustomerRepository.findAllCustomers(pageable);
     }
 
     /**
@@ -44,9 +43,7 @@ public class CustomerService implements ICustomerService {
         iCustomerRepository.insertCustomer(customerInfo.getName(), customerInfo.getEmail(), customerInfo.getPhone(),
                 customerInfo.isGender(), customerInfo.getDateOfBirth(), customerInfo.getIdCard(),
                 customerInfo.getCustomerAddress(), customerInfo.getCustomerImg(), customerInfo.getCustomerType(),
-                customerInfo.getCustomerCode(), false);
-
-
+                customerInfo.getCustomerCode(), true, customerInfo.getCart().getCartId());
     }
 
     /**
