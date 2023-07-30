@@ -67,7 +67,6 @@ public class CustomerController {
         } else {
             iCustomerService.saveCustomer(customerInfo);
         }
-
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
