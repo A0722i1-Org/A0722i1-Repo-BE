@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.Tuple;
 import java.util.List;
+import java.util.Optional;
 
 
 
@@ -118,6 +119,11 @@ public class CustomerService implements ICustomerService {
     @Override
     public CustomerDto findByPhoneCustomer(String phone) {
         return iCustomerRepository.findByPhoneCustomer(phone).orElse(null);
+    }
+
+    @Override
+    public List<Customer> customerList() {
+        return iCustomerRepository.supplierList();
     }
 
 

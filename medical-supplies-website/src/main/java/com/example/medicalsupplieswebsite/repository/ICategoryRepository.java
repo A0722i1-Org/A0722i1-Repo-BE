@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
 import java.util.List;
 
 public interface ICategoryRepository extends JpaRepository<Category,Long> {
@@ -18,4 +17,10 @@ public interface ICategoryRepository extends JpaRepository<Category,Long> {
             value = "SELECT category_id, category_name " +
                     "FROM category ")
     List<Category> getCategory();
+/*
+    A0722i1-TaiPA
+*/
+
+    @Query( value="SELECT * FROM category " , nativeQuery = true)
+    List<Category> findAll();
 }
