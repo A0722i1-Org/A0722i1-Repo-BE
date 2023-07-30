@@ -49,7 +49,7 @@ public class EmployeeService implements IEmployeeService {
         Employee employee = new Employee(null, employeeInfo.getEmployeeCode(), employeeInfo.getEmployeeName(),
                 employeeInfo.getEmail(), employeeInfo.getPhone(), employeeInfo.getEmployeeAddress(), employeeInfo.getGender(),
                 employeeInfo.getIdCard(), employeeInfo.getDateOfBirth(), employeeInfo.getEmployeeImg(), true,
-                employeeInfo.getPosition());
+                employeeInfo.getPosition(), employeeInfo.getAccount());
         iEmployeeRepository.save(employee);
     }
 

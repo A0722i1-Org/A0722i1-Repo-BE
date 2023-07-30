@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 @Transactional
 public interface IAccountRepository extends JpaRepository<Account, Long> {
@@ -39,5 +40,3 @@ public interface IAccountRepository extends JpaRepository<Account, Long> {
     void changePassword(@Param("username") String username,
                         @Param("pass") String pass);
 }
-
-
