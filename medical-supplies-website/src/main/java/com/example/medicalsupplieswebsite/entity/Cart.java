@@ -32,7 +32,6 @@ public class Cart {
     @NotBlank
     @Pattern(regexp = "^0\\d{9}$")
     private String receiverPhone;
-    @JsonBackReference
-    @OneToOne( cascade = CascadeType.ALL)
+    @OneToOne( cascade = CascadeType.ALL, mappedBy = "cart")
     private Customer customer;
 }
