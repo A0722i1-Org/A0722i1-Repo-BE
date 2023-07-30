@@ -35,5 +35,4 @@ public class Cart {
     @JsonBackReference
     @OneToOne( cascade = CascadeType.ALL)
     private Customer customer;
-
 }
