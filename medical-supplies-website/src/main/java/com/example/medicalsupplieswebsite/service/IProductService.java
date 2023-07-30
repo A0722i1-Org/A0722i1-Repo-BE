@@ -5,6 +5,7 @@ import com.example.medicalsupplieswebsite.dto.shipmentdto.ProductDto;
 import com.example.medicalsupplieswebsite.dto.receipt_dto.ProductDTO;
 import com.example.medicalsupplieswebsite.dto.ProductHomeDto;
 import com.example.medicalsupplieswebsite.dto.ProductPriceDto;
+import com.example.medicalsupplieswebsite.dto.ProductCreateDTO;
 import com.example.medicalsupplieswebsite.entity.Product;
 import com.example.medicalsupplieswebsite.entity.ProductInfo;
 import org.springframework.data.domain.Page;
@@ -39,4 +40,14 @@ public interface IProductService extends IService<Product> {
 
     List<ProductPriceDto> getProductListPrice();
     Product findByIdProductDetail(Long id);
+
+
+    Product findByIdNative(Long id);
+
+    String existsProductName(String product_name);
+
+    void saveProduct(Product product);
+
+    void updateProductValid(ProductCreateDTO product);
+
 }

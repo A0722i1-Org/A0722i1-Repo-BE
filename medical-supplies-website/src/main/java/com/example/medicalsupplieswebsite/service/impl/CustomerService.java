@@ -6,6 +6,7 @@ import com.example.medicalsupplieswebsite.dto.shipmentdto.CustomerDto;
 import com.example.medicalsupplieswebsite.entity.Account;
 import com.example.medicalsupplieswebsite.dto.receipt_dto.SupplierDTO;
 import com.example.medicalsupplieswebsite.dto.shipmentdto.CustomerDto;
+import com.example.medicalsupplieswebsite.entity.Account;
 import com.example.medicalsupplieswebsite.entity.Customer;
 import com.example.medicalsupplieswebsite.repository.IAccountRepository;
 import com.example.medicalsupplieswebsite.repository.ICustomerRepository;
@@ -93,7 +94,6 @@ public class CustomerService implements ICustomerService {
         iCustomerRepository.deleteCustomerId(id);
     }
 
-
     @Override
     public Customer findByUsername(String username) {
         return iCustomerRepository.findByUsername(username).orElse(null);
@@ -118,6 +118,7 @@ public class CustomerService implements ICustomerService {
         return iCustomerRepository.findAddressByCustomerId(customerId);
     }
 
+
     @Override
     public List<SupplierDTO> getALlCustomerByCustomerTypeSupplier() {
         return iCustomerRepository.getALlCustomerByCustomerTypeSupplier().orElse(null);
@@ -126,6 +127,11 @@ public class CustomerService implements ICustomerService {
     @Override
     public CustomerDto findByPhoneCustomer(String phone) {
         return iCustomerRepository.findByPhoneCustomer(phone).orElse(null);
+    }
+
+    @Override
+    public List<Customer> customerList() {
+        return iCustomerRepository.supplierList();
     }
 
 

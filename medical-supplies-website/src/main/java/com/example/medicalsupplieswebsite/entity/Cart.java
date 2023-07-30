@@ -12,6 +12,7 @@ import javax.validation.constraints.*;
 @Getter
 @Setter
 @RequiredArgsConstructor
+@Table(name = "cart")
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +29,7 @@ public class Cart {
     @Pattern(regexp = "^0\\d{9,10}$")
     private String receiverPhone;
     @JsonBackReference
-    @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL)
+    @OneToOne( cascade = CascadeType.ALL)
     private Customer customer;
 
 }
