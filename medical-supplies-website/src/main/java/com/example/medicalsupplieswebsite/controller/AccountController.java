@@ -2,10 +2,8 @@ package com.example.medicalsupplieswebsite.controller;
 
 import com.example.medicalsupplieswebsite.dto.ChangePasswordDto;
 import com.example.medicalsupplieswebsite.entity.Account;
-import com.example.medicalsupplieswebsite.entity.Employee;
 import com.example.medicalsupplieswebsite.entity.Role;
 import com.example.medicalsupplieswebsite.service.impl.AccountService;
-import com.example.medicalsupplieswebsite.service.impl.EmployeeService;
 import com.example.medicalsupplieswebsite.service.impl.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,28 +20,25 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/account")
 
 public class AccountController {
-    //    private final AccountService accountService;
-    private final EmployeeService employeeService;
+    private final AccountService accountService;
     private final RoleService roleService;
     private final AuthenticationManager authenticationManager;
-    @Autowired
-    AccountService accountService;
 
     @Autowired
-    public AccountController(AccountService accountService, EmployeeService employeeService, RoleService roleService, AuthenticationManager authenticationManager) {
+    public AccountController(AccountService accountService, RoleService roleService, AuthenticationManager authenticationManager) {
         this.accountService = accountService;
-        this.employeeService = employeeService;
         this.roleService = roleService;
         this.authenticationManager = authenticationManager;
     }
@@ -66,12 +61,17 @@ public class AccountController {
         if (role == null) {
             return ResponseEntity.badRequest().body("Invalid roleId");
         }
+        Set<Role> roles = account.getRoles();
+        roles.add(role);
+        account.setRoles(roles);
+
         // Lưu tài khoản
-        Account savedAccount = accountService.addAccount(account);
-        Long AccountId = savedAccount.getAccountId();
+//        Account savedAccount = accountService.addAccount(account);
+//        Long AccountId = savedAccount.getAccountId();
         // Thiết lập vai trò cho tài khoản
-        accountService.setRoleForAccount(AccountId, roleId);
-        return ResponseEntity.ok(savedAccount);
+//        accountService.setRoleForAccount(AccountId, roleId);
+//        return ResponseEntity.ok(savedAccount);
+        return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
 

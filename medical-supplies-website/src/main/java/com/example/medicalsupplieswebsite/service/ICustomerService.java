@@ -34,4 +34,5 @@ public interface ICustomerService extends IService<Customer>{
     List<SupplierDTO> getALlCustomerByCustomerTypeSupplier();
     CustomerDto findByPhoneCustomer(String phone);
 
+    List<Customer> customerList();
 }

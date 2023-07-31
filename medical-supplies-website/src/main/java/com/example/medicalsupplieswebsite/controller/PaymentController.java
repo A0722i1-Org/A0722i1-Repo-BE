@@ -5,9 +5,11 @@ import com.example.medicalsupplieswebsite.dto.CartWithDetail;
 import com.example.medicalsupplieswebsite.dto.response.PaymentResponse;
 import com.example.medicalsupplieswebsite.entity.Cart;
 import com.example.medicalsupplieswebsite.entity.CartDetail;
+import com.example.medicalsupplieswebsite.entity.Payment;
 import com.example.medicalsupplieswebsite.service.ICartDetailService;
 import com.example.medicalsupplieswebsite.service.ICartService;
 import com.example.medicalsupplieswebsite.service.IEmailService;
+import com.example.medicalsupplieswebsite.service.IPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,12 +32,14 @@ public class PaymentController {
     private final ICartService cartService;
     private final ICartDetailService cartDetailService;
     private final IEmailService emailService;
+    private final IPaymentService paymentService;
 
     @Autowired
-    PaymentController(ICartService cartService, ICartDetailService cartDetailService, IEmailService emailService) {
+    PaymentController(ICartService cartService, ICartDetailService cartDetailService, IEmailService emailService, IPaymentService paymentService) {
         this.cartService = cartService;
         this.cartDetailService = cartDetailService;
         this.emailService = emailService;
+        this.paymentService = paymentService;
     }
 
     @PutMapping("")
@@ -43,16 +47,15 @@ public class PaymentController {
         Cart cart = cartWithDetail.getCart();
         List<CartDetail> cartDetailList = cartWithDetail.getCartDetailList();
         int totalAmount = 0;
+        Set<CartDetail> cartDetails = new HashSet<>();
         this.cartService.update(cart);
         for (CartDetail cartDetail : cartDetailList) {
             if (cartDetail.isStatus()) {
                 totalAmount += cartDetail.getQuantity() * cartDetail.getProduct().getProductPrice();
+                cartDetails.add(cartDetail);
             }
-            this.cartDetailService.update(cartDetail);
         }
         if (totalAmount != 0) {
-            this.emailService.emailProcess(cart, totalAmount);
-
             String vnp_TxnRef = VnPayConfig.getRandomNumber(8);
             String vnp_IpAddr = "127.0.0.1";
             String vnp_TmnCode = VnPayConfig.vnp_TmnCode;
@@ -62,7 +65,7 @@ public class PaymentController {
             String vnp_CreateDate = formatter.format(cld.getTime());
 
             Map<String, String> vnp_Params = new HashMap<>();
-            vnp_Params.put("vnp_Amount", String.valueOf(totalAmount*100));
+            vnp_Params.put("vnp_Amount", String.valueOf(totalAmount * 100));
             vnp_Params.put("vnp_Command", VnPayConfig.vnp_Command);
             vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
             vnp_Params.put("vnp_CurrCode", "VND");
@@ -103,13 +106,41 @@ public class PaymentController {
             String vnp_SecureHash = VnPayConfig.hmacSHA512(VnPayConfig.vnp_HashSecret, hashData.toString());
             queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
             String paymentUrl = VnPayConfig.vnp_PayUrl + "?" + queryUrl;
+
+            Payment payment = new Payment();
+            payment.setCartDetails(cartDetails);
+            payment.setTotalAmount(totalAmount);
+            payment.setPaid(false);
+            payment.setTnxRef(vnp_TxnRef);
+            payment.setCartId(cart.getCartId());
+            this.paymentService.update(payment);
+
             PaymentResponse paymentResponse = new PaymentResponse();
             paymentResponse.setStatus("OK");
             paymentResponse.setMessage("Successfully");
             paymentResponse.setUrl(paymentUrl);
-            return new ResponseEntity<PaymentResponse>(paymentResponse, HttpStatus.OK);
+
+            return new ResponseEntity<>(paymentResponse, HttpStatus.OK);
         } else
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/transaction/{tnxRef}")
+    public ResponseEntity<?> transactionChecking(@PathVariable("tnxRef") String tnxRef) {
+        Payment payment = this.paymentService.findPaymentByTnxRef(tnxRef);
+        if (!payment.isPaid()) {
+            payment.setPaid(true);
+            this.paymentService.update(payment);
+            int totalAmount = payment.getTotalAmount();
+            Cart cart = this.cartService.findById(payment.getCartId());
+            Set<CartDetail> cartDetails = payment.getCartDetails();
+            for (CartDetail cartDetail : cartDetails) {
+                cartDetail.setStatus(true);
+                this.cartDetailService.update(cartDetail);
+            }
+            this.emailService.emailProcess(cart, totalAmount);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

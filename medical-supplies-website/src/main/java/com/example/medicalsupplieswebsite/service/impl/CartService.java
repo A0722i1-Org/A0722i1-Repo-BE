@@ -30,7 +30,7 @@ public class CartService implements ICartService {
 
     @Override
     public Cart findById(Long id) {
-        return null;
+        return this.cartRepository.findById(id).orElse(null);
     }
 
     // Method này dùng để tạo cart khi tạo customer

@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.persistence.Tuple;
+import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class EmployeeService implements IEmployeeService {
 
     @Autowired
@@ -47,7 +49,7 @@ public class EmployeeService implements IEmployeeService {
         Employee employee = new Employee(null, employeeInfo.getEmployeeCode(), employeeInfo.getEmployeeName(),
                 employeeInfo.getEmail(), employeeInfo.getPhone(), employeeInfo.getEmployeeAddress(), employeeInfo.getGender(),
                 employeeInfo.getIdCard(), employeeInfo.getDateOfBirth(), employeeInfo.getEmployeeImg(), true,
-                employeeInfo.getPosition());
+                employeeInfo.getPosition(), employeeInfo.getAccount());
         iEmployeeRepository.save(employee);
     }
 
@@ -116,7 +118,7 @@ return null;
     public EmployeeUserDetailDto findUserDetailByUsername(String username) {
         Tuple tuple = iEmployeeRepository.findUserDetailByUsername(username).orElse(null);
         if (tuple != null) {
-            return EmployeeUserDetailDto.TupleToEmployeeDto(tuple);
+            return EmployeeUserDetailDto.tupleToEmployeeDto(tuple);
         }
         return null;
     }

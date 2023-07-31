@@ -30,4 +30,10 @@ public class CategoryController {
         }
         return new ResponseEntity<>(categoryList, HttpStatus.OK);
     }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<Category>> findAll(){
+        return new ResponseEntity<>(iCategoryService.findAll(), HttpStatus.OK);
+    }
+
 }

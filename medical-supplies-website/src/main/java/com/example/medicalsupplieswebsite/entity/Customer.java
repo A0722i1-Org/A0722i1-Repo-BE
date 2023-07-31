@@ -13,8 +13,10 @@ import java.util.Set;
 @Setter
 @RequiredArgsConstructor
 @Entity
+@Table(name = "customer")
 public class Customer {
     @Id
+    @Column(name = "customerId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
     private String customerCode;
@@ -42,6 +44,9 @@ public class Customer {
     @JoinColumn(name = "account_id")
     private Account account;
 
+    public Customer(Long customerId) {
+        this.customerId = customerId;
+    }
     public Customer(Long customerId, String customerCode, String name, String phone, boolean gender, Date dateOfBirth, String email, String idCard, String customerAddress, String customerImg, boolean isEnable, CustomerType customerType, Cart cart, Account account) {
         this.customerId = customerId;
         this.customerCode = customerCode;

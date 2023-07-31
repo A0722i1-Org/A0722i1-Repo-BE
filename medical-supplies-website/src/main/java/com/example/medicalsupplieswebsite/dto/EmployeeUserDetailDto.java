@@ -29,7 +29,7 @@ public class EmployeeUserDetailDto {
     String accountEmail;
     String positionName;
 
-    public static EmployeeUserDetailDto TupleToEmployeeDto(Tuple tuple) {
+    public static EmployeeUserDetailDto tupleToEmployeeDto(Tuple tuple) {
         return new EmployeeUserDetailDto(
                 tuple.get("employee_id", BigInteger.class).longValue(),
                 tuple.get("employee_code", String.class),
