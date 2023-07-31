@@ -147,7 +147,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void updateProductValid(ProductCreateDTO product) {
+    public void updateProductValid(Product product,Long id) {
         iProductRepository.updateProduct(
                 product.getExpireDate(),
                 false,
@@ -156,10 +156,10 @@ public class ProductService implements IProductService {
                 product.getProductName(),
                 product.getProductPrice(),
                 product.getProductQuantity(),
-                String.valueOf(product.getCategory()),
-                String.valueOf(product.getCustomer()),
-                String.valueOf(product.getProductInfo()),
-                product.getProductId()
+                String.valueOf(product.getCategory().getCategoryId()),
+                String.valueOf(product.getCustomer().getCustomerId()),
+                String.valueOf(product.getProductInfo().getInfoId()),
+                id
         );
     }
 }

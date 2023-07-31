@@ -81,4 +81,5 @@ public class Product implements Serializable {
         this.productInfo = new ProductInfo(Long.parseLong(productCreateDTO.getProductInfo()));
         this.customer = new Customer(Long.parseLong(productCreateDTO.getCustomer()));
     }
+
 }

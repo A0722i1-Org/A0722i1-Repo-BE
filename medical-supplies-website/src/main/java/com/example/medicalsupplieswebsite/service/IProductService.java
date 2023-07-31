@@ -48,6 +48,6 @@ public interface IProductService extends IService<Product> {
 
     void saveProduct(Product product);
 
-    void updateProductValid(ProductCreateDTO product);
+    void updateProductValid(Product product,Long id);
 
 }
