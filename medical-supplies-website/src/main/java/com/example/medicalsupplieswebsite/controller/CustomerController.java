@@ -39,7 +39,7 @@ public class CustomerController {
                                                           @RequestParam("size") Optional<Integer> size) {
         String keywordSearch = keyword.orElse("");
         int pages = page.orElse(1);
-        int pageSize = size.orElse(2);
+        int pageSize = size.orElse(10);
         Page<Customer> searchName = this.iCustomerService.searchCustomers(keywordSearch, PageRequest.of(pages - 1, pageSize));
         if (searchName.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -67,7 +67,6 @@ public class CustomerController {
         } else {
             iCustomerService.saveCustomer(customerInfo);
         }
-
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
