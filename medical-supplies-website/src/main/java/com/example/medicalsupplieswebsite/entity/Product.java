@@ -1,6 +1,7 @@
 package com.example.medicalsupplieswebsite.entity;
 
 import com.example.medicalsupplieswebsite.dto.ProductCreateDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -38,17 +39,17 @@ public class Product implements Serializable {
 
 
     @ManyToOne
-    @JsonManagedReference
+    @JsonBackReference
     @JoinColumn(name = "category_id",nullable = false,referencedColumnName = "categoryId")
     private Category category;
 
     @OneToOne
-    @JsonManagedReference
+    @JsonBackReference
     @JoinColumn(name = "product_info_id",nullable = false,referencedColumnName = "infoId")
     private ProductInfo productInfo;
 
     @ManyToOne
-    @JsonManagedReference
+    @JsonBackReference
     @JoinColumn(name = "customer_id",nullable = false,referencedColumnName = "customerId")
     private Customer customer;
 
