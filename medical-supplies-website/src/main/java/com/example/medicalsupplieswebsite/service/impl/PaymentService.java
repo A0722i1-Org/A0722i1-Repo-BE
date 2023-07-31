@@ -36,7 +36,7 @@ public class PaymentService implements IPaymentService {
     }
 
     @Override
-    public Payment findPaymentByTnxRef(String tnxRef) {
-        return this.paymentRepository.findPaymentByTnxRef(tnxRef).orElse(null);
+    public Payment findPaymentBySecureHash(String hashCode) {
+        return this.paymentRepository.findPaymentBySecureHash(hashCode).orElse(null);
     }
 }

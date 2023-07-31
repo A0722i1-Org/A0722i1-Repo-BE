@@ -4,5 +4,5 @@ import com.example.medicalsupplieswebsite.entity.Payment;
 
 
 public interface IPaymentService extends IService<Payment>{
-    Payment findPaymentByTnxRef(String tnxRef);
+    Payment findPaymentBySecureHash(String hashCode);
 }
