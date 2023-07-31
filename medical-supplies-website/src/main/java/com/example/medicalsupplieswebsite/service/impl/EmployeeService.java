@@ -1,6 +1,8 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
+import com.example.medicalsupplieswebsite.entity.Account;
 import com.example.medicalsupplieswebsite.entity.Employee;
+import com.example.medicalsupplieswebsite.repository.IAccountRepository;
 import com.example.medicalsupplieswebsite.repository.IEmployeeRepository;
 import com.example.medicalsupplieswebsite.service.IEmployeeService;
 import com.example.medicalsupplieswebsite.dto.EmployeeUserDetailDto;
@@ -27,6 +29,9 @@ public class EmployeeService implements IEmployeeService {
     @Autowired
     private IEmployeeRepository iEmployeeRepository;
 
+    @Autowired
+    private IAccountRepository iAccountRepository;
+
     @Override
     public Page<Employee> findAll(Pageable pageable) {
         return null;
@@ -46,10 +51,12 @@ public class EmployeeService implements IEmployeeService {
      */
     @Override
     public void save(EmployeeInfo employeeInfo) {
+        iAccountRepository.save(employeeInfo.getAccount());
+        Account account = iAccountRepository.findByUserName(employeeInfo.getAccount().getUsername());
         Employee employee = new Employee(null, employeeInfo.getEmployeeCode(), employeeInfo.getEmployeeName(),
                 employeeInfo.getEmail(), employeeInfo.getPhone(), employeeInfo.getEmployeeAddress(), employeeInfo.getGender(),
                 employeeInfo.getIdCard(), employeeInfo.getDateOfBirth(), employeeInfo.getEmployeeImg(), true,
-                employeeInfo.getPosition());
+                employeeInfo.getPosition(), account);
         iEmployeeRepository.save(employee);
     }
 

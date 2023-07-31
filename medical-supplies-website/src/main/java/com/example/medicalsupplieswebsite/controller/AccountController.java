@@ -22,6 +22,7 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -65,11 +66,14 @@ public class AccountController {
             return ResponseEntity.badRequest().body("Invalid roleId");
         }
         // Lưu tài khoản
-        Account savedAccount = accountService.addAccount(account);
-        Long AccountId = savedAccount.getAccountId();
+//        Account savedAccount = accountService.addAccount(account);
+//        Long AccountId = savedAccount.getAccountId();
         // Thiết lập vai trò cho tài khoản
-        accountService.setRoleForAccount(AccountId, roleId);
-        return ResponseEntity.ok(savedAccount);
+//        accountService.setRoleForAccount(AccountId, roleId);
+        Set<Role> tempRoles = account.getRoles();
+        tempRoles.add(role);
+        account.setRoles(tempRoles);
+        return ResponseEntity.ok(account);
     }
 
 
