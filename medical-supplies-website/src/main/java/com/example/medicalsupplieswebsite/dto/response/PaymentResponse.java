@@ -15,4 +15,5 @@ public class PaymentResponse implements Serializable {
     private String status;
     private String message;
     private String url;
+
 }

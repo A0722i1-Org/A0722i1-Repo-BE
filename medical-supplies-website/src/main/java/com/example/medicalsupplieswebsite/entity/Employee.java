@@ -34,7 +34,7 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "position_id")
     private Position position;
-    public Employee(Long employeeId, String employeeCode, String employeeName, String email, String phone, String employeeAddress, Boolean gender, String idCard, Date dateOfBirth, String employeeImg, boolean isEnable, Position position, Account account) {
+    public Employee(Long employeeId, String employeeCode, String employeeName, String email, String phone, String employeeAddress, Boolean gender, String idCard, Date dateOfBirth, String employeeImg, boolean isEnable, Position position) {
         this.employeeId = employeeId;
         this.employeeCode = employeeCode;
         this.employeeName = employeeName;
@@ -47,7 +47,6 @@ public class Employee {
         this.employeeImg = employeeImg;
         this.isEnable = isEnable;
         this.position = position;
-        this.account = account;
     }
 
 }

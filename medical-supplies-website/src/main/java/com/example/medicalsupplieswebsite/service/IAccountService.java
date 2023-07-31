@@ -15,3 +15,5 @@ public interface IAccountService extends IService<Account> {
      */
     void changePassword(String username, String newPass);
 }
+
+

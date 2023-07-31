@@ -28,7 +28,7 @@ public class CustomerUserDetailDto {
     String username;
     String accountEmail;
 
-    public static CustomerUserDetailDto tupleToCustomerDto(Tuple tuple) {
+    public static CustomerUserDetailDto TupleToCustomerDto(Tuple tuple) {
         return new CustomerUserDetailDto(
                 tuple.get("customer_id", BigInteger.class).longValue(),
                 tuple.get("customer_code", String.class),

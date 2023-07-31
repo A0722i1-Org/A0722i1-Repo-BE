@@ -5,11 +5,12 @@ import com.example.medicalsupplieswebsite.dto.InvalidDataException;
 import com.example.medicalsupplieswebsite.dto.ValidationError;
 import com.example.medicalsupplieswebsite.dto.EmployeeDTO;
 import com.example.medicalsupplieswebsite.dto.EmployeeUserDetailDto;
-import com.example.medicalsupplieswebsite.entity.Account;
 import com.example.medicalsupplieswebsite.entity.Employee;
-import com.example.medicalsupplieswebsite.service.IAccountService;
 import com.example.medicalsupplieswebsite.service.IEmployeeService;
+import com.example.medicalsupplieswebsite.service.IPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -29,13 +30,9 @@ public class EmployeeController {
     @Autowired
     private IEmployeeService iEmployeeService;
 
-    @Autowired
-    private IAccountService iAccountService;
-
     /**
      * Created by: PhongTD
      * Date created: 12/07/2023
-     *
      * @param employeeInfo
      * @param bindingResult
      * @return if info of employee valid return httpStatus.CREATED else return error
@@ -53,9 +50,6 @@ public class EmployeeController {
                     });
             return ResponseEntity.badRequest().body(errors);
         } else {
-            Account account = employeeInfo.getAccount();
-            Account createdAccount = iAccountService.addAccount(account);
-            employeeInfo.setAccount(createdAccount);
             iEmployeeService.save(employeeInfo);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -69,13 +63,12 @@ public class EmployeeController {
     /**
      * Created by: PhongTD
      * Date created: 12/07/2023
-     *
      * @param id
      * @param employeeInfo
      * @param bindingResult
      * @return if info of employee valid return httpStatus.OK else return error
      */
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<?> updateEmployee(@Valid @PathVariable Long id, @RequestBody EmployeeInfo employeeInfo, BindingResult bindingResult) {
         new EmployeeInfo().validate(employeeInfo, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -93,22 +86,22 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    /**
-     * A0722I1-KhanhNL
-     */
-    @GetMapping("/detail")
-    public ResponseEntity<EmployeeUserDetailDto> getDetail() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        /**
+         * A0722I1-KhanhNL
+         */
+        @GetMapping("/detail")
+        public ResponseEntity<EmployeeUserDetailDto> getDetail() {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
 
-        EmployeeUserDetailDto employeeUserDetailDto = iEmployeeService.findUserDetailByUsername(username);
+            EmployeeUserDetailDto employeeUserDetailDto = iEmployeeService.findUserDetailByUsername(username);
 
-        if (employeeUserDetailDto == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            if (employeeUserDetailDto == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            return new ResponseEntity<>(employeeUserDetailDto, HttpStatus.OK);
         }
-
-        return new ResponseEntity<>(employeeUserDetailDto, HttpStatus.OK);
-    }
 
     /**
      * this function could return a list of employee ,that can display all employee or combines search with 3 params
@@ -119,9 +112,9 @@ public class EmployeeController {
      * @return list of employee
      */
     @GetMapping("")
-    public ResponseEntity<List<Employee>> findAllEmployees(@RequestParam(name = "name", defaultValue = "") String name,
-                                                           @RequestParam(name = "date", defaultValue = "") String date,
-                                                           @RequestParam(name = "pos", defaultValue = "") String pos) {
+    public ResponseEntity<List<Employee>> findAllEmployees(@RequestParam(name = "name",defaultValue = "") String name,
+                                                           @RequestParam(name="date",defaultValue = "") String date,
+                                                           @RequestParam(name="pos",defaultValue = "") String pos) {
         List<Employee> listEmployee = iEmployeeService.findAllEmWithNameAndDateAndPositions(name, date, pos);
         return new ResponseEntity<>(listEmployee, HttpStatus.OK);
     }
@@ -142,7 +135,6 @@ public class EmployeeController {
     /**
      * Created by: PhongTD
      * Date created: 12/07/2023
-     *
      * @param ex
      * @return
      */
@@ -151,7 +143,7 @@ public class EmployeeController {
     public ResponseEntity<Map<String, String>> handleInvalidDataException(InvalidDataException ex) {
         List<ValidationError> errors1 = ex.getErrors();
         Map<String, String> errors = new HashMap<>();
-        errors1.forEach(error -> {
+        errors1.forEach((error) -> {
 
             String fieldName = error.getField();
             String errorMessage = error.getMessage();
@@ -195,9 +187,8 @@ public class EmployeeController {
         iEmployeeService.updateEmployeeByFieldsDTO(employeeDTO.getEmployeeName(), employeeDTO.getEmployeeImg(),
                 employeeDTO.isGender(), employeeDTO.getDateOfBirth(), employeeDTO.getEmployeeAddress(),
                 employeeDTO.getPhone(), employeeDTO.getEmail(), username);
-        return new ResponseEntity<>(employeeDTO, HttpStatus.OK);
+        return new ResponseEntity<>(employeeDTO,HttpStatus.OK);
     }
-
     /*
      *NhanTQ
      */
@@ -209,6 +200,6 @@ public class EmployeeController {
         if (employee == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(employee, HttpStatus.OK);
+            return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 }

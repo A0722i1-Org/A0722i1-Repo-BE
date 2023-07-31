@@ -39,7 +39,7 @@ public class CustomerTypeService implements ICustomerTypeService {
 
     @Override
     public void deleteById(Long id) {
-        //No need to implement this method
+
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.Optional;
 @Transactional
 public interface ICartDetailRepository extends JpaRepository<CartDetail,Long> {
     @Query(nativeQuery = true,
-            value = "SELECT * FROM cart_detail WHERE cart_id = :id AND status = false AND quantity > 0")
+            value = "SELECT * FROM cart_detail WHERE cart_id = :id AND status = false")
     List<CartDetail> findByCartId(@Param("id") Long id);
 
     @Modifying
@@ -32,6 +32,6 @@ public interface ICartDetailRepository extends JpaRepository<CartDetail,Long> {
     void deleteById(@Param("id") Long id);
 
     @Query(nativeQuery = true,
-            value = "SELECT * FROM cart_detail WHERE product_id = :product_id AND cart_id = :cart_id AND status = false AND quantity > 0")
+            value = "SELECT * FROM cart_detail WHERE product_id = :product_id AND cart_id = :cart_id AND status = false")
     Optional<CartDetail> checkAvailable(@Param("product_id") Long id, @Param("cart_id") Long cart_id);
 }

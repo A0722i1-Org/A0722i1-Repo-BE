@@ -8,10 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-/*
- * Author: NhatLH
- * Created: 2023-07-15
- *  */
 @Entity
 @Getter
 @Setter
@@ -30,8 +26,10 @@ public class Cart {
     @Email
     private String receiverEmail;
     @NotBlank
-    @Pattern(regexp = "^0\\d{9}$")
+    @Pattern(regexp = "^0\\d{9,10}$")
     private String receiverPhone;
-    @OneToOne( cascade = CascadeType.ALL, mappedBy = "cart")
+    @JsonBackReference
+    @OneToOne( cascade = CascadeType.ALL)
     private Customer customer;
+
 }
