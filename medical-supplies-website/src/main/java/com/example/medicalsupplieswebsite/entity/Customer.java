@@ -15,7 +15,6 @@ import java.util.Set;
 @Entity
 @Table(name = "customer")
 public class Customer {
-
     @Id
     @Column(name = "customerId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,17 +34,14 @@ public class Customer {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_type_id")
-    @JsonBackReference
     private CustomerType customerType;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id")
-    @JsonBackReference
     private Cart cart;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
-    @JsonBackReference
     private Account account;
 
     public Customer(Long customerId) {

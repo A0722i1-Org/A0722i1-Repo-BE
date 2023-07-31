@@ -3,15 +3,10 @@ package com.example.medicalsupplieswebsite.service.impl;
 import com.example.medicalsupplieswebsite.dto.CustomerInfo;
 import com.example.medicalsupplieswebsite.dto.CustomerUserDetailDto;
 import com.example.medicalsupplieswebsite.dto.shipmentdto.CustomerDto;
-import com.example.medicalsupplieswebsite.entity.Account;
 import com.example.medicalsupplieswebsite.dto.receipt_dto.SupplierDTO;
-import com.example.medicalsupplieswebsite.dto.shipmentdto.CustomerDto;
-import com.example.medicalsupplieswebsite.entity.Account;
 import com.example.medicalsupplieswebsite.entity.Customer;
-import com.example.medicalsupplieswebsite.repository.IAccountRepository;
 import com.example.medicalsupplieswebsite.repository.ICustomerRepository;
 import com.example.medicalsupplieswebsite.service.ICustomerService;
-import com.example.medicalsupplieswebsite.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,8 +32,7 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Page<Customer> findAll(Pageable pageable) {
-        Page<Customer> customers = this.iCustomerRepository.findAllCustomers(pageable);
-        return customers;
+        return this.iCustomerRepository.findAllCustomers(pageable);
     }
 
     /**
@@ -50,9 +44,7 @@ public class CustomerService implements ICustomerService {
         iCustomerRepository.insertCustomer(customerInfo.getName(), customerInfo.getEmail(), customerInfo.getPhone(),
                 customerInfo.isGender(), customerInfo.getDateOfBirth(), customerInfo.getIdCard(),
                 customerInfo.getCustomerAddress(), customerInfo.getCustomerImg(), customerInfo.getCustomerType(),
-                customerInfo.getCustomerCode(), false);
-
-
+                customerInfo.getCustomerCode(), true, customerInfo.getCart().getCartId());
     }
 
     /**
@@ -80,7 +72,7 @@ public class CustomerService implements ICustomerService {
         iCustomerRepository.updateCustomer(id, customerInfo.getName(), customerInfo.getEmail(), customerInfo.getPhone(),
                 customerInfo.isGender(), customerInfo.getDateOfBirth(), customerInfo.getIdCard(),
                 customerInfo.getCustomerAddress(), customerInfo.getCustomerImg(), customerInfo.getCustomerType(),
-                customerInfo.getCart(), customerInfo.getAccount(), customerInfo.getCustomerCode(), false);
+                customerInfo.getCart(), customerInfo.getAccount(), customerInfo.getCustomerCode(), true);
 
     }
 
@@ -93,6 +85,7 @@ public class CustomerService implements ICustomerService {
     public void deleteById(Long id) {
         iCustomerRepository.deleteCustomerId(id);
     }
+
 
     @Override
     public Customer findByUsername(String username) {
@@ -107,7 +100,7 @@ public class CustomerService implements ICustomerService {
         Tuple tuple = iCustomerRepository.findUserDetailByUsername(username).orElse(null);
 
         if (tuple != null) {
-            return CustomerUserDetailDto.TupleToCustomerDto(tuple);
+            return CustomerUserDetailDto.tupleToCustomerDto(tuple);
         }
 
         return null;
@@ -117,7 +110,6 @@ public class CustomerService implements ICustomerService {
     public String findAddressByCustomerId(Long customerId) {
         return iCustomerRepository.findAddressByCustomerId(customerId);
     }
-
 
     @Override
     public List<SupplierDTO> getALlCustomerByCustomerTypeSupplier() {

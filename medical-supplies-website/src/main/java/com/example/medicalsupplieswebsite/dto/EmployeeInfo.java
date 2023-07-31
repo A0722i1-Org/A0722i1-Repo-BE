@@ -1,16 +1,18 @@
 package com.example.medicalsupplieswebsite.dto;
 
+import com.example.medicalsupplieswebsite.entity.Account;
 import com.example.medicalsupplieswebsite.entity.Position;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.validation.Errors;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.sql.Date;
 import java.time.LocalDate;
 
+@Data
 public class EmployeeInfo {
     private String employeeCode;
 
@@ -48,13 +50,15 @@ public class EmployeeInfo {
     @NotNull(message = "Vui lòng chọn chức vụ")
     private Position position;
 
+    @NotNull(message = "Vui lòng thêm tài khoản")
+    private Account account;
+
     public EmployeeInfo() {
     }
 
-    public EmployeeInfo(Long employeeId, String employeeCode, String employeeName, String email, String phone,
+    public EmployeeInfo(String employeeCode, String employeeName, String email, String phone,
                         String employeeAddress, Boolean gender, String idCard, Date dateOfBirth, String employeeImg,
-                        Position position) {
-
+                        Position position, Account account) {
         this.employeeCode = employeeCode;
         this.employeeName = employeeName;
         this.email = email;
@@ -65,6 +69,7 @@ public class EmployeeInfo {
         this.dateOfBirth = dateOfBirth;
         this.employeeImg = employeeImg;
         this.position = position;
+        this.account = account;
     }
 
     public String getEmployeeCode() {
@@ -149,7 +154,7 @@ public class EmployeeInfo {
 
     public void validate(Object target, Errors errors) {
         EmployeeInfo employeeInfo = (EmployeeInfo) target;
-        if (!(employeeInfo.dateOfBirth == null)) {
+        if (employeeInfo.dateOfBirth != null) {
             LocalDate today = LocalDate.now();
             LocalDate minAgeDate = today.minusYears(18);
             LocalDate maxAgeDate = today.minusYears(50);
