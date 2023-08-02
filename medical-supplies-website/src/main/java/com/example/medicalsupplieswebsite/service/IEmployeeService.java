@@ -10,11 +10,9 @@ import java.util.Optional;
 
 public interface IEmployeeService extends IService<Employee>{
 
-    Employee findById(Long id);
-
-    List<Employee> findAll();
 
     Employee findByUsername(String username);
+    List<Employee> findAll();
 
     /**
      * A0722I1-KhanhNL

@@ -5,15 +5,18 @@ import com.example.medicalsupplieswebsite.dto.receipt_dto.ProductDTO;
 import com.example.medicalsupplieswebsite.dto.ProductHomeDto;
 import com.example.medicalsupplieswebsite.dto.ProductPriceDto;
 import com.example.medicalsupplieswebsite.dto.shipmentdto.ProductDto;
+import com.example.medicalsupplieswebsite.dto.ProductCreateDTO;
 import com.example.medicalsupplieswebsite.entity.Product;
+import com.example.medicalsupplieswebsite.error.NotFoundById;
 import com.example.medicalsupplieswebsite.repository.IProductRepository;
 import com.example.medicalsupplieswebsite.service.IProductService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService implements IProductService {
@@ -25,14 +28,19 @@ public class ProductService implements IProductService {
         return null;
     }
 
+    @SneakyThrows
     @Override
     public Product findById(Long id) {
-        return null;
+        Optional<Product> employee = iProductRepository.findById(id);
+        if (employee.isPresent()) {
+            return employee.get();
+        }
+        throw new NotFoundById("Không tìm thấy bất kì nhân viên nào có mã số: " + id);
     }
 
     @Override
     public Product update(Product product) {
-        return null;
+        return iProductRepository.save(product);
     }
 
     @Override
@@ -105,5 +113,53 @@ public class ProductService implements IProductService {
     @Override
     public Product findByIdProductDetail(Long id) {
         return iProductRepository.findByIdProductDetail(id);
+    }
+
+    @Override
+    public void saveProduct(Product product) {
+        iProductRepository.saveProductNative(
+                product.getExpireDate(),
+                product.isEnable(),
+                product.getProductCode(),
+                product.getProductImg(),
+                product.getProductName(),
+                product.getProductPrice(),
+                product.getProductQuantity(),
+                String.valueOf(product.getCategory().getCategoryId()),
+                String.valueOf(product.getCustomer().getCustomerId()),
+                String.valueOf(product.getProductInfo().getInfoId())
+        );
+    }
+
+    @SneakyThrows
+    @Override
+    public Product findByIdNative(Long id) {
+        Optional<Product> product = iProductRepository.findByIdNative(id);
+        if (product.isPresent()) {
+            return product.get();
+        }
+        throw new NotFoundById("Không tìm thấy bất kì nhân viên nào có mã số: " + id);
+    }
+
+    @Override
+    public String existsProductName(String product_name) {
+        return iProductRepository.existsProductName(product_name);
+    }
+
+    @Override
+    public void updateProductValid(ProductCreateDTO product) {
+        iProductRepository.updateProduct(
+                product.getExpireDate(),
+                false,
+                product.getProductCode(),
+                product.getProductImg(),
+                product.getProductName(),
+                product.getProductPrice(),
+                product.getProductQuantity(),
+                String.valueOf(product.getCategory()),
+                String.valueOf(product.getCustomer()),
+                String.valueOf(product.getProductInfo()),
+                product.getProductId()
+        );
     }
 }
