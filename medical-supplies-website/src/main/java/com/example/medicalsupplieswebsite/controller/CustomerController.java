@@ -34,15 +34,17 @@ public class CustomerController {
     private CustomerTypeService customerTypeService;
 
     @GetMapping("")
-    public ResponseEntity<Page<Customer>> findAllCustomer(@RequestParam("page") Optional<Integer> page,
+    public ResponseEntity<Page<Customer>> findAllCustomer(@RequestParam(value = "keyword", required = false) Optional<String> keyword,
+                                                          @RequestParam("page") Optional<Integer> page,
                                                           @RequestParam("size") Optional<Integer> size) {
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(2);
-        Page<Customer> customers = this.iCustomerService.findAll(PageRequest.of(currentPage - 1, pageSize));
-        if (customers.isEmpty()) {
+        String keywordSearch = keyword.orElse("");
+        int pages = page.orElse(1);
+        int pageSize = size.orElse(10);
+        Page<Customer> searchName = this.iCustomerService.searchCustomers(keywordSearch, PageRequest.of(pages - 1, pageSize));
+        if (searchName.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(customers, HttpStatus.OK);
+            return new ResponseEntity<>(searchName, HttpStatus.OK);
         }
     }
 
@@ -65,7 +67,6 @@ public class CustomerController {
         } else {
             iCustomerService.saveCustomer(customerInfo);
         }
-
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -119,15 +120,6 @@ public class CustomerController {
         return new ResponseEntity<>(customerUserDetailDto, HttpStatus.OK);
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<List<Customer>> searchCustomer(@RequestParam String keyword) {
-        List<Customer> searchCustomers = this.iCustomerService.searchCustomers(keyword);
-        if (searchCustomers.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(searchCustomers, HttpStatus.OK);
-        }
-    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {

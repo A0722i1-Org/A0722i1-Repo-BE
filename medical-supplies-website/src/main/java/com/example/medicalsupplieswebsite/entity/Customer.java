@@ -1,17 +1,15 @@
 package com.example.medicalsupplieswebsite.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Getter
 @Setter
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Customer {
     @Id
@@ -41,23 +39,6 @@ public class Customer {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
     private Account account;
-
-    public Customer(Long customerId, String customerCode, String name, String phone, boolean gender, Date dateOfBirth, String email, String idCard, String customerAddress, String customerImg, boolean isEnable, CustomerType customerType, Cart cart, Account account) {
-        this.customerId = customerId;
-        this.customerCode = customerCode;
-        this.name = name;
-        this.phone = phone;
-        this.gender = gender;
-        this.dateOfBirth = dateOfBirth;
-        this.email = email;
-        this.idCard = idCard;
-        this.customerAddress = customerAddress;
-        this.customerImg = customerImg;
-        this.isEnable = isEnable;
-        this.customerType = customerType;
-        this.cart = cart;
-        this.account = account;
-    }
 
     public Customer(Long customerId, String customerCode, String name, String phone, boolean gender, Date dateOfBirth, String email, String idCard, String customerAddress, String customerImg, boolean isEnable, CustomerType customerType) {
         this.customerId = customerId;

@@ -1,11 +1,8 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
-import com.example.medicalsupplieswebsite.entity.Account;
-import com.example.medicalsupplieswebsite.entity.CustomerType;
 import com.example.medicalsupplieswebsite.entity.Employee;
 import com.example.medicalsupplieswebsite.repository.IEmployeeRepository;
 import com.example.medicalsupplieswebsite.service.IEmployeeService;
-import com.example.medicalsupplieswebsite.service.IService;
 import com.example.medicalsupplieswebsite.dto.EmployeeUserDetailDto;
 import com.example.medicalsupplieswebsite.dto.EmployeeInfo;
 
@@ -14,14 +11,17 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 import javax.persistence.Tuple;
+import javax.transaction.Transactional;
 import java.sql.Date;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class EmployeeService implements IEmployeeService {
 
     @Autowired
@@ -31,6 +31,7 @@ public class EmployeeService implements IEmployeeService {
     public Page<Employee> findAll(Pageable pageable) {
         return null;
     }
+
 
     @Override
     public Employee update(Employee employee) {
@@ -45,13 +46,13 @@ public class EmployeeService implements IEmployeeService {
      */
     @Override
     public void save(EmployeeInfo employeeInfo) {
-
         Employee employee = new Employee(null, employeeInfo.getEmployeeCode(), employeeInfo.getEmployeeName(),
                 employeeInfo.getEmail(), employeeInfo.getPhone(), employeeInfo.getEmployeeAddress(), employeeInfo.getGender(),
-                employeeInfo.getIdCard(), employeeInfo.getDateOfBirth(), employeeInfo.getEmployeeImg(), false,
+                employeeInfo.getIdCard(), employeeInfo.getDateOfBirth(), employeeInfo.getEmployeeImg(), true,
                 employeeInfo.getPosition());
         iEmployeeRepository.save(employee);
     }
+
 
     /**
      * Created by: PhongTD
@@ -60,9 +61,13 @@ public class EmployeeService implements IEmployeeService {
      * @param id
      * @return Employee was found by id
      */
+//    @Override
+//    public Employee findById(Long id) {
+//    return null;
+//    }
     @Override
     public Employee findById(Long id) {
-    return null;
+return null;
     }
 
     /**
@@ -79,16 +84,17 @@ public class EmployeeService implements IEmployeeService {
                 employeeInfo.getEmployeeImg(), employeeInfo.getPosition(), id);
     }
 
+
     /**
      * Created by PhongTD
      * Date created: 21/07/2023
      *
      * @return List all employee
      */
-    @Override
-    public List<Employee> findAll() {
-        return iEmployeeRepository.findAll();
-    }
+//    @Override
+//    public List<Employee> findAll() {
+//        return iEmployeeRepository.findAll();
+//    }
 
     @Override
     public void deleteById(Long id) {
@@ -98,6 +104,11 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public Employee findByUsername(String username) {
         return iEmployeeRepository.findByUsername(username).orElse(null);
+    }
+
+    @Override
+    public List<Employee> findAll() {
+        return iEmployeeRepository.findAll();
     }
 
     /**
@@ -122,7 +133,15 @@ public class EmployeeService implements IEmployeeService {
      */
     @Override
     public List<Employee> findAllEmWithNameAndDateAndPositions(String name, String date, String position) {
-        return iEmployeeRepository.findAllByNameAndDobAndAndPosition(name, date, position);
+        List<Employee> employeeList = iEmployeeRepository.findAllByNameAndDobAndAndPosition(name, date, position);
+        Collections.sort(employeeList, new Comparator<Employee>() {
+            @Override
+            public int compare(Employee employee, Employee t1) {
+                return employee.getEmployeeId() > t1.getEmployeeId() ? 1 : -1;
+            }
+        });
+        return employeeList;
+
     }
 
     /**
