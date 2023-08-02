@@ -138,4 +138,10 @@ public class CustomerController {
             return new ResponseEntity<>(customerTypes, HttpStatus.OK);
         }
     }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<Customer>> CustomerList(){
+        return new ResponseEntity<>(iCustomerService.customerList(), HttpStatus.OK);
+    }
+
 }

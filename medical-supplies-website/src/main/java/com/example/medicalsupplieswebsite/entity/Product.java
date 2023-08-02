@@ -34,7 +34,9 @@ public class Product implements Serializable {
             strategy = "com.example.medicalsupplieswebsite.utils.PersonAutoGenerator")
     @Column(length = 45)
     private String productCode;
+
     private Date expireDate;
+
     private boolean isEnable;
 
 
@@ -48,7 +50,7 @@ public class Product implements Serializable {
     @JoinColumn(name = "product_info_id",nullable = false,referencedColumnName = "infoId")
     private ProductInfo productInfo;
 
-    @ManyToOne
+    @ManyToOne()
     @JsonBackReference
     @JoinColumn(name = "customer_id",nullable = false,referencedColumnName = "customerId")
     private Customer customer;
@@ -77,7 +79,7 @@ public class Product implements Serializable {
         this.productImg = productCreateDTO.getProductImg();
         this.productCode = productCreateDTO.getProductCode();
         this.expireDate = productCreateDTO.getExpireDate();
-        this.isEnable = false;
+        this.isEnable = true;
         this.category = new Category(Long.parseLong(productCreateDTO.getCategory()));
         this.productInfo = new ProductInfo(Long.parseLong(productCreateDTO.getProductInfo()));
         this.customer = new Customer(Long.parseLong(productCreateDTO.getCustomer()));

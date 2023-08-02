@@ -1,23 +1,21 @@
 package com.example.medicalsupplieswebsite.service;
 
-import com.example.medicalsupplieswebsite.dto.Supply;
+import com.example.medicalsupplieswebsite.dto.*;
 import com.example.medicalsupplieswebsite.dto.shipmentdto.ProductDto;
 import com.example.medicalsupplieswebsite.dto.receipt_dto.ProductDTO;
-import com.example.medicalsupplieswebsite.dto.ProductHomeDto;
-import com.example.medicalsupplieswebsite.dto.ProductPriceDto;
-import com.example.medicalsupplieswebsite.dto.ProductCreateDTO;
 import com.example.medicalsupplieswebsite.entity.Product;
 import com.example.medicalsupplieswebsite.entity.ProductInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IProductService extends IService<Product> {
     Product findByIdProductShipment(Long productId);
 
     Product findByProductId(Long productId);
-
+    Product findMaxCodeInDatabase();
     Page<Supply> findAllSuppliesForAdmin(Pageable pageable);
 
     Page<Supply> searchSupplies(String productCode, String productName,
@@ -49,5 +47,7 @@ public interface IProductService extends IService<Product> {
     void saveProduct(Product product);
 
     void updateProductValid(Product product,Long id);
+
+    Product findProductByCode(String productCode);
 
 }

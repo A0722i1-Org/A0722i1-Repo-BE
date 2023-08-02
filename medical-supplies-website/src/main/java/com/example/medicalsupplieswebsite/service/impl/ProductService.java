@@ -1,11 +1,8 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
-import com.example.medicalsupplieswebsite.dto.Supply;
+import com.example.medicalsupplieswebsite.dto.*;
 import com.example.medicalsupplieswebsite.dto.receipt_dto.ProductDTO;
-import com.example.medicalsupplieswebsite.dto.ProductHomeDto;
-import com.example.medicalsupplieswebsite.dto.ProductPriceDto;
 import com.example.medicalsupplieswebsite.dto.shipmentdto.ProductDto;
-import com.example.medicalsupplieswebsite.dto.ProductCreateDTO;
 import com.example.medicalsupplieswebsite.entity.Product;
 import com.example.medicalsupplieswebsite.error.NotFoundById;
 import com.example.medicalsupplieswebsite.repository.IProductRepository;
@@ -56,6 +53,11 @@ public class ProductService implements IProductService {
     @Override
     public Product findByProductId(Long productId) {
         return iProductRepository.findByProductId(productId);
+    }
+
+    @Override
+    public Product findMaxCodeInDatabase() {
+        return iProductRepository.findMaxCodeInDatabase();
     }
 
     @Override
@@ -115,6 +117,9 @@ public class ProductService implements IProductService {
         return iProductRepository.findByIdProductDetail(id);
     }
 
+    /*
+    A0722i1-TaiPA
+    */
     @Override
     public void saveProduct(Product product) {
         iProductRepository.saveProductNative(
@@ -146,6 +151,9 @@ public class ProductService implements IProductService {
         return iProductRepository.existsProductName(product_name);
     }
 
+    /*
+    A0722i1-TaiPA
+    */
     @Override
     public void updateProductValid(Product product,Long id) {
         iProductRepository.updateProduct(
@@ -161,5 +169,18 @@ public class ProductService implements IProductService {
                 String.valueOf(product.getProductInfo().getInfoId()),
                 id
         );
+    }
+
+    /*
+    A0722i1-TaiPA
+    */
+    @SneakyThrows
+    @Override
+    public Product findProductByCode(String productCode) {
+        Optional<Product> productCreateDTO = iProductRepository.findProductByCode(productCode);
+        if (productCreateDTO.isPresent()){
+            return productCreateDTO.get();
+        }
+        throw new NotFoundById("Không tìm thấy bất kì vật tư nào có mã số: " + productCode);
     }
 }

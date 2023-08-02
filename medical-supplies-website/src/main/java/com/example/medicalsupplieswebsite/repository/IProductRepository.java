@@ -1,16 +1,9 @@
 package com.example.medicalsupplieswebsite.repository;
 
-import com.example.medicalsupplieswebsite.dto.Supply;
+import com.example.medicalsupplieswebsite.dto.*;
 import com.example.medicalsupplieswebsite.dto.shipmentdto.ProductDto;
 import com.example.medicalsupplieswebsite.dto.receipt_dto.ProductDTO;
-import com.example.medicalsupplieswebsite.dto.ProductHomeDto;
-import com.example.medicalsupplieswebsite.dto.ProductPriceDto;
-import com.example.medicalsupplieswebsite.entity.Category;
 import com.example.medicalsupplieswebsite.entity.Product;
-import com.example.medicalsupplieswebsite.entity.ProductInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,13 +11,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import org.springframework.data.repository.query.Param;
-
 import java.util.List;
-import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.Optional;
 
 public interface IProductRepository extends JpaRepository<Product, Long> {
@@ -49,22 +38,6 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
                     "inner join category ct on p.category_id = ct.category_id " +
                     "inner join customer c on p.customer_id = c.customer_id")
     Page<Supply> findAllSuppliesForAdmin(Pageable pageable);
-
-
-    /*
-    A0722I1-TaiPA
-    */
-    @Transactional
-    @Query(value = "SELECT * FROM product WHERE product_id = :id", nativeQuery = true)
-    Optional<Product> findByIdNative(@Param("id") Long id);
-
-
-    /*
-    A0722I1-TaiPA
-    */
-    @Transactional
-    @Query(value = "select  product_name from product where product_name = ?1", nativeQuery = true)
-    String existsProductName(String product_name);
 
     @Query(nativeQuery = true,
             value = "select p.product_code, p.product_name, ct.category_name, p.product_price, p.expire_date, c.name " +
@@ -182,6 +155,8 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
     /*
      A0722I1-TaiPA
     */
+    @Modifying
+    @Transactional
     @Query(value = "insert into product(expire_date, is_enable, product_code, product_img, product_name, product_price, product_quantity, category_id, customer_id, product_info_id)" +
             " values(:expire_date, :is_enable, :product_code, :product_img, :product_name, :product_price, :product_quantity, :category_id, :customer_id, :product_info_id)",
             nativeQuery = true)
@@ -216,4 +191,34 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
                        @Param("product_info_id") String product_info_id,
                        @Param("id") Long id
     );
+
+    /*
+    A0722i1-TaiPA
+    */
+    @Transactional
+    @Query(value = "select product_id, product_name, product_price, product_quantity, product_img, product_code,"+
+            " expire_date, is_enable, category_id, product_info_id, customer_id"+
+            " from product where product_code = :product_code", nativeQuery = true)
+    Optional<Product> findProductByCode(@Param("product_code") String product_code);
+
+    /*
+    A0722i1-TaiPA
+    */
+    @Query(value = "select * from product order by product_code desc limit 1 ", nativeQuery = true)
+    Product findMaxCodeInDatabase();
+
+    /*
+    A0722I1-TaiPA
+    */
+    @Transactional
+    @Query(value = "SELECT * FROM product WHERE product_id = :id", nativeQuery = true)
+    Optional<Product> findByIdNative(@Param("id") Long id);
+
+
+    /*
+    A0722I1-TaiPA
+    */
+    @Transactional
+    @Query(value = "select  product_name from product where product_name = ?1", nativeQuery = true)
+    String existsProductName(String product_name);
 }

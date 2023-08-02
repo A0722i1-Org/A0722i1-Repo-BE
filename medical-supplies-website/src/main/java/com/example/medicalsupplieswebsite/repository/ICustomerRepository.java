@@ -144,7 +144,8 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
    A0722i1-TaiPA
     */
     @Transactional
-    @Query(value = "select  c.customer_id,c.gender ,c.date_of_birth,c.customer_type_id,c.customer_img,c.customer_address ,c.cart_id,c.account_id, c.name ,c.id_card, c.is_enable, c.phone from customer c\n" +
+    @Query(value = "select  c.customer_id,c.gender ,c.date_of_birth,c.customer_type_id,c.customer_img,c.customer_address ,c.cart_id,c.account_id, c.name ,c.id_card, c.is_enable, c.phone," +
+            "c.customer_code,c.email from customer c\n" +
             "inner join customer_type ct on ct.customer_type_id = c.customer_type_id\n" +
             "where ct.customer_type_id = 2",nativeQuery = true)
     List<Customer> supplierList();

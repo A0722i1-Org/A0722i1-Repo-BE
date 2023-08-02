@@ -1,7 +1,9 @@
 package com.example.medicalsupplieswebsite.controller;
 
 import com.example.medicalsupplieswebsite.dto.ProductCreateDTO;
+import com.example.medicalsupplieswebsite.dto.ProductViewDTO;
 import com.example.medicalsupplieswebsite.dto.ResponseToClient;
+import com.example.medicalsupplieswebsite.utils.ConverterMaxCode;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 @CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*")
@@ -38,35 +42,50 @@ public class ProductController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-
+    /*
+    A0722i1-TaiPA
+    */
     @PostMapping("")
     public ResponseEntity<ResponseToClient> createProduct(@Valid @RequestBody ProductCreateDTO productCreateDTO) {
         if (productService.existsProductName(productCreateDTO.getProductName()) != null){
             return ResponseEntity.badRequest().body(new ResponseToClient("Tên vật tư đã được sử đụng"));
         }
+        Product productMax = productService.findMaxCodeInDatabase();
+        productCreateDTO.setProductCode(ConverterMaxCode.generateNextId(productMax.getProductCode()));
         Product product = new Product(productCreateDTO);
-        productService.saveProduct(product);
+        // xử lý bất dồng bộ
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+            productService.saveProduct(product);
+        });
+        executorService.shutdown();
         return new ResponseEntity<>(new ResponseToClient("Thêm mới vật tư thành công"),HttpStatus.CREATED);
     }
 
-
-
-    @PutMapping("/update")
-    public ResponseEntity<Product> updateEmployee(@Valid @RequestBody ProductCreateDTO productCreateDTO) throws NotFoundById {
-        Product product = productService.findById(productCreateDTO.getProductId());
-        BeanUtils.copyProperties(productCreateDTO,product);
-        return new ResponseEntity<>(productService.update(product), HttpStatus.OK);
-    }
-
+    /*
+    A0722i1-TaiPA
+    */
     @GetMapping("/detail1/{id}")
-    public ResponseEntity<Product> findProductById(@PathVariable Long id) throws NotFoundById {
-        return new ResponseEntity<>(productService.findById(id), HttpStatus.OK);
+    public ResponseEntity<ProductViewDTO> findProductById(@PathVariable String id) throws NotFoundById {
+        return new ResponseEntity<>(new ProductViewDTO(productService.findProductByCode(id.trim())), HttpStatus.OK);
     }
 
+
+    /*
+    A0722i1-TaiPA
+    */
     @PatchMapping("update")
     public ResponseEntity<?> updateProduct(@Valid @RequestBody ProductCreateDTO productCreateDTO){
+        if (productService.existsProductName(productCreateDTO.getProductName()) != null){
+            return ResponseEntity.badRequest().body(new ResponseToClient("Tên vật tư đã được sử đụng"));
+        }
         productService.findById(productCreateDTO.getProductId());
-        productService.updateProductValid(new Product(productCreateDTO),productCreateDTO.getProductId());
+        // xử lý bất dồng bộ
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+            productService.updateProductValid(new Product(productCreateDTO),productCreateDTO.getProductId());
+        });
+        executorService.shutdown();
         return new ResponseEntity<>(productService.findByIdNative(productCreateDTO.getProductId()),HttpStatus.OK);
     }
 
