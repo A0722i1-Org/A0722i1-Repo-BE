@@ -97,7 +97,6 @@ public class CustomerController {
         return ResponseEntity.badRequest().body(errors);
     } else {
         iCustomerService.update(employeeInfo, id);
-
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
