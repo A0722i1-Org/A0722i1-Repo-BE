@@ -39,4 +39,16 @@ public interface IProductService extends IService<Product> {
 
     List<ProductPriceDto> getProductListPrice();
     Product findByIdProductDetail(Long id);
+
+    Product findMaxCodeInDatabase();
+
+    Product findByIdNative(Long id);
+
+    String existsProductName(String product_name);
+
+    void saveProduct(Product product);
+
+    void updateProductValid(Product product,Long id);
+
+    Product findProductByCode(String productCode);
 }

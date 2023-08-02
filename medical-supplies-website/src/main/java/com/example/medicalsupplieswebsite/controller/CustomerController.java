@@ -137,5 +137,10 @@ public class CustomerController {
             return new ResponseEntity<>(customerTypes, HttpStatus.OK);
         }
     }
+
+    @GetMapping("/suppliers")
+    public ResponseEntity<List<Customer>> findAllSuppliers() {
+        return new ResponseEntity<>(iCustomerService.findAllSuppliers(), HttpStatus.OK);
+    }
 }
 

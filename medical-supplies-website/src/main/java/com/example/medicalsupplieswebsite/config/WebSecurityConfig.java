@@ -49,14 +49,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/public/login", "/api/v1/home/**", "/api/v1/category/home", "/api/v1/product/**", "/api/v1/customer-type/**", "/api/v1/payment/**")
+                .antMatchers("/api/v1/public/login",
+                        "/api/v1/home/**",
+                        "/api/v1/category/home",
+                        "/api/v1/product/detail/**",
+                        "/api/v1/customer-type/**",
+                        "/api/v1/payment/**",
+                        "/api/v1/cart/**")
                 .permitAll()
-                .antMatchers("/api/v1/cart/**").hasAnyRole("USER", "ADMIN", "SALE", "ACCOUNTANT")
                 .antMatchers("/api/v1/employee/**").hasAnyRole("SALE", "ACCOUNTANT", "ADMIN")
-                .antMatchers("/api/v1/customer/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/api/v1/customer-type/**").hasAnyRole( "ADMIN","SALE")
+                .antMatchers("/api/v1/customer/**").hasAnyRole("USER", "ADMIN", "ACCOUNTANT")
                 .antMatchers("/api/v1/account/**").hasAnyRole("ADMIN", "USER", "SALE", "ACCOUNTANT")
-                .antMatchers("api/v1/admin/**").hasRole("ADMIN")
+                .antMatchers("api/v1/admin/**", "/api/v1/product/**", "/api/v1/category/**", "/api/v1/productInfo/**").hasRole("ADMIN")
                 .antMatchers("/api/v1/supply/**").hasRole("ADMIN")
                 .antMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/api/v1/shipment/shipment/**").hasAnyRole("SALE", "ACCOUNTANT", "ADMIN")
@@ -74,10 +78,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
-
-// Config cua NhatLH de test API
-//     @Override
-//     protected void configure(HttpSecurity http) throws Exception {
-//         http.cors().and().csrf().disable();
-//     }
 }

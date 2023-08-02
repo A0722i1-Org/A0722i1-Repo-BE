@@ -40,6 +40,10 @@ public class Customer {
     @JoinColumn(name = "account_id")
     private Account account;
 
+    public Customer(Long customerId) {
+        this.customerId = customerId;
+    }
+
     public Customer(Long customerId, String customerCode, String name, String phone, boolean gender, Date dateOfBirth, String email, String idCard, String customerAddress, String customerImg, boolean isEnable, CustomerType customerType) {
         this.customerId = customerId;
         this.customerCode = customerCode;
