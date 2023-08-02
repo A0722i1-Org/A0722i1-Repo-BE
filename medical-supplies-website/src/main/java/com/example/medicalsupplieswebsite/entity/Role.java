@@ -16,6 +16,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roleId;
     private String roleName;
+
     @JsonBackReference
     @ManyToMany(mappedBy = "roles")
     private Set<Account> accounts = new LinkedHashSet<>();
