@@ -65,7 +65,7 @@ public class PaymentController {
             String vnp_CreateDate = formatter.format(cld.getTime());
 
             Map<String, String> vnp_Params = new HashMap<>();
-            vnp_Params.put("vnp_Amount", String.valueOf(totalAmount * 100));
+            vnp_Params.put("vnp_Amount", totalAmount+"00");
             vnp_Params.put("vnp_Command", VnPayConfig.vnp_Command);
             vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
             vnp_Params.put("vnp_CurrCode", "VND");
