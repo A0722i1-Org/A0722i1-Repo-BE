@@ -39,4 +39,13 @@ public class PaymentService implements IPaymentService {
     public Payment findPaymentByTnxRef(String tnxRef) {
         return this.paymentRepository.findPaymentByTnxRef(tnxRef).orElse(null);
     }
+
+    @Override
+    public void deleteByTnxRef(String tnxRef) {
+        Payment payment = this.paymentRepository.findPaymentByTnxRef(tnxRef).orElse(null);
+        if(payment != null) {
+            this.paymentRepository.deleteDetailsByPaymentId(payment.getId());
+            this.paymentRepository.deleteById(payment.getId());
+        }
+    }
 }
