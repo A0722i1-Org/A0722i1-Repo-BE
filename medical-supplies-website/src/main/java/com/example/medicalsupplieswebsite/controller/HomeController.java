@@ -31,7 +31,7 @@ public class HomeController {
             @RequestParam("page") Optional<Integer> page,
             @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
-        int pageSize = size.orElse(8);
+        int pageSize = size.orElse(10);
         Page<ProductHomeDto> productPage = productService.findAllProducts(
                 PageRequest.of(currentPage - 1, pageSize));
         if (productPage.isEmpty()) {
@@ -53,7 +53,7 @@ public class HomeController {
             @RequestParam("size") Optional<Integer> size) {
         String productNameSearch = productName.orElse("");
         int currentPage = page.orElse(1);
-        int pageSize = size.orElse(8);
+        int pageSize = size.orElse(10);
         Page<ProductHomeDto> productPage = productService.searchProduct(productNameSearch, PageRequest.of(currentPage - 1, pageSize));
         if (productPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -73,7 +73,7 @@ public class HomeController {
             @RequestParam("page") Optional<Integer> page,
             @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
-        int pageSize = size.orElse(8);
+        int pageSize = size.orElse(10);
         Page<ProductHomeDto> productPage = productService.searchProductByCategory(categoryId, PageRequest.of(currentPage - 1, pageSize));
         if (productPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
