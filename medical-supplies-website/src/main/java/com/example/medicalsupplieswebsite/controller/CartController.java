@@ -65,7 +65,12 @@ public class CartController {
         this.cartService.update(cart);
         List<CartDetail> cartDetailList = cartWithDetail.getCartDetailList();
         for (CartDetail cartDetail : cartDetailList) {
-            this.cartDetailService.update(cartDetail);
+            if(cartDetail.getQuantity()>0) {
+                cartDetail.setStatus(false);
+                this.cartDetailService.update(cartDetail);
+            } else {
+                this.cartDetailService.deleteById(cartDetail.getCartDetailId());
+            }
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -10,6 +10,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 @Service
 public class EmailService implements IEmailService {
     //Author: NhatLH
@@ -51,9 +54,11 @@ public class EmailService implements IEmailService {
 
     @Async
     public void emailProcess(Cart cart, long totalAmount) {
+        Locale locale = new Locale("vi", "VN");
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
         String recipient = cart.getReceiverEmail();
         String subject = "Email xác nhận đơn hàng";
-        String body = "Xin chào quý khách: " + cart.getReceiverName() + ",\nĐơn hàng của quý khách đã được tiếp nhận.\nVà dự kiến sẽ được giao đến địa chỉ: " + cart.getReceiverAddress() + " trong vòng 3-5 ngày.\nTổng giá trị thanh toán là: " + totalAmount + " VND.\nXin cảm ơn quý khách đã tin dùng sản phẩm của công ty chúng tôi.\nA0722I1 Co.Ltd";
+        String body = "Xin chào quý khách: " + cart.getReceiverName() + ",\nĐơn hàng của quý khách đã được tiếp nhận.\nVà dự kiến sẽ được giao đến địa chỉ: " + cart.getReceiverAddress() + " trong vòng 3-5 ngày.\nTổng giá trị thanh toán là: " + numberFormat.format(totalAmount) + ".\nXin cảm ơn quý khách đã tin dùng sản phẩm của công ty chúng tôi.\nA0722I1 Co.Ltd";
         EmailDetails emailDetails = new EmailDetails(recipient, subject, body);
         this.sendSimpleMail(emailDetails);
     }
