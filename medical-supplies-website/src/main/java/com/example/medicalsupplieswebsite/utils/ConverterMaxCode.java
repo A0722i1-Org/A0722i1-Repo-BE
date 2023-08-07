@@ -14,6 +14,6 @@ public class ConverterMaxCode {
         String prefix = currentId.split("-")[0];
         int number = Integer.parseInt(currentId.split("-")[1]);
         int nextNumber = number + 1;
-        return String.format("%s-%04d", prefix, nextNumber);
+        return String.format("%s-%03d", prefix, nextNumber);
     }
 }

@@ -225,4 +225,11 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
     @Transactional
     @Query(value = "select  product_name from product where product_name = ?1", nativeQuery = true)
     String existsProductName(String product_name);
+
+    /*
+A0722I1-TaiPA
+*/
+    @Transactional
+    @Query(value = "select  product_name from product where product_name = ?1 and product_id <> ?2", nativeQuery = true)
+    String existsProductName2(String product_name, Long product_id);
 }

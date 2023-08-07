@@ -78,7 +78,7 @@ public class ProductController {
     */
     @PatchMapping("update")
     public ResponseEntity<?> updateProduct(@Valid @RequestBody ProductCreateDTO productCreateDTO){
-        if (productService.existsProductName(productCreateDTO.getProductName()) != null){
+        if (productService.existsProductNameEdit(productCreateDTO.getProductName(),productCreateDTO.getProductId()) != null){
             return ResponseEntity.badRequest().body(new ResponseToClient("Tên vật tư đã được sử đụng"));
         }
         productService.findById(productCreateDTO.getProductId());

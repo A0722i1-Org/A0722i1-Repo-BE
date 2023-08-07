@@ -45,6 +45,7 @@ public interface IProductService extends IService<Product> {
     Product findByIdNative(Long id);
 
     String existsProductName(String product_name);
+    String existsProductNameEdit(String product_name,Long id);
 
     void saveProduct(Product product);
 

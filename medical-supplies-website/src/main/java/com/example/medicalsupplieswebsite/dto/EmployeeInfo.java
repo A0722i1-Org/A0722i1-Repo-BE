@@ -1,5 +1,6 @@
 package com.example.medicalsupplieswebsite.dto;
 
+import com.example.medicalsupplieswebsite.entity.Account;
 import com.example.medicalsupplieswebsite.entity.Position;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.validation.Errors;
@@ -25,7 +26,7 @@ public class EmployeeInfo {
     private String email;
 
     @NotBlank(message = "Vui lòng nhập số điện thoại")
-    @Pattern(regexp = "^(09|08)\\d{8}$",message = "số điện thoại chỉ được phép 10 số và bắt đầu 09 hoặc 08")
+    @Pattern(regexp = "^(0)\\d{9,10}$",message = "số điện thoại chỉ được phép 10 hoặc 11 số")
     private String phone;
 
     @NotBlank(message = "Vui lòng nhập địa chỉ")
@@ -48,12 +49,22 @@ public class EmployeeInfo {
     @NotNull(message = "Vui lòng chọn chức vụ")
     private Position position;
 
+    private Account account;
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
     public EmployeeInfo() {
     }
 
     public EmployeeInfo(Long employeeId, String employeeCode, String employeeName, String email, String phone,
                         String employeeAddress, Boolean gender, String idCard, Date dateOfBirth, String employeeImg,
-                        Position position) {
+                        Position position, Account account) {
 
         this.employeeCode = employeeCode;
         this.employeeName = employeeName;
@@ -65,6 +76,7 @@ public class EmployeeInfo {
         this.dateOfBirth = dateOfBirth;
         this.employeeImg = employeeImg;
         this.position = position;
+        this.account = account;
     }
 
     public String getEmployeeCode() {

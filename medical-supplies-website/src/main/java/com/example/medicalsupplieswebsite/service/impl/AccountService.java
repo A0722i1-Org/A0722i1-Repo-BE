@@ -25,12 +25,14 @@ public class AccountService implements IAccountService {
         if (accountRepository.existsByUsername(account.getUsername())) {
             throw new IllegalArgumentException("Tên tài khoản đã tồn tại. Vui lòng chọn tên tài khoản khác.");
         }
+        if (accountRepository.existsByEmail(account.getEmail())) {
+            throw new IllegalArgumentException("Email đã tồn tại. Vui lòng chọn email khác.");
+        }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(account.getEncryptPassword());
         account.setEncryptPassword(encodedPassword);
         account.setEnable(true);
 
-        accountRepository.save(account);
         return account;
     }
 
@@ -74,5 +76,13 @@ public class AccountService implements IAccountService {
     @Override
     public void changePassword(String username, String newPass) {
         accountRepository.changePassword(username,newPass);
+    }
+
+    public boolean existsByUsername(String username) {
+        return accountRepository.existsByUsername(username);
+    }
+
+    public boolean existsByEmail(String email) {
+        return accountRepository.existsByEmail(email);
     }
 }
