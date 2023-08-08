@@ -39,4 +39,11 @@ public interface IAccountRepository extends JpaRepository<Account, Long> {
             nativeQuery = true)
     void changePassword(@Param("username") String username,
                         @Param("pass") String pass);
+    @Modifying
+    @Query(value = "update `account` a " +
+            "set a.is_enable = false " +
+            "where a.account_id = :id",
+            nativeQuery = true)
+    void deleteById(@Param("id") Long id);
+
 }

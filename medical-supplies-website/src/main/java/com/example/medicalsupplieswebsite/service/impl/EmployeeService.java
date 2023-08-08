@@ -1,6 +1,7 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
 import com.example.medicalsupplieswebsite.entity.Employee;
+import com.example.medicalsupplieswebsite.repository.IAccountRepository;
 import com.example.medicalsupplieswebsite.repository.IEmployeeRepository;
 import com.example.medicalsupplieswebsite.service.IEmployeeService;
 import com.example.medicalsupplieswebsite.dto.EmployeeUserDetailDto;
@@ -26,6 +27,8 @@ public class EmployeeService implements IEmployeeService {
 
     @Autowired
     private IEmployeeRepository iEmployeeRepository;
+    @Autowired
+    private IAccountRepository iAccountRepository;
 
     @Override
     public Page<Employee> findAll(Pageable pageable) {
@@ -152,7 +155,9 @@ return null;
      */
     @Override
     public void deleteEmployee(Long id) {
+        Employee employee = iEmployeeRepository.getEmployeeById(id);
         iEmployeeRepository.deleteEmployeeByID(id);
+        iAccountRepository.deleteById(employee.getAccount().getAccountId());
     }
 
     /**
