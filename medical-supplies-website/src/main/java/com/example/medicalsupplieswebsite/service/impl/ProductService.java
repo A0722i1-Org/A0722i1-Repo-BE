@@ -155,6 +155,12 @@ public class ProductService implements IProductService {
         return iProductRepository.existsProductName(product_name);
     }
 
+    @Override
+    public String existsProductNameEdit(String product_name, Long id) {
+        return iProductRepository.existsProductName2(product_name,id);
+    }
+
+
     /*
     A0722i1-TaiPA
     */

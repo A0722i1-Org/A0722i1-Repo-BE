@@ -11,6 +11,9 @@ import java.util.Optional;
 
 public interface IAccountRepository extends JpaRepository<Account, Long> {
 
+    @Query("SELECT account FROM Account account WHERE account.username = ?1")
+    Account findByUserName(String userName);
+
     @Query(value = "INSERT INTO account_roles (account_id, role_id) " +
             "VALUES (:accountId, :roleId)", nativeQuery = true)
     @Modifying
@@ -27,6 +30,7 @@ public interface IAccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> findAccountByUsername(@Param("username") String username);
 
     boolean existsByUsername(String username);
+    boolean existsByEmail(String email);
 
     /*
      * NhanTQ

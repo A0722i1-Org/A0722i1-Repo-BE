@@ -34,6 +34,7 @@ public class ProductCreateDTO {
 
     private String productCode;
 
+
     @NotNull(message ="Hạn sử dụng không được để trống")
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date expireDate;

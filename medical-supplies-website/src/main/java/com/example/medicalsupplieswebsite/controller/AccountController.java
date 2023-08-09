@@ -22,6 +22,7 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -49,6 +50,19 @@ public class AccountController {
         this.authenticationManager = authenticationManager;
     }
 
+    /*ThienTDV kiểm tra tài khoản và email có tồn tại trong database chưa*/
+    @GetMapping("/checkExistingUsername")
+    public ResponseEntity<Boolean> checkExistingUsername(@RequestParam String username) {
+        boolean exists = accountService.existsByUsername(username);
+        return ResponseEntity.ok(exists);
+    }
+
+    @GetMapping("/checkExistingEmail")
+    public ResponseEntity<Boolean> checkExistingEmail(@RequestParam String email) {
+        boolean exists = accountService.existsByEmail(email);
+        return ResponseEntity.ok(exists);
+    }
+
     /*ThienTDV thêm Tài khoản và setRole cho tài khoản*/
     @PostMapping("/addAccount")
     public ResponseEntity<?> addAccount(@Valid @RequestBody Account account, BindingResult bindingResult, @RequestParam Long roleId) {
@@ -67,12 +81,11 @@ public class AccountController {
         if (role == null) {
             return ResponseEntity.badRequest().body("Invalid roleId");
         }
-        // Lưu tài khoản
-        Account savedAccount = accountService.addAccount(account);
-        Long AccountId = savedAccount.getAccountId();
-        // Thiết lập vai trò cho tài khoản
-        accountService.setRoleForAccount(AccountId, roleId);
-        return ResponseEntity.ok(savedAccount);
+        Set<Role> tempRoles = account.getRoles();
+        tempRoles.add(role);
+        account.setRoles(tempRoles);
+        return ResponseEntity.ok(account);
+
     }
 
 
@@ -101,4 +114,3 @@ public class AccountController {
                 "", ""), HttpStatus.OK);
     }
 }
-
