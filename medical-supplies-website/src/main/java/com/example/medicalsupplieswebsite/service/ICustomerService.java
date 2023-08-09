@@ -6,6 +6,7 @@ import com.example.medicalsupplieswebsite.dto.receipt_dto.SupplierDTO;
 
 import com.example.medicalsupplieswebsite.dto.CustomerInfo;
 import com.example.medicalsupplieswebsite.entity.Customer;
+import com.example.medicalsupplieswebsite.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -21,6 +22,7 @@ public interface ICustomerService extends IService<Customer>{
   */
     void update(CustomerInfo customerInfo, Long id);
 
+    Customer customerLimit();
 
     Customer save(Customer customer);
 

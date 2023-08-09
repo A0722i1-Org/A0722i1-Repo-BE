@@ -84,6 +84,11 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    public Customer customerLimit() {
+        return customerRepository.limitCustomer();
+    }
+
+    @Override
     public Customer save(Customer customer) {
         return null;
     }

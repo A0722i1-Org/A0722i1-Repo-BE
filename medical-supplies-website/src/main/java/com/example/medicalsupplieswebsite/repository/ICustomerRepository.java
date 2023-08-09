@@ -70,7 +70,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
      *
      * A0722I1-HieuLD
      */
-    @Query(value = "SELECT * FROM demotestgeneration1.employee order by `name` desc limit 1",nativeQuery = true)
+    @Query(value = "SELECT * FROM medical_supplies.customer order by `customer_code` desc limit 1",nativeQuery = true)
     Customer limitCustomer();
 
     /**
