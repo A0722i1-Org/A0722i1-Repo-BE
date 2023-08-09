@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <title>Thư xác nhận đơn hàng</title>
+    <style>
+        table {
+            vertical-align: middle;
+            border-collapse:separate;
+            border:solid black 1px;
+            border-radius:6px;
+        }
+
+        td, th {
+            border-left:solid black 1px;
+            border-top:solid black 1px;
+        }
+
+        th {
+            background-color: #00b894;
+            border-top: none;
+        }
+
+        td:first-child, th:first-child {
+            border-left: none;
+        }
+    </style>
+</head>
+<body>
+<h2>Thư xác nhận đơn hàng</h2>
+<p>Xin chào quý khách: <strong th:text="${receiverName}"></strong></p>
+<p>Đơn hàng của quý khách đã được tiếp nhận và đang đợc xử lý.</p>
+<p>Địa chỉ giao hàng tại: <strong th:text="${receiverAddress}"></strong></p>
+<p>Thông tin chi tiết đơn hàng như sau:</p>
+<table>
+    <tr>
+        <th>STT</th>
+        <th>Tên sản phẩm</th>
+        <th>Số lượng</th>
+        <th>Đơn giá</th>
+        <th>Thành tiền</th>
+    </tr>
+    <tr th:each="detail, stat : ${cartDetails}">
+        <td style="text-align: center" th:text="${stat.count}"></td>
+        <td th:text="${detail.getProduct().getProductName()}"></td>
+        <td style="text-align: center" th:text="${detail.getQuantity()}"></td>
+        <td style="text-align: right"
+            th:text="${#numbers.formatInteger(detail.getProduct().getProductPrice(),0,'POINT')} + ' đ'"></td>
+        <td style="text-align: right"
+            th:text="${#numbers.formatInteger(detail.getProduct().getProductPrice()*detail.getQuantity(),0,'POINT')} + ' đ'"></td>
+    </tr>
+    <tr>
+        <th colspan="4">Tổng giá trị đơn hàng</th>
+        <th th:text="${totalAmount}"></th>
+    </tr>
+</table>
+<p>Xin cảm ơn quý khách đã tin tưởng mua hàng tại công ty chúng tôi.</p>
+<a href="http://localhost:4200">A0722I1 Co.Ltd</a>
+</body>
+</html>
