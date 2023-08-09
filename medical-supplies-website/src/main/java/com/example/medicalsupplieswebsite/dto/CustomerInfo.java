@@ -22,6 +22,7 @@ public class CustomerInfo {
      */
     private Long customerId;
 
+    @Pattern(regexp = "^KH-\\d{4}$")
     private String customerCode;
 
     @NotBlank(message = "Vui lòng nhập họ và tên")
@@ -30,7 +31,8 @@ public class CustomerInfo {
     private String name;
 
     @NotBlank(message = "Vui lòng nhập số điện thoại")
-    @Pattern(regexp = "^(09|08)\\d{8}$",message = "số điện thoại chỉ được phép 10 số và bắt đầu 09 hoặc 08")
+    @Pattern(regexp = "^(086|096|097|098|038|037|036|035|034|033|032|091|094|088|081|082|083|084|085|070|076|077|078|079|089|090|093|092|052|056|058|099|059|087)\\\\d{8}$",
+            message = "số điện thoại chỉ được phép 10 số và đầu số của nhà mạng Việt Nam")
     private String phone;
 
     @NotNull(message = "Vui lòng chọn giới tính")
