@@ -133,4 +133,9 @@ public class CustomerService implements ICustomerService {
     public Page<Customer> searchCustomers(String keyword, Pageable pageable) {
         return this.customerRepository.searchCustomer(keyword, pageable);
     }
+
+    @Override
+    public List<Customer> findAllSuppliers() {
+        return customerRepository.findAllSuppliers();
+    }
 }

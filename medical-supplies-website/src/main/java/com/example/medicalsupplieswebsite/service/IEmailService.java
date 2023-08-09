@@ -7,5 +7,5 @@ public interface IEmailService {
     //Author: NhatLH
     String sendSimpleMail(EmailDetails emailDetails);
 
-    void emailProcess(Cart cart, int totalAmount);
+    void emailProcess(Cart cart, long totalAmount);
 }

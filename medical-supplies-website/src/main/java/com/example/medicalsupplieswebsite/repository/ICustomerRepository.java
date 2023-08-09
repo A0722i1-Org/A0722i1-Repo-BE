@@ -151,4 +151,11 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             " where (ct.customer_type_name like concat('%',:keyword,'%') or c.name like concat('%',:keyword,'%') or c.customer_address like concat('%',:keyword,'%') or c.phone like concat('%',:keyword,'%')) and (c.is_enable = true)"
             , nativeQuery = true)
     Page<Customer> searchCustomer(@Param("keyword") String keyword ,Pageable pageable);
+
+    @Query(value = "select customer_id, customer_address, customer_img, date_of_birth, gender, id_card, name, phone, account_id, cart_id, ct.customer_type_id, is_enable, customer_code, email " +
+            "from customer c " +
+            "inner join customer_type ct on c.customer_type_id = ct.customer_type_id " +
+            "where ct.customer_type_id = 2 and c.is_enable = true and c.account_id is not null ",
+            nativeQuery = true)
+    List<Customer> findAllSuppliers();
 }

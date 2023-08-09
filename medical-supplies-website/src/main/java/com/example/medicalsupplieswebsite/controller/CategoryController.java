@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1/category")
 public class CategoryController {
@@ -29,5 +29,11 @@ public class CategoryController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(categoryList, HttpStatus.OK);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<Category>> findAll() {
+        iCategoryService.getCategoryList();
+        return new ResponseEntity<>(iCategoryService.getCategoryList(), HttpStatus.OK);
     }
 }

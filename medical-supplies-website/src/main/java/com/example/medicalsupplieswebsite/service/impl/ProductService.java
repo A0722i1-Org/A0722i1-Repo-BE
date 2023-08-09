@@ -6,14 +6,17 @@ import com.example.medicalsupplieswebsite.dto.ProductHomeDto;
 import com.example.medicalsupplieswebsite.dto.ProductPriceDto;
 import com.example.medicalsupplieswebsite.dto.shipmentdto.ProductDto;
 import com.example.medicalsupplieswebsite.entity.Product;
+import com.example.medicalsupplieswebsite.error.NotFoundById;
 import com.example.medicalsupplieswebsite.repository.IProductRepository;
 import com.example.medicalsupplieswebsite.service.IProductService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService implements IProductService {
@@ -25,14 +28,19 @@ public class ProductService implements IProductService {
         return null;
     }
 
+    @SneakyThrows
     @Override
     public Product findById(Long id) {
-        return null;
+        Optional<Product> employee = iProductRepository.findById(id);
+        if (employee.isPresent()) {
+            return employee.get();
+        }
+        throw new NotFoundById("Không tìm thấy bất kì nhân viên nào có mã số: " + id);
     }
 
     @Override
     public Product update(Product product) {
-        return null;
+        return iProductRepository.save(product);
     }
 
     @Override
@@ -102,8 +110,87 @@ public class ProductService implements IProductService {
     public Product findByProductIdIs(Long productId) {
         return iProductRepository.findByProductIdIs(productId);
     }
+
     @Override
     public Product findByIdProductDetail(Long id) {
         return iProductRepository.findByIdProductDetail(id);
+    }
+
+    @Override
+    public Product findMaxCodeInDatabase() {
+        return iProductRepository.findMaxCodeInDatabase();
+    }
+
+    /*
+       A0722i1-TaiPA
+       */
+    @Override
+    public void saveProduct(Product product) {
+        iProductRepository.saveProductNative(
+                product.getExpireDate(),
+                true,
+                product.getProductCode(),
+                product.getProductImg(),
+                product.getProductName(),
+                product.getProductPrice(),
+                product.getProductQuantity(),
+                String.valueOf(product.getCategory().getCategoryId()),
+                String.valueOf(product.getCustomer().getCustomerId()),
+                String.valueOf(product.getProductInfo().getInfoId())
+        );
+    }
+
+    @SneakyThrows
+    @Override
+    public Product findByIdNative(Long id) {
+        Optional<Product> product = iProductRepository.findByIdNative(id);
+        if (product.isPresent()) {
+            return product.get();
+        }
+        throw new NotFoundById("Không tìm thấy bất kì nhân viên nào có mã số: " + id);
+    }
+
+    @Override
+    public String existsProductName(String product_name) {
+        return iProductRepository.existsProductName(product_name);
+    }
+
+    @Override
+    public String existsProductNameEdit(String product_name, Long id) {
+        return iProductRepository.existsProductName2(product_name,id);
+    }
+
+
+    /*
+    A0722i1-TaiPA
+    */
+    @Override
+    public void updateProductValid(Product product, Long id) {
+        iProductRepository.updateProduct(
+                product.getExpireDate(),
+                false,
+                product.getProductCode(),
+                product.getProductImg(),
+                product.getProductName(),
+                product.getProductPrice(),
+                product.getProductQuantity(),
+                String.valueOf(product.getCategory().getCategoryId()),
+                String.valueOf(product.getCustomer().getCustomerId()),
+                String.valueOf(product.getProductInfo().getInfoId()),
+                id
+        );
+    }
+
+    /*
+    A0722i1-TaiPA
+    */
+    @SneakyThrows
+    @Override
+    public Product findProductByCode(String productCode) {
+        Optional<Product> productCreateDTO = iProductRepository.findProductByCode(productCode);
+        if (productCreateDTO.isPresent()) {
+            return productCreateDTO.get();
+        }
+        throw new NotFoundById("Không tìm thấy bất kì vật tư nào có mã số: " + productCode);
     }
 }

@@ -50,7 +50,7 @@ public class EmailService implements IEmailService {
     }
 
     @Async
-    public void emailProcess(Cart cart, int totalAmount) {
+    public void emailProcess(Cart cart, long totalAmount) {
         String recipient = cart.getReceiverEmail();
         String subject = "Email xác nhận đơn hàng";
         String body = "Xin chào quý khách: " + cart.getReceiverName() + ",\nĐơn hàng của quý khách đã được tiếp nhận.\nVà dự kiến sẽ được giao đến địa chỉ: " + cart.getReceiverAddress() + " trong vòng 3-5 ngày.\nTổng giá trị thanh toán là: " + totalAmount + " VND.\nXin cảm ơn quý khách đã tin dùng sản phẩm của công ty chúng tôi.\nA0722I1 Co.Ltd";
