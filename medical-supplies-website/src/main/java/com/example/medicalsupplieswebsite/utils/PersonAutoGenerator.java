@@ -1,5 +1,4 @@
 package com.example.medicalsupplieswebsite.utils;
-
 import org.hibernate.HibernateException;
 import org.hibernate.MappingException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
@@ -13,8 +12,7 @@ import java.util.Properties;
 import java.util.stream.Stream;
 
 @Component
-public class PersonAutoGenerator implements IdentifierGenerator {
-    private String prefix;
+public class PersonAutoGenerator implements IdentifierGenerator{private String prefix;
 
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
@@ -35,4 +33,5 @@ public class PersonAutoGenerator implements IdentifierGenerator {
                           ServiceRegistry serviceRegistry) throws MappingException {
         prefix = properties.getProperty("prefix");
     }
+
 }

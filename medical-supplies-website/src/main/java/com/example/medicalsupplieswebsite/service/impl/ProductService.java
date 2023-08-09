@@ -5,7 +5,6 @@ import com.example.medicalsupplieswebsite.dto.receipt_dto.ProductDTO;
 import com.example.medicalsupplieswebsite.dto.ProductHomeDto;
 import com.example.medicalsupplieswebsite.dto.ProductPriceDto;
 import com.example.medicalsupplieswebsite.dto.shipmentdto.ProductDto;
-import com.example.medicalsupplieswebsite.dto.ProductCreateDTO;
 import com.example.medicalsupplieswebsite.entity.Product;
 import com.example.medicalsupplieswebsite.error.NotFoundById;
 import com.example.medicalsupplieswebsite.repository.IProductRepository;
@@ -15,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -110,16 +110,25 @@ public class ProductService implements IProductService {
     public Product findByProductIdIs(Long productId) {
         return iProductRepository.findByProductIdIs(productId);
     }
+
     @Override
     public Product findByIdProductDetail(Long id) {
         return iProductRepository.findByIdProductDetail(id);
     }
 
     @Override
+    public Product findMaxCodeInDatabase() {
+        return iProductRepository.findMaxCodeInDatabase();
+    }
+
+    /*
+       A0722i1-TaiPA
+       */
+    @Override
     public void saveProduct(Product product) {
         iProductRepository.saveProductNative(
                 product.getExpireDate(),
-                product.isEnable(),
+                true,
                 product.getProductCode(),
                 product.getProductImg(),
                 product.getProductName(),
@@ -146,8 +155,11 @@ public class ProductService implements IProductService {
         return iProductRepository.existsProductName(product_name);
     }
 
+    /*
+    A0722i1-TaiPA
+    */
     @Override
-    public void updateProductValid(ProductCreateDTO product) {
+    public void updateProductValid(Product product, Long id) {
         iProductRepository.updateProduct(
                 product.getExpireDate(),
                 false,
@@ -156,10 +168,23 @@ public class ProductService implements IProductService {
                 product.getProductName(),
                 product.getProductPrice(),
                 product.getProductQuantity(),
-                String.valueOf(product.getCategory()),
-                String.valueOf(product.getCustomer()),
-                String.valueOf(product.getProductInfo()),
-                product.getProductId()
+                String.valueOf(product.getCategory().getCategoryId()),
+                String.valueOf(product.getCustomer().getCustomerId()),
+                String.valueOf(product.getProductInfo().getInfoId()),
+                id
         );
+    }
+
+    /*
+    A0722i1-TaiPA
+    */
+    @SneakyThrows
+    @Override
+    public Product findProductByCode(String productCode) {
+        Optional<Product> productCreateDTO = iProductRepository.findProductByCode(productCode);
+        if (productCreateDTO.isPresent()) {
+            return productCreateDTO.get();
+        }
+        throw new NotFoundById("Không tìm thấy bất kì vật tư nào có mã số: " + productCode);
     }
 }

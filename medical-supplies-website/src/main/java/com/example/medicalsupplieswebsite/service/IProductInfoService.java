@@ -1,6 +1,5 @@
 package com.example.medicalsupplieswebsite.service;
 
-import com.example.medicalsupplieswebsite.entity.Product;
 import com.example.medicalsupplieswebsite.entity.ProductInfo;
 
 import java.util.List;

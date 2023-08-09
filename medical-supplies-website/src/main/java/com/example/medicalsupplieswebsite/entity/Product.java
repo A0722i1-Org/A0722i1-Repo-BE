@@ -2,24 +2,18 @@ package com.example.medicalsupplieswebsite.entity;
 
 import com.example.medicalsupplieswebsite.dto.ProductCreateDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
 
 @Entity
 @Getter
 @Setter
 @RequiredArgsConstructor
-@Table(name = "product")
-public class Product implements Serializable {
-
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
@@ -27,30 +21,21 @@ public class Product implements Serializable {
     private Integer productPrice;
     private Integer productQuantity;
     private String productImg;
-
-    @GeneratedValue(generator = "person-generator")
-    @GenericGenerator(name = "person-generator",
-            parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "VT"),
-            strategy = "com.example.medicalsupplieswebsite.utils.PersonAutoGenerator")
-    @Column(length = 45)
     private String productCode;
     private Date expireDate;
     private boolean isEnable;
 
 
-    @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "category_id",nullable = false,referencedColumnName = "categoryId")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToOne
-    @JsonBackReference
-    @JoinColumn(name = "product_info_id",nullable = false,referencedColumnName = "infoId")
+    @OneToOne()
+    @JoinColumn(name = "product_info_id")
     private ProductInfo productInfo;
 
-    @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "customer_id",nullable = false,referencedColumnName = "customerId")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     public void decreaseQuantity(int quantity){
@@ -66,7 +51,6 @@ public class Product implements Serializable {
         this.productQuantity += quantity;
     }
 
-
     public Product(Long id){
         this.productId= id;
     }
@@ -77,9 +61,10 @@ public class Product implements Serializable {
         this.productImg = productCreateDTO.getProductImg();
         this.productCode = productCreateDTO.getProductCode();
         this.expireDate = productCreateDTO.getExpireDate();
-        this.isEnable = false;
+        this.isEnable = true;
         this.category = new Category(Long.parseLong(productCreateDTO.getCategory()));
         this.productInfo = new ProductInfo(Long.parseLong(productCreateDTO.getProductInfo()));
         this.customer = new Customer(Long.parseLong(productCreateDTO.getCustomer()));
     }
+
 }

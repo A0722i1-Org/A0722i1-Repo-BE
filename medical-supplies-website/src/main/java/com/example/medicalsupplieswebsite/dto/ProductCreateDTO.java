@@ -1,13 +1,8 @@
 package com.example.medicalsupplieswebsite.dto;
 
-import com.example.medicalsupplieswebsite.entity.Category;
-import com.example.medicalsupplieswebsite.entity.Customer;
-import com.example.medicalsupplieswebsite.entity.ProductInfo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.aspectj.apache.bcel.ExceptionConstants;
 
-import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.sql.Date;
 
@@ -17,10 +12,10 @@ import java.sql.Date;
 @ToString
 @AllArgsConstructor
 public class ProductCreateDTO {
-
     private Long productId;
 
     @NotBlank(message = "Tên vật tư không được để trống")
+    @Pattern(regexp = "^[^!@#$%^&*()_+<>?'\"{}\\`~|/\\\\]+$", message = "Tên vật tư không được chứa các kí tự đặc biệt")
     private String productName;
 
     @NotNull(message = "Giá vật tư không được để trống")
@@ -37,7 +32,6 @@ public class ProductCreateDTO {
     @Size(min = 0,max = 1000,message = "Hình ảnh không phù hợp")
     private String productImg;
 
-    @NotBlank(message = "Mã vật tư không được để trống")
     private String productCode;
 
     @NotNull(message ="Hạn sử dụng không được để trống")
@@ -47,7 +41,7 @@ public class ProductCreateDTO {
     @NotBlank(message = "loại vật tư không được để trống")
     private String category;
 
-    @NotBlank(message = "Thông tin vật tư không được để trống")
+//    @NotBlank(message = "Thông tin vật tư không được để trống")
     private String productInfo;
 
     @NotBlank(message = "Nhà cung cấp không được để trống")
@@ -65,5 +59,4 @@ public class ProductCreateDTO {
         this.productInfo = productInfo;
         this.customer = customer;
     }
-
 }
