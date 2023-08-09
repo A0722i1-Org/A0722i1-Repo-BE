@@ -90,12 +90,18 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
                         @Param("customer_code") String customer_code,
                         @Param("is_enable") Boolean is_enable);
 
+    @Query(value = "SELECT customer_code,id_card FROM medical_supplies.customer ",
+            nativeQuery = true)
+    Customer findAllCustomer(@Param("username") String username);
+
     /**
      *
      * A0722I1-HieuLD
      */
     @Query("SELECT customer FROM Customer customer WHERE customer.customerId = ?1")
     Customer findAllById(Long id);
+
+
 
 
     @Query(value = "select c.customer_id, c.name, c.phone, c.gender, c.date_of_birth, c.id_card, c.customer_address, " +

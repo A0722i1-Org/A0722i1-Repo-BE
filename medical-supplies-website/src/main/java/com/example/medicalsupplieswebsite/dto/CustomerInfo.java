@@ -92,10 +92,10 @@ public class CustomerInfo {
         CustomerInfo customerInfo = (CustomerInfo) target;
         if (!(customerInfo.dateOfBirth == null)) {
             LocalDate today = LocalDate.now();
-            LocalDate minAgeDate = today.minusYears(18);
+            LocalDate minAgeDate = today.minusYears(12);
             LocalDate maxAgeDate = today.minusYears(90);
             if (customerInfo.dateOfBirth.toLocalDate().isAfter(minAgeDate)) {
-                errors.rejectValue("dateOfBirth", "", "chưa đủ 18 tuổi");
+                errors.rejectValue("dateOfBirth", "", "chưa đủ 12 tuổi");
             }
             if (customerInfo.dateOfBirth.toLocalDate().isBefore(maxAgeDate)) {
                 errors.rejectValue("dateOfBirth", "", "lớn hơn 90 tuổi");
