@@ -32,11 +32,11 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             " c.name, c.phone, ct.customer_type_id ," +
             " a.account_id, r.cart_id " +
             "from customer c inner join customer_type ct on c.customer_type_id = ct.customer_type_id left join account a" +
-            " on c.account_id = a.account_id left join cart r on c.cart_id = r.cart_id where c.is_enable= true",
+            " on c.account_id = a.account_id left join cart r on c.cart_id = r.cart_id where c.is_enable= true order by c.customer_code ",
             countQuery = "select count(c.customer_id)" +
                     " from customer c" +
                     " inner join customer_type ct on c.customer_type_id = ct.customer_type_id left join account a" +
-                    " on c.account_id = a.account_id left join cart r on c.cart_id = r.cart_id where c.is_enable= true",
+                    " on c.account_id = a.account_id left join cart r on c.cart_id = r.cart_id where c.is_enable= true order by c.customer_code ",
             nativeQuery = true)
     Page<Customer> findAllCustomers(Pageable pageable);
 
@@ -133,11 +133,11 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     @Query(value = "select c.customer_id, c.customer_address,c.customer_code,c.email, c.customer_img, c.date_of_birth, c.gender, c.id_card, c.is_enable, c.name, c.phone,ct.customer_type_name,ct.customer_type_id,a.account_id, r.cart_id" +
             " from customer c  join customer_type ct on c.customer_type_id = ct.customer_type_id left join account a " +
             " on c.account_id = a.account_id  left join cart r on c.cart_id = r.cart_id"+
-            " where (ct.customer_type_name like concat('%',:keyword,'%') or c.name like concat('%',:keyword,'%') or c.customer_address like concat('%',:keyword,'%') or c.phone like concat('%',:keyword,'%')) and (c.is_enable = true)"
+            " where (ct.customer_type_name like concat('%',:type,'%') and c.name like concat('%',:name,'%') and c.customer_address like concat('%',:address,'%') and c.phone like concat('%',:phone,'%')) and (c.is_enable = true) order by c.customer_code "
             , countQuery = "select count(c.customer_id) from customer c join customer_type ct on c.customer_type_id = ct.customer_type_id left join account a on c.account_id = a.account_id  left join cart r on c.cart_id = r.cart_id"+
-            " where (ct.customer_type_name like concat('%',:keyword,'%') or c.name like concat('%',:keyword,'%') or c.customer_address like concat('%',:keyword,'%') or c.phone like concat('%',:keyword,'%')) and (c.is_enable = true)"
+            " where (ct.customer_type_name like concat('%',:type,'%') and c.name like concat('%',:name,'%') and c.customer_address like concat('%',:address,'%') and c.phone like concat('%',:phone,'%')) and (c.is_enable = true) order by c.customer_code"
             , nativeQuery = true)
-    Page<Customer> searchCustomer(@Param("keyword") String keyword ,Pageable pageable);
+    Page<Customer> searchCustomer(@Param("type") String type ,@Param("name") String name ,@Param("address") String address ,@Param("phone") String phone ,Pageable pageable);
 
     @Query(value = "select customer_id, customer_address, customer_img, date_of_birth, gender, id_card, name, phone, account_id, cart_id, ct.customer_type_id, is_enable, customer_code, email " +
             "from customer c " +

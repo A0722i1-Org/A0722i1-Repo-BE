@@ -19,6 +19,13 @@ public interface IEmployeeService extends IService<Employee>{
      */
     EmployeeUserDetailDto findUserDetailByUsername(String username);
     void save(EmployeeInfo employeeInfo);
+
+    List<Employee> findByPhone(String phone);
+
+    List<Employee> findByIdCard(String idCard);
+
+    List<Employee> findByEmail(String email);
+
     void updateEmployee(EmployeeInfo employeeInfo, Long id);
     /**
      * this function could return a list of employee ,that can display all employee or combines search with 3 params

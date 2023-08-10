@@ -1,5 +1,7 @@
 package com.example.medicalsupplieswebsite.service.impl;
 
+import com.example.medicalsupplieswebsite.dto.InvalidDataException;
+import com.example.medicalsupplieswebsite.dto.ValidationError;
 import com.example.medicalsupplieswebsite.entity.Account;
 import com.example.medicalsupplieswebsite.entity.Employee;
 import com.example.medicalsupplieswebsite.repository.IAccountRepository;
@@ -17,10 +19,7 @@ import org.springframework.data.domain.Pageable;
 import javax.persistence.Tuple;
 import javax.transaction.Transactional;
 import java.sql.Date;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -51,15 +50,62 @@ public class EmployeeService implements IEmployeeService {
      */
     @Override
     public void save(EmployeeInfo employeeInfo) {
-        iAccountRepository.save(employeeInfo.getAccount());
-        Account account = iAccountRepository.findByUserName(employeeInfo.getAccount().getUsername());
-        Employee employee = new Employee(null, employeeInfo.getEmployeeCode(), employeeInfo.getEmployeeName(),
-                employeeInfo.getEmail(), employeeInfo.getPhone(), employeeInfo.getEmployeeAddress(), employeeInfo.getGender(),
-                employeeInfo.getIdCard(), employeeInfo.getDateOfBirth(), employeeInfo.getEmployeeImg(), true,
-                employeeInfo.getPosition(), account);
-        iEmployeeRepository.save(employee);
+        List<ValidationError> errors = new ArrayList<>();
+        List<Employee> listFindByPhone = this.findByPhone(employeeInfo.getPhone());
+        List<Employee> listFindByIdCard = this.findByPhone(employeeInfo.getIdCard());
+        if (listFindByPhone.size() > 0) {
+            errors.add(new ValidationError("duplicatePhone", "Số điện thoại đã được đăng kí."));
+        }
+
+        if (listFindByIdCard.size() > 0) {
+            errors.add(new ValidationError("duplicateIdCard", "Số CCCD/Hộ chiếu đã được đăng kí."));
+        }
+        if (!errors.isEmpty()) {
+            throw new InvalidDataException(errors);
+        }
+        if (!errors.isEmpty()) {
+            iAccountRepository.save(employeeInfo.getAccount());
+            Account account = iAccountRepository.findByUserName(employeeInfo.getAccount().getUsername());
+            Employee employee = new Employee(null, employeeInfo.getEmployeeCode(), employeeInfo.getEmployeeName(),
+                    employeeInfo.getEmail(), employeeInfo.getPhone(), employeeInfo.getEmployeeAddress(), employeeInfo.getGender(),
+                    employeeInfo.getIdCard(), employeeInfo.getDateOfBirth(), employeeInfo.getEmployeeImg(), true,
+                    employeeInfo.getPosition(), account);
+            iEmployeeRepository.save(employee);
+        }
     }
 
+    /**
+     * created by PhongTD
+     * Date created: 09/08/2023
+     * @param phone
+     * @return
+     */
+    @Override
+    public List<Employee> findByPhone(String phone) {
+        return this.iEmployeeRepository.findAllByPhone(phone);
+    }
+
+    /**
+     * created by PhongTD
+     * Date created: 09/08/2023
+     * @param idCard
+     * @return
+     */
+    @Override
+    public List<Employee> findByIdCard(String idCard) {
+        return this.iEmployeeRepository.findAllByIdCard(idCard);
+    }
+
+    /**
+     * created by PhongTD
+     * Date created: 09/08/2023
+     * @param email
+     * @return
+     */
+    @Override
+    public List<Employee> findByEmail(String email) {
+        return this.iEmployeeRepository.findAllByEmail(email);
+    }
 
     /**
      * Created by: PhongTD
@@ -86,9 +132,29 @@ return null;
      */
     @Override
     public void updateEmployee(EmployeeInfo employeeInfo, Long id) {
-        iEmployeeRepository.updateEmployee(employeeInfo.getEmployeeName(), employeeInfo.getEmail(), employeeInfo.getPhone(),
-                employeeInfo.getEmployeeAddress(), employeeInfo.getGender(), employeeInfo.getIdCard(), employeeInfo.getDateOfBirth(),
-                employeeInfo.getEmployeeImg(), employeeInfo.getPosition(), id);
+        List<ValidationError> errors = new ArrayList<>();
+        Employee currentEmployee = this.findEmployeeByID(id);
+        List<Employee> list1 = this.findByEmail(employeeInfo.getEmail());
+        List<Employee> list2 = this.findByPhone(employeeInfo.getPhone());
+        List<Employee> list3 = this.findByIdCard(employeeInfo.getIdCard());
+        if (list1.size() > 0 && !currentEmployee.getEmail().equals(employeeInfo.getEmail())) {
+            errors.add(new ValidationError("duplicateEmail", "Email đã được đăng kí."));
+        }
+        if (list2.size() > 0 && !currentEmployee.getPhone().equals(employeeInfo.getPhone())) {
+            errors.add(new ValidationError("duplicatePhone", "Số điện thoại đã được đăng kí."));
+        }
+        if (list3.size() > 0 && !currentEmployee.getIdCard().equals(employeeInfo.getIdCard())) {
+            errors.add(new ValidationError("duplicateIdCard", "Số CCCD/Hộ chiếu đã được đăng kí."));
+        }
+        if (!errors.isEmpty()) {
+            throw new InvalidDataException(errors);
+        }
+        if (errors.isEmpty()) {
+            iEmployeeRepository.updateEmployee(employeeInfo.getEmployeeName(), employeeInfo.getEmail(), employeeInfo.getPhone(),
+                    employeeInfo.getEmployeeAddress(), employeeInfo.getGender(), employeeInfo.getIdCard(), employeeInfo.getDateOfBirth(),
+                    employeeInfo.getEmployeeImg(), employeeInfo.getPosition(), id);
+        }
+
     }
 
 

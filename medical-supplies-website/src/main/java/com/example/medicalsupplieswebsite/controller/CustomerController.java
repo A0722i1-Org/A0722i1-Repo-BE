@@ -8,6 +8,7 @@ import com.example.medicalsupplieswebsite.service.impl.CustomerTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -34,19 +35,28 @@ public class CustomerController {
     private CustomerTypeService customerTypeService;
 
     @GetMapping("")
-    public ResponseEntity<Page<Customer>> findAllCustomer(@RequestParam(value = "keyword", required = false) Optional<String> keyword,
+    public ResponseEntity<Page<Customer>> findAllCustomer(@RequestParam(value = "type", required = false) Optional<String> type,
+                                                          @RequestParam(value = "name", required = false) Optional<String> name,
+                                                          @RequestParam(value = "address", required = false) Optional<String> address,
+                                                          @RequestParam(value = "phone", required = false) Optional<String> phone,
                                                           @RequestParam("page") Optional<Integer> page,
-                                                          @RequestParam("size") Optional<Integer> size) {
-        String keywordSearch = keyword.orElse("");
+                                                          @RequestParam("size") Optional<Integer> size,
+                                                          @RequestParam("sort") Optional<String> sort) {
+        String searchType = type.orElse("");
+        String searchName = name.orElse("");
+        String searchAddress = address.orElse("");
+        String searchPhone = phone.orElse("");
         int pages = page.orElse(1);
-        int pageSize = size.orElse(10);
-        Page<Customer> searchName = this.iCustomerService.searchCustomers(keywordSearch, PageRequest.of(pages - 1, pageSize));
-        if (searchName.isEmpty()) {
+        int pageSize = size.orElse(5);
+        String sortName = sort.orElse("name");
+        Page<Customer> searchCustomer = this.iCustomerService.searchCustomers(searchType, searchName, searchAddress, searchPhone, PageRequest.of(pages - 1, pageSize, Sort.by(sortName)));
+        if (searchCustomer.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(searchName, HttpStatus.OK);
+            return new ResponseEntity<>(searchCustomer, HttpStatus.OK);
         }
     }
+
 
     /**
      *

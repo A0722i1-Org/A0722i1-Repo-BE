@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ICustomerService extends IService<Customer>{
-    Page<Customer> searchCustomers(String search, Pageable pageable);
+    Page<Customer> searchCustomers(String type, String name, String address, String phone, Pageable pageable);
     void saveCustomer(CustomerInfo customerInfo);
  /**
   * HieuLD

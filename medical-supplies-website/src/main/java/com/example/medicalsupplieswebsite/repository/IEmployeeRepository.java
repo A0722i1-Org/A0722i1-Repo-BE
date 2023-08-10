@@ -37,7 +37,14 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
     void updateEmployee(String employeeName, String email, String phone, String employeeAddress, Boolean gender,
                         String idCard, Date dateOfBirth, String avatar, Position position, Long id);
 
+    @Query("SELECT employee FROM Employee employee WHERE employee.email = ?1")
+    List<Employee> findAllByEmail(String email);
 
+    @Query("SELECT employee FROM Employee employee WHERE employee.phone = ?1")
+    List<Employee> findAllByPhone(String phone);
+
+    @Query("SELECT employee FROM Employee employee WHERE employee.idCard = ?1")
+    List<Employee> findAllByIdCard(String idCard);
 
     /**
      * Created by: PhongTD
