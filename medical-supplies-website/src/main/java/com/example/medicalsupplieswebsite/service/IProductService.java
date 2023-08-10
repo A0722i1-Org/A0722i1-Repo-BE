@@ -52,4 +52,5 @@ public interface IProductService extends IService<Product> {
     void updateProductValid(Product product,Long id);
 
     Product findProductByCode(String productCode);
+    Page<ProductHomeDto> findAllProductHomeDtosBySearch(Long categoryId, String productName, Pageable pageable);
 }

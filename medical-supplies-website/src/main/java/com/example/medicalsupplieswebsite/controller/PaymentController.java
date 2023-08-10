@@ -133,12 +133,12 @@ public class PaymentController {
             this.paymentService.update(payment);
             int totalAmount = payment.getTotalAmount();
             Cart cart = this.cartService.findById(payment.getCartId());
-            Set<CartDetail> cartDetails = payment.getCartDetails();
+            List<CartDetail> cartDetails = new ArrayList<>(payment.getCartDetails());
             for (CartDetail cartDetail : cartDetails) {
                 cartDetail.setStatus(true);
                 this.cartDetailService.update(cartDetail);
             }
-            this.emailService.emailProcess(cart, totalAmount);
+            this.emailService.emailProcess(cart, totalAmount, cartDetails);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }

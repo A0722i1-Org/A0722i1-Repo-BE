@@ -2,59 +2,66 @@ package com.example.medicalsupplieswebsite.service.impl;
 
 import com.example.medicalsupplieswebsite.dto.EmailDetails;
 import com.example.medicalsupplieswebsite.entity.Cart;
+import com.example.medicalsupplieswebsite.entity.CartDetail;
 import com.example.medicalsupplieswebsite.service.IEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+
+import javax.mail.internet.MimeMessage;
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.Locale;
 
 @Service
 public class EmailService implements IEmailService {
-    //Author: NhatLH
+    /*
+     * Author: NhatLH
+     * Created: 2023-08-08
+     * */
 
     private final JavaMailSender javaMailSender;
+    private final TemplateEngine templateEngine;
 
     @Autowired
-    EmailService(JavaMailSender javaMailSender) {
+    EmailService(JavaMailSender javaMailSender, TemplateEngine templateEngine) {
         this.javaMailSender = javaMailSender;
+        this.templateEngine = templateEngine;
     }
 
     @Value("${spring.mail.username}")
     private String sender;
-    public String sendSimpleMail(EmailDetails details) {
-
-        // Try block to check for exceptions
-        try {
-
-            // Creating a simple mail message
-            SimpleMailMessage mailMessage
-                    = new SimpleMailMessage();
-
-            // Setting up necessary details
-            mailMessage.setFrom(sender);
-            mailMessage.setTo(details.getRecipient());
-            mailMessage.setSubject(details.getSubject());
-            mailMessage.setText(details.getBody());
-
-            // Sending the mail
-            javaMailSender.send(mailMessage);
-            return "Mail Sent Successfully...";
-        }
-
-        // Catch block to handle the exceptions
-        catch (Exception e) {
-            return "Error while Sending Mail";
-        }
-    }
 
     @Async
-    public void emailProcess(Cart cart, long totalAmount) {
-        String recipient = cart.getReceiverEmail();
-        String subject = "Email xác nhận đơn hàng";
-        String body = "Xin chào quý khách: " + cart.getReceiverName() + ",\nĐơn hàng của quý khách đã được tiếp nhận.\nVà dự kiến sẽ được giao đến địa chỉ: " + cart.getReceiverAddress() + " trong vòng 3-5 ngày.\nTổng giá trị thanh toán là: " + totalAmount + " VND.\nXin cảm ơn quý khách đã tin dùng sản phẩm của công ty chúng tôi.\nA0722I1 Co.Ltd";
-        EmailDetails emailDetails = new EmailDetails(recipient, subject, body);
-        this.sendSimpleMail(emailDetails);
+    public void emailProcess(Cart cart, long totalAmount, List<CartDetail> details) {
+        MimeMessagePreparator preparator = new MimeMessagePreparator() {
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+                messageHelper.setFrom(sender);
+                messageHelper.setTo(cart.getReceiverEmail());
+                messageHelper.setSubject("Email xac nhan don hang");
+
+                Locale locale = new Locale("vi", "VN");
+                NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
+
+                Context context = new Context();
+                context.setVariable("receiverName", cart.getReceiverName());
+                context.setVariable("receiverAddress", cart.getReceiverAddress());
+                context.setVariable("totalAmount", numberFormat.format(totalAmount));
+                context.setVariable("cartDetails", details);
+                context.setVariable("locale", new Locale("vi", "VN"));
+                String content = templateEngine.process("email-template", context);
+
+                messageHelper.setText(content, true);
+            }
+        };
+        javaMailSender.send(preparator);
     }
 }

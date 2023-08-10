@@ -193,4 +193,19 @@ public class ProductService implements IProductService {
         }
         throw new NotFoundById("Không tìm thấy bất kì vật tư nào có mã số: " + productCode);
     }
+
+    @Override
+    public Page<ProductHomeDto> findAllProductHomeDtosBySearch(Long categoryId, String productName, Pageable pageable) {
+        if (categoryId == 0 && productName.isEmpty()) {
+            return iProductRepository.findAllProductHomeDtos(pageable);
+        }
+
+        if (categoryId > 0) {
+            return this.iProductRepository.findAllProductHomeDtosByCategoryId(categoryId, pageable);
+        } else if(!productName.isEmpty()) {
+            return this.iProductRepository.findAllProductHomeDtosByProductName(productName, pageable);
+        }
+
+        return iProductRepository.findAllProductHomeDtosByCategoryIdAndProductName(categoryId, productName, pageable);
+    }
 }

@@ -18,18 +18,6 @@ import java.util.List;
 public class CategoryController {
     @Autowired
     private ICategoryService iCategoryService;
-    /**
-     * VanNT
-     * @return  list categogy
-     */
-    @GetMapping("/home")
-    public ResponseEntity<List<Category>> getCategoryList(){
-        List<Category> categoryList  = iCategoryService.getCategoryList();
-        if (categoryList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(categoryList, HttpStatus.OK);
-    }
 
     @GetMapping("")
     public ResponseEntity<List<Category>> findAll() {

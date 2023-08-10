@@ -65,7 +65,12 @@ public class CartController {
         this.cartService.update(cart);
         List<CartDetail> cartDetailList = cartWithDetail.getCartDetailList();
         for (CartDetail cartDetail : cartDetailList) {
-            this.cartDetailService.update(cartDetail);
+            if(cartDetail.getQuantity()>0) {
+                cartDetail.setStatus(false);
+                this.cartDetailService.update(cartDetail);
+            } else {
+                this.cartDetailService.deleteById(cartDetail.getCartDetailId());
+            }
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -74,16 +79,18 @@ public class CartController {
     public ResponseEntity<CartWithDetail> checkout(@RequestBody CartWithDetail cartWithDetail) {
         Cart cart = cartWithDetail.getCart();
         List<CartDetail> cartDetailList = cartWithDetail.getCartDetailList();
+        List<CartDetail> details = new ArrayList<>();
         int totalAmount = 0;
         this.cartService.update(cart);
         for (CartDetail cartDetail : cartDetailList) {
             if (cartDetail.isStatus()) {
                 totalAmount += cartDetail.getQuantity() * cartDetail.getProduct().getProductPrice();
+                details.add(cartDetail);
             }
             this.cartDetailService.update(cartDetail);
         }
         if (totalAmount != 0) {
-            this.emailService.emailProcess(cart, totalAmount);
+            this.emailService.emailProcess(cart, totalAmount, details);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }

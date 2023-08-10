@@ -232,4 +232,51 @@ A0722I1-TaiPA
     @Transactional
     @Query(value = "select  product_name from product where product_name = ?1 and product_id <> ?2", nativeQuery = true)
     String existsProductName2(String product_name, Long product_id);
+
+    @Query(
+            value = "SELECT product_id, product_name,  product_price, product_img, ct.category_name " +
+                    "FROM product p INNER JOIN category ct ON p.category_id = ct.category_id " +
+                    "WHERE p.is_enable",
+            countQuery = "SELECT COUNT(p.product_id) " +
+                    "FROM product p INNER JOIN category ct ON p.category_id = ct.category_id " +
+                    "WHERE p.is_enable",
+            nativeQuery = true)
+    Page<ProductHomeDto> findAllProductHomeDtos(Pageable pageable);
+
+    @Query(
+            value = "SELECT product_id, product_name,  product_price, product_img, ct.category_name " +
+                    "FROM product p INNER JOIN category ct ON p.category_id = ct.category_id " +
+                    "WHERE p.category_id = :categoryId AND p.is_enable",
+            countQuery = "SELECT COUNT(p.product_id) " +
+                    "FROM product p INNER JOIN category ct ON p.category_id = ct.category_id " +
+                    "WHERE p.category_id = :categoryId AND p.is_enable",
+            nativeQuery = true)
+    Page<ProductHomeDto> findAllProductHomeDtosByCategoryId(@Param("categoryId") Long categoryId,
+                                                            Pageable pageable);
+
+    @Query(
+            value = "SELECT product_id, product_name,  product_price, product_img, ct.category_name " +
+                    "FROM product p INNER JOIN category ct ON p.category_id = ct.category_id " +
+                    "WHERE UPPER(p.product_name) LIKE CONCAT('%',UPPER(:productName), '%') AND p.is_enable",
+            countQuery = "SELECT COUNT(p.product_id) " +
+                    "FROM product p INNER JOIN category ct ON p.category_id = ct.category_id " +
+                    "WHERE UPPER(p.product_name) LIKE CONCAT('%',UPPER(:productName), '%') AND p.is_enable",
+            nativeQuery = true)
+    Page<ProductHomeDto> findAllProductHomeDtosByProductName(@Param("productName") String productName,
+                                                             Pageable pageable);
+
+    @Query(
+            value = "SELECT product_id, product_name,  product_price, product_img, ct.category_name " +
+                    "FROM product p INNER JOIN category ct ON p.category_id = ct.category_id " +
+                    "WHERE UPPER(p.product_name) LIKE CONCAT('%',UPPER(:productName), '%') " +
+                    "AND p.category_id = :categoryId AND p.is_enable",
+            countQuery = "SELECT COUNT(p.product_id) " +
+                    "FROM product p INNER JOIN category ct ON p.category_id = ct.category_id " +
+                    "WHERE UPPER(p.product_name) LIKE CONCAT('%',UPPER(:productName), '%') " +
+                    "AND p.category_id = :categoryId AND p.is_enable",
+            nativeQuery = true)
+    Page<ProductHomeDto> findAllProductHomeDtosByCategoryIdAndProductName(
+            @Param("categoryId") Long categoryId,
+            @Param("productName") String productName,
+            Pageable pageable);
 }

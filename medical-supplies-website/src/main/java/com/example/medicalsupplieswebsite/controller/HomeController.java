@@ -6,6 +6,7 @@ import com.example.medicalsupplieswebsite.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,13 +28,16 @@ public class HomeController {
      * @return list all product and paging
      */
     @GetMapping("")
-    public ResponseEntity<Page<ProductHomeDto>> getAllProduct(
-            @RequestParam("page") Optional<Integer> page,
-            @RequestParam("size") Optional<Integer> size) {
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(10);
-        Page<ProductHomeDto> productPage = productService.findAllProducts(
-                PageRequest.of(currentPage - 1, pageSize));
+    public ResponseEntity<Page<ProductHomeDto>> findAll(
+            @RequestParam(value = "page") Optional<Integer> page,
+            @RequestParam("size") Optional<Integer> size,
+            @RequestParam(value = "categoryId") Optional<Long> categoryIdParam,
+            @RequestParam(value = "productName") Optional<String> productNameParam
+    ) {
+        Pageable pageable = this.getPageable(page, size);
+        Long categoryId = categoryIdParam.orElse(0L);
+        String productName = productNameParam.orElse("");
+        Page<ProductHomeDto> productPage = productService.findAllProductHomeDtosBySearch(categoryId, productName, pageable);
         if (productPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -93,5 +97,12 @@ public class HomeController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(productPriceList, HttpStatus.OK);
+    }
+
+    private Pageable getPageable(Optional<Integer> page,
+                                 Optional<Integer> size) {
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(8);
+        return PageRequest.of(currentPage - 1, pageSize);
     }
 }

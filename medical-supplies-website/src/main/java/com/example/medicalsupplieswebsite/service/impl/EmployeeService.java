@@ -225,7 +225,9 @@ return null;
      */
     @Override
     public void deleteEmployee(Long id) {
+        Employee employee = iEmployeeRepository.getEmployeeById(id);
         iEmployeeRepository.deleteEmployeeByID(id);
+        iAccountRepository.deleteById(employee.getAccount().getAccountId());
     }
 
     /**
