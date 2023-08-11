@@ -50,7 +50,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
      * A0722I1-HieuLD
      */
     @Modifying
-    @Query(value = "INSERT INTO `medical_supplies`.`customer` (`customer_address`,`customer_code`,`customer_img`,`customer_type_id`," +
+    @Query(value = "INSERT INTO customer (`customer_address`,`customer_code`,`customer_img`,`customer_type_id`," +
             "`date_of_birth`,`email`,`gender`,`id_card`,`is_enable`,`name`,`phone`,`cart_id`) VALUES (:customer_address,:customer_code,:customer_img,:customer_type_id,:date_of_birth,:email,:gender,:id_card,:is_enable," +
             ":name,:phone, :cart_id)", nativeQuery = true)
     void insertCustomer(@Param("name") String name,
@@ -65,13 +65,19 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
                         @Param("customer_code") String customer_code,
                         @Param("is_enable") Boolean is_enable,
                         @Param("cart_id") Long cart_id);
+    /**
+     *
+     * A0722I1-HieuLD
+     */
+    @Query(value = "SELECT * FROM customer order by `customer_code` desc limit 1",nativeQuery = true)
+    Customer limitCustomer();
 
     /**
      *
      * A0722I1-HieuLD
      */
     @Modifying
-    @Query(value = "UPDATE `medical_supplies`.`customer` SET `account_id`=:account_id,`cart_id`=:cart_id,`customer_address`=:customer_address," +
+    @Query(value = "UPDATE customer SET `account_id`=:account_id,`cart_id`=:cart_id,`customer_address`=:customer_address," +
             "`customer_code`=:customer_code,`customer_img`=:customer_img,`customer_type_id`=:customer_type_id," +
             "`date_of_birth`=:date_of_birth,`email`=:email,`gender`=:gender,`id_card`=:id_card,`is_enable`=:is_enable," +
             "`name`=:name,`phone`=:phone WHERE `customer_id`=:customer_id", nativeQuery = true)

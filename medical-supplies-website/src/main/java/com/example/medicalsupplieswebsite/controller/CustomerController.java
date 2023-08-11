@@ -5,6 +5,7 @@ import com.example.medicalsupplieswebsite.entity.Customer;
 import com.example.medicalsupplieswebsite.entity.CustomerType;
 import com.example.medicalsupplieswebsite.service.impl.CustomerService;
 import com.example.medicalsupplieswebsite.service.impl.CustomerTypeService;
+import com.example.medicalsupplieswebsite.utils.ConverterMaxCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -75,6 +76,8 @@ public class CustomerController {
                     });
             return ResponseEntity.badRequest().body(errors);
         } else {
+            Customer customerLimit = iCustomerService.customerLimit();
+            customerInfo.setCustomerCode(ConverterMaxCode.generateNextId(customerLimit.getCustomerCode()));
             iCustomerService.saveCustomer(customerInfo);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);

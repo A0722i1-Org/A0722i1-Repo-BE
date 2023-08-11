@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
@@ -52,7 +53,10 @@ public class ProductController {
     */
     @PostMapping("")
     public ResponseEntity<ResponseToClient> createProduct(@Valid @RequestBody ProductCreateDTO productCreateDTO) {
-        if (productService.existsProductName(productCreateDTO.getProductName()) != null){
+        if(productCreateDTO.getExpireDate().toLocalDate().isBefore(LocalDate.now())){
+            return ResponseEntity.badRequest().body(new ResponseToClient("Hạn sử dụng không được bé hơn ngày hiện tại."));
+        }
+        if (productService.existsProductName(productCreateDTO.getProductName().trim()) != null){
             return ResponseEntity.badRequest().body(new ResponseToClient("Tên vật tư đã được sử đụng"));
         }
         Product productMax = productService.findMaxCodeInDatabase();
@@ -78,7 +82,7 @@ public class ProductController {
     */
     @PatchMapping("update")
     public ResponseEntity<?> updateProduct(@Valid @RequestBody ProductCreateDTO productCreateDTO){
-        if (productService.existsProductNameEdit(productCreateDTO.getProductName(),productCreateDTO.getProductId()) != null){
+        if (productService.existsProductNameEdit(productCreateDTO.getProductName().trim(),productCreateDTO.getProductId()) != null) {
             return ResponseEntity.badRequest().body(new ResponseToClient("Tên vật tư đã được sử đụng"));
         }
         productService.findById(productCreateDTO.getProductId());

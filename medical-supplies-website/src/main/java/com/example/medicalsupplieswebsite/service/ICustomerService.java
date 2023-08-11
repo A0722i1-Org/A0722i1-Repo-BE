@@ -21,7 +21,7 @@ public interface ICustomerService extends IService<Customer>{
   */
     void update(CustomerInfo customerInfo, Long id);
 
-
+    Customer customerLimit();
     Customer save(Customer customer);
 
     Customer findByUsername(String username);

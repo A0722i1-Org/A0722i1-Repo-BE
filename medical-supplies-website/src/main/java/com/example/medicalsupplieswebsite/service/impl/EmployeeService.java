@@ -63,7 +63,7 @@ public class EmployeeService implements IEmployeeService {
         if (!errors.isEmpty()) {
             throw new InvalidDataException(errors);
         }
-        if (!errors.isEmpty()) {
+        if (errors.isEmpty()) {
             iAccountRepository.save(employeeInfo.getAccount());
             Account account = iAccountRepository.findByUserName(employeeInfo.getAccount().getUsername());
             Employee employee = new Employee(null, employeeInfo.getEmployeeCode(), employeeInfo.getEmployeeName(),
@@ -252,7 +252,18 @@ return null;
      */
     @Override
     public void updateEmployeeByFieldsDTO(String employeeName, String employeeImg, boolean gender, Date dateOfBirth, String employeeAddress, String phone, String email, String username) {
-        iEmployeeRepository.updateEmployeeDto(employeeName, employeeImg, gender, dateOfBirth, employeeAddress, phone, email, username);
+        List<ValidationError> errors = new ArrayList<>();
+        Employee currentEmployee = iEmployeeRepository.findEmployeeByUserName(username).orElse(null);
+        List<Employee> listFindByPhone = this.findByPhone(phone);
+        if (listFindByPhone.size() > 0 && !currentEmployee.getPhone().equals(phone)) {
+            errors.add(new ValidationError("duplicatePhone", "Số điện thoại đã được đăng kí."));
+        }
+        if (!errors.isEmpty()) {
+            throw new InvalidDataException(errors);
+        }
+        if (errors.isEmpty()) {
+            iEmployeeRepository.updateEmployeeDto(employeeName, employeeImg, gender, dateOfBirth, employeeAddress, phone, email, username);
+        }
     }
 
     @Override

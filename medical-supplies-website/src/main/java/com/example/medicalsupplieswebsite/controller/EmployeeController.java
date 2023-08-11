@@ -175,20 +175,28 @@ public class EmployeeController {
      *NhanTQ
      */
     @PatchMapping("/update-employee")
-    public ResponseEntity<EmployeeDTO> updateEmployee(@RequestBody @Valid EmployeeDTO employeeDTO, BindingResult bindingResult) {
+    public ResponseEntity<?> updateEmployee(@RequestBody @Valid EmployeeDTO employeeDTO, BindingResult bindingResult) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         if (iEmployeeService.findByUsername(username) == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            Map<String, String> errors = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(
+                    error -> {
+                        String fieldName = error.getField();
+                        String errorMessage = error.getDefaultMessage();
+                        errors.put(fieldName, errorMessage);
+                    });
+            return ResponseEntity.badRequest().body(errors);
         }
         iEmployeeService.updateEmployeeByFieldsDTO(employeeDTO.getEmployeeName(), employeeDTO.getEmployeeImg(),
                 employeeDTO.isGender(), employeeDTO.getDateOfBirth(), employeeDTO.getEmployeeAddress(),
                 employeeDTO.getPhone(), employeeDTO.getEmail(), username);
-        return new ResponseEntity<>(employeeDTO,HttpStatus.OK);
+        return new ResponseEntity<>(employeeDTO, HttpStatus.OK);
     }
+
     /*
      *NhanTQ
      */

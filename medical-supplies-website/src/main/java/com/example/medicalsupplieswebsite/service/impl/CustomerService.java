@@ -82,6 +82,14 @@ public class CustomerService implements ICustomerService {
                 customerInfo.getCart(), customerInfo.getAccount(), customerInfo.getCustomerCode(), true);
 
     }
+    /**
+     *
+     * A0722I1-HieuLD
+     */
+    @Override
+    public Customer customerLimit() {
+        return customerRepository.limitCustomer();
+    }
 
     @Override
     public Customer save(Customer customer) {

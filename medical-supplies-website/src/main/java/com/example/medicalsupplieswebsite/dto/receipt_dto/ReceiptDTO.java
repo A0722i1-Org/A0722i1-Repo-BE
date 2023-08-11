@@ -24,6 +24,7 @@ public class ReceiptDTO {
     @NotNull(message = "Không được để trống")
     private Long receiptTypeId;
     @NotBlank(message = "Không được để trống")
+    @Pattern(regexp = "^HD-\\d{10}$", message = "HD-Mã số thuế không đúng định dạng(Định dạng HD-xxxxxxxxxx)" )
     private String invoiceCode;
     private Date dateOfCreate;
     private Long employeeId;

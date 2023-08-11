@@ -25,7 +25,7 @@ public interface IAccountRepository extends JpaRepository<Account, Long> {
     @Query(nativeQuery = true, value =
             "select account_id, username, email, encrypt_password, is_enable " +
                     "from account " +
-                    "where username = :username")
+                    "where username = :username and is_enable = true")
     Optional<Account> findAccountByUsername(@Param("username") String username);
 
     boolean existsByUsername(String username);
