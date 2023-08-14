@@ -1,5 +1,6 @@
 package com.example.medicalsupplieswebsite.entity;
 
+import com.example.medicalsupplieswebsite.dto.ProductCreateDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
@@ -7,7 +8,6 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
 
 @Entity
 @Getter
@@ -49,6 +49,22 @@ public class Product {
 
     public void increaseQuantity(int quantity){
         this.productQuantity += quantity;
+    }
+
+    public Product(Long id){
+        this.productId= id;
+    }
+    public Product(ProductCreateDTO productCreateDTO){
+        this.productName = productCreateDTO.getProductName();
+        this.productPrice = productCreateDTO.getProductPrice();
+        this.productQuantity = productCreateDTO.getProductQuantity();
+        this.productImg = productCreateDTO.getProductImg();
+        this.productCode = productCreateDTO.getProductCode();
+        this.expireDate = productCreateDTO.getExpireDate();
+        this.isEnable = true;
+        this.category = new Category(Long.parseLong(productCreateDTO.getCategory()));
+        this.productInfo = new ProductInfo(Long.parseLong(productCreateDTO.getProductInfo()));
+        this.customer = new Customer(Long.parseLong(productCreateDTO.getCustomer()));
     }
 
 }

@@ -1,14 +1,11 @@
 package com.example.medicalsupplieswebsite.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -19,11 +16,17 @@ public class Receipt {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long receiptId;
     private String invoiceCode;
-    private String note;
     private Date dateOfCreate;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_id")
     private Employee employee;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "receipt_type_id")
+    private ReceiptType receiptType;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
 
 }

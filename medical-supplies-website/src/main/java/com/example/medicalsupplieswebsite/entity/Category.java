@@ -1,14 +1,10 @@
 package com.example.medicalsupplieswebsite.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -20,4 +16,7 @@ public class Category {
     private Long categoryId;
     private String categoryName;
 
+    public Category(Long id) {
+        this.categoryId = id;
+    }
 }
