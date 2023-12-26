@@ -14,7 +14,7 @@ public class ProductInfo {
     private Long infoId;
     @Column(name = "info_introduction", length = 2000)
     private String infoIntroduction;
-    @Column(name = "info_description", length = 2000, columnDefinition = "LONGTEXT")
+    @Column(name = "info_description", length = 2000)
     private String infoDescription;
     private String trademark;
     private String placeOfManufacture;
